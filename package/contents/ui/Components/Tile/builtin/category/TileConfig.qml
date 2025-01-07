@@ -4,9 +4,6 @@
  */
 
 import QtQuick
-import QtQuick.Layouts
-import QtQuick.Controls
-import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.formcard as FormCard
 import "../.."
 import "../../../" as Utils
@@ -65,4 +62,18 @@ FormCard.FormCardPage {
         }
     }
 
+    FormCard.FormHeader {
+        title: "Grouping"
+    }
+    FormCard.FormCard {
+        FormCard.FormSwitchDelegate {
+            text: "Enable tile grouping"
+            description: "When enabled, tiles positioned directly below will be attached to this tile."
+            checked: root.tile.tileData.grouping
+            onCheckedChanged: {
+                root.tile.tileData.grouping = checked;
+                root.tile.tileData = root.tile.tileData;
+            }
+        }
+    }
 }
