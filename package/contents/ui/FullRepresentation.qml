@@ -26,6 +26,8 @@ Kicker.DashboardWindow {
         }
     }
 
+    Keys.onEscapePressed: root.toggle()
+
     function reloadData() {
     }
 
@@ -131,6 +133,8 @@ Kicker.DashboardWindow {
                         onToggled: {
                             root.toggle()
                         }
+
+                        Keys.forwardTo: [mainCat.textField]
                     }
                 }
             }

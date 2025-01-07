@@ -65,6 +65,8 @@ FocusScope {
         id: contextMenu
         property int current: 0
 
+        Keys.onEscapePressed: root.toggle()
+
         PlasmaComponents.MenuItem{
             text: "Add to Tiles"
             icon.name: "emblem-favorite-symbolic"
