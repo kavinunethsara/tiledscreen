@@ -48,6 +48,10 @@ Item {
         onClicked: function (mouse) {
             // If we are in the same place, acctivate the tile
             if (mouse.button == Qt.LeftButton) {
+                if (root.controller.editMode){
+                    root.openEditor();
+                    return
+                }
                 root.internalTile.activate();
                 controller.toggled();
                 return;
@@ -84,9 +88,9 @@ Item {
 
         drag.onActiveChanged:  {
             if (mouseArea.drag.active)
-                root.controller.editMode = true
+                root.controller.dragMode = true
             else {
-                root.controller.editMode = false
+                root.controller.dragMode = false
             }
         }
 
@@ -116,15 +120,10 @@ Item {
             text: "Edit Tile"
             icon.name: "editor"
             onClicked: {
-                if (root.internalTile.config != ""){
-                    var conf = Qt.createComponent("builtin/"+root.internalTile.config + ".qml");
-                    if (conf.status === Component.Ready) {
-                        var confDial = conf.createObject(root.controller, {tile: root});
-                        confDial.open();
-                    }
-                }
+                root.openEditor()
             }
         }
+
         PlasmaComponents.MenuItem{
             text: "Delete Tile"
             icon.name: "delete"
@@ -137,5 +136,15 @@ Item {
     function showContextMenu(index: int) {
         contextMenu.current = index;
         contextMenu.popup();
+    }
+
+
+    function openEditor() {
+        if (root.internalTile.config != ""){
+            var conf = Qt.createComponent("builtin/"+root.internalTile.config + ".qml");
+            if (conf.status === Component.Ready) {
+                root.controller.openEditor(conf, {tile: root});
+            }
+        }
     }
 }

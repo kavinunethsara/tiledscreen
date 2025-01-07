@@ -1,55 +1,71 @@
 import QtQuick
-import org.kde.kirigamiaddons.formcard as FormCard
+import QtQuick.Layouts
+import QtQuick.Controls
+import org.kde.kirigami as Kirigami
 import ".."
 
-FormCard.FormCardDialog {
+ColumnLayout {
     id: root
-    title: "Edit Tile"
+    anchors.fill: parent
+    spacing: Kirigami.Units.mediumSpacing
     required property Tile tile
 
-    FormCard.FormHeader {
-        title: "General"
+    Label {
+        text: "General"
     }
 
-    FormCard.FormTextFieldDelegate {
+    ConfigEntry {
         label: "Name"
-        placeholderText: "Name to display on tile"
-        text: root.tile.tileData.name
-        onTextChanged: {
-            root.tile.tileData.name = text;
-            root.tile.tileData = root.tile.tileData;
+        TextField {
+            placeholderText: "Name to display on tile"
+            text: root.tile.tileData.name
+            onTextChanged: {
+                root.tile.tileData.name = text;
+                root.tile.tileData = root.tile.tileData;
+            }
         }
     }
 
-    FormCard.FormSpinBoxDelegate {
+    ConfigEntry{
         label: "Width"
-        value: root.tile.tileWidth
-        from: 1
-        to: 100
-        stepSize: 1
-        onValueChanged: {
-            root.tile.tileWidth = value;
+        SpinBox {
+            value: root.tile.model.tileWidth
+            from: 1
+            to: 100
+            stepSize: 1
+            onValueChanged: {
+                root.tile.model.tileWidth = value;
+            }
         }
     }
 
-    FormCard.FormSpinBoxDelegate {
+    ConfigEntry{
         label: "Height"
-        value: root.tile.tileHeight
-        from: 1
-        to: 100
-        stepSize: 1
-        onValueChanged: {
-            root.tile.tileHeight = value;
+        SpinBox {
+            value: root.tile.model.tileHeight
+            from: 1
+            to: 100
+            stepSize: 1
+            onValueChanged: {
+                root.tile.model.tileHeight = value;
+            }
         }
     }
 
-    FormCard.FormDelegateSeparator {}
 
-    FormIconDelegate {
-        iconName: root.tile.tileData.icon
-        onIconNameChanged: {
-            root.tile.tileData.icon = iconName;
-            root.tile.tileData = root.tile.tileData;
+    Label {
+        text: "Appearance"
+    }
+
+    ConfigEntry {
+        label: "Icon "
+        IconSelector {
+            text: "Select"
+            icon.name: root.tile.tileData.icon
+            onIconChanged: {
+                root.tile.tileData.icon = icon.name;
+                root.tile.tileData = root.tile.tileData;
+            }
         }
     }
 }

@@ -28,9 +28,14 @@ Kicker.DashboardWindow {
     onVisibleChanged: {
         if (visible) {
             root.currentPage = "home"
-            mainCat.searchText = "";
-            mainCat.grabFocus();
+            mainCat.searchText = ""
+            mainCat.grabFocus()
         }
+        tileView.closeEditor()
+    }
+
+    onCurrentPageChanged: {
+        tileView.closeEditor()
     }
 
     function reloadData() {
@@ -174,6 +179,7 @@ Kicker.DashboardWindow {
                         id: tileView
                         visible: root.currentPage == "home"
                         appsView: appsView
+
                         onToggled: {
                             root.toggle()
                         }

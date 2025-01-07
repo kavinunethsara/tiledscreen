@@ -29,7 +29,8 @@ Item {
 
     property QtObject tileContainer: tileBody
 
-    property bool editMode: false
+    property bool dragMode: false
+    property bool editMode: sidebar.visible
     property bool initialLoad: true
 
     function refreshItems () {
@@ -38,21 +39,18 @@ Item {
         }
     }
 
-
-    TextEdit{
-        id: textEdit
-        visible: false
+    function openEditor(widget = null, data = {}) {
+        if (sidebar.currentPage)
+            sidebar.currentPage.destroy();
+        if (widget)
+            sidebar.currentPage = widget.createObject(sidebar.content, data);
+        sidebar.visible = true;
     }
-    Shortcut {
-        sequence: "Ctrl+Alt+Y"
-        onActivated: {
-            console.warn("Copier");
-            textEdit.text = plasmoid.configuration.tiles
-            console.warn(plasmoid.configuration.tiles);
-            textEdit.selectAll()
-            textEdit.copy()
-            console.warn("Copied");
-        }
+
+    function closeEditor() {
+        if (sidebar.currentPage)
+            sidebar.currentPage.destroy();
+        sidebar.visible = false;
     }
 
     signal toggled()
@@ -66,13 +64,67 @@ Item {
         initialLoad = false
     }
 
-    RowLayout {
+    // Editor Sidebar
+    Editor {
+        id: sidebar
+
+        anchors {
+            top: root.top
+            left: root.left
+            bottom: root.bottom
+            margins: Kirigami.Units.largeSpacing
+        }
+        width: root.width * 0.25 - Kirigami.Units.largeSpacing * 2
+
+        onVisibleChanged: {
+            if (visible) {
+                scaleOut.restart();
+            } else {
+                scaleAnim.restart();
+            }
+        }
+
+        onCloseClicked: root.closeEditor()
+    }
+
+    // Tile view
+    Item {
+        id: gridContainer
         anchors.fill: parent
+
+        // Edit mode background
+        Rectangle {
+            visible: sidebar.visible
+            opacity: 0.3
+            anchors.fill: gridContainer
+            color: Kirigami.Theme.textColor
+            radius: Kirigami.Units.mediumSpacing
+            z: -1
+        }
+
+        transformOrigin: Item.Right
+
+        ScaleAnimator {
+            id: scaleAnim
+            from: 0.75
+            to: 1
+            duration: 100
+            target: gridContainer
+            running: false
+        }
+
+        ScaleAnimator {
+            id: scaleOut
+            from: 1
+            to: 0.75
+            duration: 100
+            target: gridContainer
+            running: false
+        }
 
         ScrollView {
             id: scroll
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+            anchors.fill: parent
             contentWidth: grid.implicitWidth
             contentHeight: grid.implicitHeight
 
@@ -103,7 +155,7 @@ Item {
                             anchors.fill: parent
                             anchors.margins: 2
                             color: rt.current? Kirigami.Theme.highlightColor : Kirigami.Theme.linkColor
-                            opacity: root.editMode ? 0.7 : 0
+                            opacity: root.dragMode ? 0.7 : 0
                         }
 
                         Component.onCompleted: {
