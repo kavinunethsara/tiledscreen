@@ -153,7 +153,7 @@ Kicker.DashboardWindow {
                         visible: root.currentPage == "all"
                         model: rootModel.count ? rootModel.modelForRow(0) : null
                         onAddTile: function (metadata) {
-                            tileView.addTile("IconTile", metadata)
+                            tileView.addTile("icon", metadata)
                         }
                         onToggle: {
                             root.toggle()

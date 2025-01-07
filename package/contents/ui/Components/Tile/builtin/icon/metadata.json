@@ -1,0 +1,20 @@
+{
+    "name": "Icon",
+    "plugin": "icon",
+    "description": "A simple launcher tile",
+    "icon": "icons",
+    "main": "IconTile.qml",
+    "config": "TileConfig.qml",
+    "preferredWidth": 2,
+    "preferredHeight": 2,
+    "defaults": {
+        "name": "Icon",
+        "icon": "empty",
+        "useCustomBack": false,
+        "useCustomFront": false,
+        "backColor": "white",
+        "frontColor": "black",
+        "actionType": 0,
+        "action": ""
+    }
+}

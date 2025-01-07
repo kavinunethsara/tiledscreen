@@ -23,8 +23,8 @@ Item {
 
     Component.onCompleted: {
         root.tileData = JSON.parse(root.model.metadata);
-
-        const tileContent = Qt.createComponent("builtin/"+root.model.plugin + ".qml");
+        let tileInfo = controller.tiles.find((tile) => tile.plugin == root.model.plugin)
+        const tileContent = Qt.createComponent(tileInfo.path + "/" +tileInfo.main);
         if (tileContent.status == Component.Ready) {
             var intTile = tileContent.createObject(root, { metadata: Qt.binding(function() { return root.tileData }), container: root } );
             internalTile = intTile
@@ -94,14 +94,17 @@ Item {
             }
         }
 
-        onMouseXChanged: function(mouse) {
+        onMouseXChanged: function(mouse) { mouseArea.move(mouse) }
+        onMouseYChanged: function(mouse) { mouseArea.move(mouse) }
+
+        function move(mouse) {
             var loc = root.grid.mapFromItem(root.controller.tileContainer, root.x, root.y)
             var item = root.grid.childAt(loc.x, loc.y)
             if (!item) return
-            if (prevItem)
-                prevItem.current = false
-            item.current = true
-            prevItem = item
+                if (prevItem)
+                    prevItem.current = false
+                    item.current = true
+                    prevItem = item
         }
     }
 
@@ -140,11 +143,10 @@ Item {
 
 
     function openEditor() {
-        if (root.internalTile.config != ""){
-            var conf = Qt.createComponent("builtin/"+root.internalTile.config + ".qml");
-            if (conf.status === Component.Ready) {
-                root.controller.openEditor(conf, {tile: root});
-            }
+        let tileInfo = controller.tiles.find((tile) => tile.plugin == root.model.plugin)
+        var conf = Qt.createComponent(tileInfo.path + "/" + tileInfo.config);
+        if (conf.status === Component.Ready) {
+            root.controller.openEditor(conf, {tile: root});
         }
     }
 }

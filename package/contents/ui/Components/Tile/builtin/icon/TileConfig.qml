@@ -3,7 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import Qt.labs.platform
 import org.kde.kirigami as Kirigami
-import ".."
+import "../.."
 
 ColumnLayout {
     id: root

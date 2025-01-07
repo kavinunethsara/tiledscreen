@@ -1,0 +1,14 @@
+{
+    "name": "Category",
+    "plugin": "category",
+    "description": "A Label to use for Categorisation",
+    "icon": "object-group-symbolic",
+    "main": "CategoryTile.qml",
+    "config": "TileConfig.qml",
+    "preferredWidth": 2,
+    "preferredHeight": 1,
+    "defaults": {
+        "name": "Category",
+        "icon": ""
+    }
+}

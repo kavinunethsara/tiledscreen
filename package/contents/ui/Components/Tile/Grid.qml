@@ -7,6 +7,8 @@ import org.kde.plasma.components as PlasmaComponents
 import org.kde.plasma.private.kicker as Kicker
 import org.kde.kirigami as Kirigami
 
+import org.kde.plasma.plasma5support as Plasma5Support
+
 
 pragma ComponentBehavior: Bound
 
@@ -23,6 +25,7 @@ Item {
             refreshItems();
         }
     }
+    property var tiles: []
     property QtObject appsView
     property real cellSizeMultiplier: plasmoid.configuration.cellSize / 10
     readonly property real cellSize: Kirigami.Units.gridUnit * 2.5 * cellSizeMultiplier
@@ -33,35 +36,10 @@ Item {
     property bool editMode: sidebar.visible
     property bool initialLoad: true
 
-    function refreshItems () {
-        if (!initialLoad) {
-            plasmoid.configuration.tiles = JSON.stringify(serializeModel());
-        }
-    }
-
-    function openEditor(widget = null, data = {}) {
-        if (sidebar.currentPage)
-            sidebar.currentPage.destroy();
-        if (widget)
-            sidebar.currentPage = widget.createObject(sidebar.content, data);
-        sidebar.visible = true;
-    }
-
-    function closeEditor() {
-        if (sidebar.currentPage)
-            sidebar.currentPage.destroy();
-        sidebar.visible = false;
-    }
-
     signal toggled()
 
     Component.onCompleted: {
-        initialLoad = true
-        var items = JSON.parse(plasmoid.configuration.tiles);
-        items.forEach((item) => {
-            itemModel.append({ grid: grid, controller: root, metadata: JSON.stringify(item.metadata), plugin: item.plugin, tileWidth: item.tileWidth, tileHeight: item.tileHeight, column: item.column, row: item.row });
-        });
-        initialLoad = false
+        getTiles()
     }
 
     // Editor Sidebar
@@ -200,37 +178,22 @@ Item {
                 id: contextMenu
                 property int current: 0
                 PlasmaComponents.MenuItem{
-                    text: "Add Icon Tile"
+                    text: "Add Tile"
                     icon.name: "application-x-executable"
                     onClicked: {
-                        var metadata = {
-                            name: "Icon",
-                            icon: "empty",
-                            useCustomBack: false,
-                            useCustomFront: false,
-                            backColor: Qt.color.white,
-                            frontColor: Kirigami.Theme.textColor,
-                            actionType: 0,
-                            action: ""
-                        }
-                        root.addTile("IconTile",metadata);
-                    }
-                }
-                PlasmaComponents.MenuItem{
-                    text: "Add Header Tile"
-                    icon.name: "category"
-                    onClicked: {
-                        var metadata = {
-                            name: "Category",
-                            icon: ""
-                        }
-                        root.addTile("CategoryTile",metadata, 4, 1);
+                        tileSelector.open()
                     }
                 }
             }
 
         }
 
+    }
+
+    TileSelector {
+        id: tileSelector
+        tiles: root.tiles
+        controller: root
     }
 
     function updateGrid() {
@@ -261,11 +224,79 @@ Item {
         return list;
     }
 
+    Plasma5Support.DataSource {
+        id: executable
+        engine: "executable"
+        connectedSources: []
+        onNewData: function(source, data) {
+            disconnectSource(source)
+            let jsdata = data.stdout
+            while (jsdata.includes("'")) {
+                jsdata = jsdata.replace("'", "\"")
+            }
+            while (jsdata.includes("False") || jsdata.includes("True")) {
+                jsdata = jsdata.replace("False", "false")
+                jsdata = jsdata.replace("True", "true")
+            }
+            root.parseTileData(jsdata)
+        }
+
+        function exec(cmd) {
+            executable.connectSource(cmd)
+        }
+    }
+
     function addTile(type: string, metadata: variant, len = 2, breadth = 2, col = 0, row = 0, index = 0) {
 
         itemModel.append({ grid: grid, controller: root, metadata: JSON.stringify(metadata), plugin: type, tileWidth: len, tileHeight: breadth, column: col, row: row });
 
         root.updateGrid();
+    }
+
+    function createTile(tile) {
+        addTile(tile.plugin, tile.defaults, tile.preferredWidth, tile.preferredHeight);
+        root.updateGrid();
+    }
+
+    function getTiles() {
+        const scriptUrl = Qt.resolvedUrl("../scripts/tileLoader.py").toString().replace("file://", "")
+        const builtinsUrl = Qt.resolvedUrl("./builtin/").toString().replace("file://", "")
+        executable.exec("python "+"'"+scriptUrl+"'"+" '"+builtinsUrl+"' ");
+    }
+
+    function parseTileData(data) {
+        let tiles = JSON.parse(data)
+        root.tiles = tiles.filter((o) => !o.hasOwnProperty("error"))
+        root.loadTiles()
+    }
+
+    function loadTiles() {
+        initialLoad = true
+        var items = JSON.parse(plasmoid.configuration.tiles);
+        items.forEach((item) => {
+            itemModel.append({ grid: grid, controller: root, metadata: JSON.stringify(item.metadata), plugin: item.plugin, tileWidth: item.tileWidth, tileHeight: item.tileHeight, column: item.column, row: item.row });
+        });
+        initialLoad = false
+    }
+
+    function refreshItems () {
+        if (!initialLoad) {
+            plasmoid.configuration.tiles = JSON.stringify(serializeModel());
+        }
+    }
+
+    function openEditor(widget = null, data = {}) {
+        if (sidebar.currentPage)
+            sidebar.currentPage.destroy();
+        if (widget)
+            sidebar.currentPage = widget.createObject(sidebar.content, data);
+        sidebar.visible = true;
+    }
+
+    function closeEditor() {
+        if (sidebar.currentPage)
+            sidebar.currentPage.destroy();
+        sidebar.visible = false;
     }
 
 }
