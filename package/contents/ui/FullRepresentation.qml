@@ -80,6 +80,7 @@ Kicker.DashboardWindow {
                 spacing: Kirigami.Units.smallSpacing * 2
                 Layout.alignment: Qt.AlignHCenter
                 Layout.margins: Kirigami.Units.largeSpacing * 2
+                Layout.bottomMargin: 0
                 Layout.fillHeight: true
                 Layout.fillWidth: true
 

@@ -30,7 +30,7 @@ Item{
         anchors.right: parent.right
         anchors.top: root.fill? parent.top : undefined
         anchors.bottom: root.fill? parent.bottom : undefined
-        spacing: Kirigami.Units.smallSpacing * 2
+        //spacing: Kirigami.Units.smallSpacing * 2
 
         RowLayout {
             Layout.preferredHeight: actionButton.implicitHeight
