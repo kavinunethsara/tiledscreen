@@ -5,6 +5,7 @@
 
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Effects
 import org.kde.plasma.core as PlasmaCore
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.private.kicker as Kicker
@@ -40,6 +41,28 @@ Kicker.DashboardWindow {
 
     mainItem: Item {
         anchors.fill: parent
+
+        Image {
+            id: bgImage
+            anchors.fill: parent;
+            visible: plasmoid.configuration.backgroundEnabled
+            source: plasmoid.configuration.backgroundImage
+            fillMode: Image.PreserveAspectCrop
+            opacity: 0
+            z: 0
+        }
+
+        MultiEffect {
+            visible: plasmoid.configuration.backgroundEnabled
+            source: bgImage
+            anchors.fill: bgImage
+            anchors.margins: -64
+            blurEnabled: true
+            blurMultiplier: plasmoid.configuration.backgroundImageBlurMultiplier / 10
+            blurMax: 64
+            blur: plasmoid.configuration.backgroundImageBlur / 100
+            opacity: plasmoid.configuration.backgroundOPacity / 100
+        }
 
         ColumnLayout{
             id: container

@@ -4,7 +4,8 @@
  */
 
 import QtQuick
-
+import QtCore
+import QtQuick.Dialogs as Dialogs
 import org.kde.kcmutils as KCM
 import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.formcard as FormCard
@@ -12,8 +13,9 @@ import org.kde.kirigamiaddons.formcard as FormCard
 KCM.SimpleKCM {
     id: root
     property alias cfg_useBackgroundImage: useImage.checked
-    property alias cfg_backgroundImage: imagePath.text
+    property alias cfg_backgroundImage: imagePath.selectedFile
     property alias cfg_backgroundImageBlur: blurSlider.value
+    property alias cfg_backgroundImageBlurMultiplier: blurMultiplier.value
     property alias cfg_backgroundOpacity: opacitySlider.value
 
     property alias cfg_displayUserInfo: showUser.checked
@@ -31,10 +33,15 @@ KCM.SimpleKCM {
                 id: useImage
                 text: "Background Image"
             }
-            FormCard.FormTextFieldDelegate {
-                id: imagePath
+            FormCard.FormButtonDelegate {
+                id: imageSelector
                 enabled: useImage.checked
-                label: "Image Path"
+                text: "Select Background"
+                onClicked: imagePath.open()
+            }
+            Dialogs.FileDialog {
+                id: imagePath
+                currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
             }
             FormCard.FormSpinBoxDelegate {
                 id: blurSlider
@@ -42,6 +49,14 @@ KCM.SimpleKCM {
                 from: 0
                 to: 100
                 stepSize: 1
+                enabled: useImage.checked
+            }
+            FormCard.FormSpinBoxDelegate {
+                id: blurMultiplier
+                label: "Image Blur Multiplier"
+                from: 0
+                to: 50
+                stepSize: 2
                 enabled: useImage.checked
             }
             FormCard.FormSpinBoxDelegate {
