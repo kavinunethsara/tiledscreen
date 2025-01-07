@@ -90,7 +90,7 @@ Item {
                 property int current: 0
                 PlasmaComponents.MenuItem{
                     text: "Add Icon Tile"
-                    icon.name: "editor"
+                    icon.name: "application-x-executable"
                     onClicked: {
                         var metadata = {
                             name: "Icon",
@@ -107,7 +107,7 @@ Item {
                 }
                 PlasmaComponents.MenuItem{
                     text: "Add Header Tile"
-                    icon.name: "delete"
+                    icon.name: "category"
                     onClicked: {
                         var metadata = {
                             name: "Category",

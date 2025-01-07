@@ -37,7 +37,7 @@ Rectangle {
     Item {
         id: iconContainer
         visible: root.icon != ""
-        width: iconItem.implicitWidth
+        width: root.icon == ""? 0 : iconItem.implicitWidth
         anchors {
             left: parent.left
             top: parent.top
