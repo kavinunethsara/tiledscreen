@@ -92,7 +92,6 @@ Item {
                 onClicked: function (mouse) {
                     var pos = scroll.mapToItem(grid, mouse.x, mouse.y);
                     var item = grid.childAt(pos.x, pos.y);
-                    console.warn(item);
                     if (item.gridBox) {
                         contextMenu.current = item.index
                         contextMenu.popup();

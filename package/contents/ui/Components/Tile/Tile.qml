@@ -32,16 +32,13 @@ Item {
 
     function updateTile() {
         controller.items.forEach((item) => {
-            console.warn(item.index + ":"+ dragger.index);
             if (item.id == dragger.index) {
-                console.warn("inside");
                 item.col = dragger.col,
                 item.row =dragger.row,
                 item.len = dragger.len,
                 item.breadth = dragger.breadth,
                 item.plugin = dragger.tileType,
                 item.metadata = dragger.metadata
-                console.warn(dragger.metadata.name);
                 controller.updateGrid();
             }
         });
