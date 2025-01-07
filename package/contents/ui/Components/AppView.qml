@@ -1,10 +1,11 @@
 import QtQuick
+import QtQuick.Controls as Controls
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents
 //import 'scripts/util.js' as Util
 
-pragma ComponentBehavior: Bound
+//pragma ComponentBehavior: Bound
 
 FocusScope {
     id: root
@@ -63,6 +64,7 @@ FocusScope {
     PlasmaComponents.Menu {
         id: contextMenu
         property int current: 0
+
         PlasmaComponents.MenuItem{
             text: "Add to Tiles"
             icon.name: "emblem-favorite-symbolic"
@@ -80,7 +82,40 @@ FocusScope {
                 root.addTile(metadata);
             }
         }
+
+        PlasmaComponents.MenuSeparator {}
+
+        Component {
+            id: menuItem
+
+            PlasmaComponents.MenuItem {
+                text: model.text
+                icon.name: model.icon
+                onTriggered: {
+                    list.model.trigger(list.itemAtIndex(contextMenu.current).model.index, model.actionId, model.actionArgument);
+                    contextMenu.close();
+                }
+            }
+        }
+
+        Component {
+            id: separator
+
+            PlasmaComponents.MenuSeparator {}
+        }
+
+        Repeater {
+            model: list.itemAtIndex(contextMenu.current).model.actionList
+
+            delegate: Component {
+                Loader {
+                    required property variant model
+                    sourceComponent: model.type != "separator" ? menuItem : separator
+                }
+            }
+        }
     }
+
 
     function runApp(url) {
         for (var i = 0; i < root.model.count; i++) {
