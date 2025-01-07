@@ -18,6 +18,7 @@ Kicker.DashboardWindow {
 
     onVisibleChanged: {
         if (visible) {
+            root.currentPage = "home"
             preloadAllAppsTimer.restart();
             mainCat.grabFocus();
         }
@@ -82,7 +83,11 @@ Kicker.DashboardWindow {
                 Layout.fillHeight: true
                 Layout.fillWidth: true
 
-                ToolBar {}
+                ToolBar {
+                    onToggle: {
+                        root.toggle();
+                    }
+                }
 
                 Category{
                     id: mainCat
@@ -123,6 +128,9 @@ Kicker.DashboardWindow {
                         onAddTile: function (metadata) {
                             tileView.addTile("IconTile", metadata)
                         }
+                        onToggle: {
+                            root.toggle()
+                        }
                     }
 
                     AppView {
@@ -131,11 +139,18 @@ Kicker.DashboardWindow {
                         onAddTile: function (metadata) {
                             tileView.addTile("IconTile", metadata)
                         }
+                        onToggle: {
+                            root.toggle()
+                        }
                     }
 
                     Tile.Grid {
                         id: tileView
                         visible: root.currentPage == "home"
+                        appsView: appsView
+                        onToggled: {
+                            root.toggle()
+                        }
                     }
                 }
             }

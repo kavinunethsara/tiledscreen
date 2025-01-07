@@ -17,6 +17,7 @@ FocusScope {
     Layout.margins: Kirigami.Units.largeSpacing
 
     signal addTile(metadata: variant)
+    signal toggle
 
     property alias delegate: list.delegate
     property alias model: list.model
@@ -38,7 +39,14 @@ FocusScope {
             opacity: 0.7
         }
         highlightMoveDuration: 0
-        delegate: AppDelegate{ itemController: root;small: root.small; itemWidth: root.itemWidth }
+        delegate: AppDelegate{
+            itemController: root
+            small: root.small
+            itemWidth: root.itemWidth
+            onToggle: {
+                root.toggle()
+            }
+        }
     }
 
     MouseArea {
@@ -67,11 +75,23 @@ FocusScope {
                     backColor: Qt.color.white,
                     frontColor: Kirigami.Theme.textColor,
                     actionType: 0,
-                    action: list.currentItem.model.url
+                    action: list.currentItem.model.favoriteId
                 }
                 root.addTile(metadata);
             }
         }
+    }
+
+    function runApp(url) {
+        for (var i = 0; i < root.model.count; i++) {
+            var modelIndex = root.model.index(i, 0)
+            var favoriteId = root.model.data(modelIndex, Qt.UserRole + 3)
+            if (favoriteId == url) {
+                root.model.trigger(i, "", null)
+                return
+            }
+        }
+        console.warn('runApp', url, 'no index')
     }
 
     function showContextMenu(index: int) {

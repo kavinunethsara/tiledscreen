@@ -62,6 +62,10 @@ Rectangle {
         root.update()
     }
 
+    function activate() {
+        container.controller.appsView.runApp(metadata.action);
+    }
+
     Component.onCompleted: {
         if (!root.useCustomBack) {
             root.backColor = imageColor.background

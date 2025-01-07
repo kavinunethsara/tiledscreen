@@ -8,6 +8,7 @@ Item {
     property real itemWidth: Kirigami.Units.gridUnit * 14
     property bool small: false
     required property variant itemController
+    signal toggle
 
     height: content.implicitHeight
     width: root.itemWidth - Kirigami.Units.gridUnit * 2

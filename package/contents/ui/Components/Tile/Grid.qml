@@ -4,6 +4,7 @@ import QtQuick.Controls
 import org.kde.plasma.plasmoid
 import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.components as PlasmaComponents
+import org.kde.plasma.private.kicker as Kicker
 import org.kde.kirigami as Kirigami
 
 pragma ComponentBehavior: Bound
@@ -12,7 +13,9 @@ Item {
     id: root
     anchors.fill: parent
     property int minRows: 0
+    property int count: 0
     property variant items: []
+    property QtObject appsView
     property real cellSizeMultiplier: plasmoid.configuration.cellSize / 10
     readonly property real cellSize: Kirigami.Units.gridUnit * 2.5 * cellSizeMultiplier
 
@@ -29,11 +32,15 @@ Item {
         }
     }
 
+    signal toggled()
+
     Component.onCompleted: {
         initialLoad = true
         items = JSON.parse(plasmoid.configuration.tiles)
         items.forEach((item) => {
+            console.warn("Entry of "+item.plugin+ " with index "+item.id+ " @ "+item.row+" : "+item.col);
            addTile(item.plugin, item.metadata, item.len, item.breadth, item.col, item.row, item.id);
+           if (item.id + 1 > count ) count = item.id + 1;
         });
         initialLoad = false
     }
@@ -49,7 +56,8 @@ Item {
             contentHeight: grid.implicitHeight
 
             function getNewIndex(): int {
-                return Math.random() * 100000
+                root.count += 1
+                return (root.count - 1);
             }
 
             GridLayout {
@@ -151,7 +159,9 @@ Item {
         const tile = Qt.createComponent("Tile.qml");
         if (index == 0) index = scroll.getNewIndex() + 1
         if (tile.status === Component.Ready) {
+            console.warn("Tile "+index+" ofType "+type+" with metadata"+metadata);
             var tileObj = tile.createObject(scroll, { grid: grid, index: index, len: len, breadth: breadth, col: col, row: row, controller: root, metadata: metadata, tileType: type });
+            tileObj.toggled.connect(root.toggled);
 //
         }
         root.updateGrid();

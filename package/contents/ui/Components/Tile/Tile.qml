@@ -1,4 +1,5 @@
 import QtQuick
+import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents
 
 Item {
@@ -9,7 +10,7 @@ Item {
     required property int index
     property variant metadata: {}
     property QtObject internalTile: Item{}
-    property string tileType: "IconTile"
+    property string tileType
 
     property alias hover: mouseArea.containsMouse
 
@@ -19,6 +20,8 @@ Item {
     property int row: 0
     property int len: 2
     property int breadth: 2
+
+    signal toggled()
 
     z: 1000
 
@@ -30,7 +33,12 @@ Item {
         updateTile()
     }
 
+    onTileTypeChanged: {
+        updateTile()
+    }
+
     function updateTile() {
+        console.warn(dragger.index);
         controller.items.forEach((item) => {
             if (item.id == dragger.index) {
                 item.col = dragger.col,
@@ -48,8 +56,10 @@ Item {
         dragger.x = dragger.col * controller.cellSize
         dragger.y = dragger.row * controller.cellSize
 
+        console.warn(dragger.tileType +" Setup");
         const tileContent = Qt.createComponent(dragger.tileType + ".qml");
         if (tileContent.status == Component.Ready) {
+            console.warn("Comp created with index "+dragger.index);
             var intTile = tileContent.createObject(dragger, { metadata: metadata, container: dragger } );
             intTile.update.connect(function() {
                 dragger.metadata = intTile.metadata;
@@ -59,6 +69,7 @@ Item {
         }
         var addItem = true
         controller.items.forEach ((item) => {
+            console.warn("Comparing "+dragger.index+" to "+item.id+ " of type "+item.plugin)
            if (item.id == dragger.index) addItem = false
         });
         if (!addItem) return;
@@ -95,7 +106,16 @@ Item {
             prevItem.current = false
             var loc = grid.mapFromItem(grid, dragger.x, dragger.y)
             var item = grid.childAt(loc.x, loc.y)
+            // Only move or activate if on a valid tile block
             if (item) {
+                // If we are in the same place, acctivate the tile
+                if (dragger.col == item.col && dragger.row == item.row && mouse.button == Qt.LeftButton) {
+                    dragger.internalTile.activate();
+                    dragger.toggled();
+                    return;
+                }
+
+                // Else move
                 dragger.col = item.col
                 dragger.row = item.row
             }
@@ -125,6 +145,13 @@ Item {
             item.current = true
             prevItem = item
         }
+    }
+
+    HoverOutlineEffect {
+        anchors.fill: parent
+        mouseArea: mouseArea
+        anchors.margins: Kirigami.Units.smallSpacing
+        z: 2
     }
 
 

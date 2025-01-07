@@ -32,7 +32,7 @@ Rectangle {
         root.update()
     }
 
-    color: container.hover ? Kirigami.Theme.highlightColor : "transparent"
+    color: "transparent"
 
     Item {
         id: iconContainer

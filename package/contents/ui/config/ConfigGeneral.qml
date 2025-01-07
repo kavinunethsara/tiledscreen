@@ -13,7 +13,7 @@ KCM.SimpleKCM {
     id: root
     property alias cfg_icon: icon.text
     property alias cfg_cellSize: cellSize.value
-    property alias cfg_tiles: tiles
+    property string cfg_tiles
     property string cfg_tilesDefault
 
     FormCard.FormCardPage {
@@ -60,7 +60,7 @@ KCM.SimpleKCM {
             FormCard.FormButtonDelegate {
                 text: "Reset tiles"
                 onClicked: {
-                    root.tiles = root.cfg_tilesDefault
+                    root.cfg_tiles = root.cfg_tilesDefault
                 }
             }
         }
