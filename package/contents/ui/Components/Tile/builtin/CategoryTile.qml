@@ -1,43 +1,25 @@
 import QtQuick
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents
+import ".."
 
 Rectangle {
     id: root
     anchors.fill: parent
     anchors.margins: Kirigami.Units.smallSpacing
 
-    required property variant metadata
-
-    signal update
-
-    property string name: metadata.name
-    property string icon: metadata.icon
+    required property var metadata
 
     readonly property string config: "CatTileConfig"
 
-    required property QtObject container
-
-    onNameChanged: {
-        updateMeta()
-    }
-    onIconChanged: {
-        updateMeta()
-    }
-
-    function updateMeta() {
-        metadata.name = root.name
-        metadata.icon = root.icon
-
-        root.update()
-    }
+    required property Tile container
 
     color: "transparent"
 
     Item {
         id: iconContainer
-        visible: root.icon != ""
-        width: root.icon == ""? 0 : iconItem.implicitWidth
+        visible: root.metadata.icon != ""
+        width: root.metadata.icon == ""? 0 : iconItem.implicitWidth
         anchors {
             left: parent.left
             top: parent.top
@@ -48,14 +30,14 @@ Rectangle {
             anchors.centerIn: parent
             height: parent.height * 0.75
             width: height
-            source: root.icon
+            source: root.metadata.icon
         }
 
     }
 
     PlasmaComponents.Label {
         id: textLabel
-        text: root.name
+        text: root.metadata.name
         horizontalAlignment: Qt.AlignHCenter
         verticalAlignment: Qt.AlignVCenter
 

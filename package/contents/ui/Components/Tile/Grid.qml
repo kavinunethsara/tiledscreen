@@ -7,6 +7,7 @@ import org.kde.plasma.components as PlasmaComponents
 import org.kde.plasma.private.kicker as Kicker
 import org.kde.kirigami as Kirigami
 
+
 pragma ComponentBehavior: Bound
 
 Item {
@@ -14,21 +15,43 @@ Item {
     anchors.fill: parent
     property int minRows: 0
     property int count: 0
-    property variant items: []
+    property ListModel itemModel: ListModel {
+        onDataChanged: {
+            refreshItems();
+        }
+        onCountChanged: {
+            refreshItems();
+        }
+    }
     property QtObject appsView
     property real cellSizeMultiplier: plasmoid.configuration.cellSize / 10
     readonly property real cellSize: Kirigami.Units.gridUnit * 2.5 * cellSizeMultiplier
 
+    property QtObject tileContainer: tileBody
+
     property bool editMode: false
     property bool initialLoad: true
 
-    onItemsChanged: {
-        refreshItems();
-    }
-
     function refreshItems () {
         if (!initialLoad) {
-            plasmoid.configuration.tiles = JSON.stringify(root.items)
+            plasmoid.configuration.tiles = JSON.stringify(serializeModel());
+        }
+    }
+
+
+    TextEdit{
+        id: textEdit
+        visible: false
+    }
+    Shortcut {
+        sequence: "Ctrl+Alt+Y"
+        onActivated: {
+            console.warn("Copier");
+            textEdit.text = plasmoid.configuration.tiles
+            console.warn(plasmoid.configuration.tiles);
+            textEdit.selectAll()
+            textEdit.copy()
+            console.warn("Copied");
         }
     }
 
@@ -36,10 +59,9 @@ Item {
 
     Component.onCompleted: {
         initialLoad = true
-        items = JSON.parse(plasmoid.configuration.tiles)
+        var items = JSON.parse(plasmoid.configuration.tiles);
         items.forEach((item) => {
-           addTile(item.plugin, item.metadata, item.len, item.breadth, item.col, item.row, item.id);
-           if (item.id + 1 > count ) count = item.id + 1;
+            itemModel.append({ grid: grid, controller: root, metadata: JSON.stringify(item.metadata), plugin: item.plugin, tileWidth: item.tileWidth, tileHeight: item.tileHeight, column: item.column, row: item.row });
         });
         initialLoad = false
     }
@@ -57,15 +79,6 @@ Item {
             function getNewIndex(): int {
                 root.count += 1
                 return (root.count - 1);
-            }
-
-            Item {
-                id: tileBody
-                anchors {
-                    top:parent.top
-                    left:parent.left
-                    right: parent.right
-                }
             }
 
             GridLayout {
@@ -102,6 +115,15 @@ Item {
                 }
             }
 
+            Item {
+                id: tileBody
+                anchors.fill:grid
+                Repeater {
+                    model: root.itemModel
+                    delegate: Tile {}
+                }
+            }
+
             MouseArea {
                 anchors.fill: parent
                 propagateComposedEvents: true
@@ -111,7 +133,7 @@ Item {
                     var tilepos = scroll.mapToItem(tileBody, mouse.x, mouse.y);
                     var tile = tileBody.childAt(tilepos.x, tilepos.y);
                     var item = grid.childAt(pos.x, pos.y);
-                    if (tile && tile.index) {
+                    if (tile && tile.model.plugin) {
                         mouse.accepted = false;
                         return;
                     }
@@ -162,22 +184,35 @@ Item {
     function updateGrid() {
         var rows = Math.floor(grid.children.length / grid.columns)
         var row = 0
-        items.forEach((item) => {
-            if (row < (item.row + item.breadth)) row = item.row + item.breadth + 1
-        });
-        root.refreshItems()
+        for (var i=0; i < root.itemModel.count; i++) {
+            var item = root.itemModel.get(i);
+            if (row < (item.row + item.tileHeight)) row = item.row + item.tileHeight + 1;
+            root.refreshItems()
 
-        root.minRows = row
+            root.minRows = row
+        }
+    }
+
+    function serializeModel() {
+        var list = [];
+        for (var i=0; i < root.itemModel.count; i++) {
+            var item = root.itemModel.get(i);
+            list.push({
+                metadata: JSON.parse(item.metadata),
+                plugin: item.plugin,
+                tileWidth: item.tileWidth,
+                tileHeight: item.tileHeight,
+                column: item.column,
+                row: item.row,
+            });
+        }
+        return list;
     }
 
     function addTile(type: string, metadata: variant, len = 2, breadth = 2, col = 0, row = 0, index = 0) {
-        const tile = Qt.createComponent("Tile.qml");
-        if (index == 0) index = scroll.getNewIndex() + 1
-        if (tile.status === Component.Ready) {
-            var tileObj = tile.createObject(tileBody, { grid: grid, index: index, len: len, breadth: breadth, col: col, row: row, controller: root, metadata: metadata, tileType: type });
-            tileObj.toggled.connect(root.toggled);
-//
-        }
+
+        itemModel.append({ grid: grid, controller: root, metadata: JSON.stringify(metadata), plugin: type, tileWidth: len, tileHeight: breadth, column: col, row: row });
+
         root.updateGrid();
     }
 

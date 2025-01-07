@@ -1,11 +1,11 @@
 import QtQuick
 import org.kde.kirigamiaddons.formcard as FormCard
-
+import ".."
 
 FormCard.FormCardDialog {
     id: root
     title: "Edit Tile"
-    required property variant tile
+    required property Tile tile
 
     FormCard.FormHeader {
         title: "General"
@@ -14,31 +14,32 @@ FormCard.FormCardDialog {
     FormCard.FormTextFieldDelegate {
         label: "Name"
         placeholderText: "Name to display on tile"
-        text: root.tile.internalTile.name
+        text: root.tile.tileData.name
         onTextChanged: {
-            root.tile.internalTile.name = text;
+            root.tile.tileData.name = text;
+            root.tile.tileData = root.tile.tileData;
         }
     }
 
     FormCard.FormSpinBoxDelegate {
         label: "Width"
-        value: root.tile.len
+        value: root.tile.tileWidth
         from: 1
         to: 100
         stepSize: 1
         onValueChanged: {
-            root.tile.len = value;
+            root.tile.tileWidth = value;
         }
     }
 
     FormCard.FormSpinBoxDelegate {
         label: "Height"
-        value: root.tile.breadth
+        value: root.tile.tileHeight
         from: 1
         to: 100
         stepSize: 1
         onValueChanged: {
-            root.tile.breadth = value;
+            root.tile.tileHeight = value;
         }
     }
 
@@ -66,43 +67,48 @@ FormCard.FormCardDialog {
         FormCard.FormSwitchDelegate {
             id: customBack
             text: "Custom background"
-            checked: root.tile.internalTile.useCustomBack
+            checked: root.tile.tileData.useCustomBack
             onCheckedChanged: {
-                root.tile.internalTile.useCustomBack = checked
+                root.tile.tileData.useCustomBack = checked
+                root.tile.tileData = root.tile.tileData;
             }
         }
 
         FormCard.FormColorDelegate {
             enabled: customBack.checked
             text: "Background color"
-            color: root.tile.internalTile.backColor
+            color: root.tile.tileData.backColor
             onColorChanged: {
-                root.tile.internalTile.backColor = color
+                root.tile.tileData.backColor = color
+                root.tile.tileData = root.tile.tileData;
             }
         }
 
         FormCard.FormSwitchDelegate {
             id: customFront
             text: "Custom text color"
-            checked: root.tile.internalTile.useCustomFront
+            checked: root.tile.tileData.useCustomFront
             onCheckedChanged: {
-                root.tile.internalTile.useCustomFront = checked
+                root.tile.tileData.useCustomFront = checked
+                root.tile.tileData = root.tile.tileData;
             }
         }
 
         FormCard.FormColorDelegate {
             enabled: customFront.checked
             text: "Text color"
-            color: root.tile.internalTile.frontColor
+            color: root.tile.tileData.frontColor
             onColorChanged: {
-                root.tile.internalTile.frontColor = color
+                root.tile.tileData.frontColor = color
+                root.tile.tileData = root.tile.tileData;
             }
         }
 
         FormIconDelegate {
-            iconName: root.tile.internalTile.icon
+            iconName: root.tile.tileData.icon
             onIconNameChanged: {
-                root.tile.internalTile.icon = iconName
+                root.tile.tileData.icon = iconName
+                root.tile.tileData = root.tile.tileData;
             }
         }
     }
@@ -120,17 +126,19 @@ FormCard.FormCardDialog {
                 "DBus",
                 "Shell"
             ]
-            currentIndex: root.tile.internalTile.actionType
+            currentIndex: root.tile.tileData.actionType
             onCurrentIndexChanged: {
-                root.tile.internalTile.actionType = currentIndex
+                root.tile.tileData.actionType = currentIndex
+                root.tile.tileData = root.tile.tileData;
             }
         }
 
         FormCard.FormTextFieldDelegate {
             label: (actType.currentIndex == 0) ? "File Path" : actType.currentText + " Command"
-            text: root.tile.internalTile.action
+            text: root.tile.tileData.action
             onTextChanged: {
-                root.tile.internalTile.action = text
+                root.tile.tileData.action = text
+                root.tile.tileData = root.tile.tileData;
             }
         }
     }

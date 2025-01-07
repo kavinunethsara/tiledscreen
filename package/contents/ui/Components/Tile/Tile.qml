@@ -3,83 +3,37 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents
 
 Item {
-    id: dragger
+    id: root
 
-    required property variant grid
-    required property variant controller
-    required property int index
-    property variant metadata: {}
+    required property var model
+    property var controller: model.controller
+    property var grid: model.grid
+
+    property variant tileData: {}
     property QtObject internalTile: Item{}
-    property string tileType
 
     property alias hover: mouseArea.containsMouse
 
-    width: len * controller.cellSize
-    height: breadth * controller.cellSize
-    property int col: 0
-    property int row: 0
-    property int len: 2
-    property int breadth: 2
-
-    signal toggled()
+    width: model.tileWidth * controller.cellSize
+    height: model.tileHeight * controller.cellSize
+    x: model.column * controller.cellSize
+    y: model.row * controller.cellSize
 
     z: 1000
 
-    onLenChanged: {
-        updateTile()
-    }
-
-    onBreadthChanged: {
-        updateTile()
-    }
-
-    onTileTypeChanged: {
-        updateTile()
-    }
-
-    function updateTile() {
-        controller.items.forEach((item) => {
-            if (item.id == dragger.index) {
-                item.col = dragger.col,
-                item.row =dragger.row,
-                item.len = dragger.len,
-                item.breadth = dragger.breadth,
-                item.plugin = dragger.tileType,
-                item.metadata = dragger.metadata
-                controller.updateGrid();
-            }
-        });
-    }
-
     Component.onCompleted: {
-        dragger.x = dragger.col * controller.cellSize
-        dragger.y = dragger.row * controller.cellSize
+        root.tileData = JSON.parse(root.model.metadata);
 
-        const tileContent = Qt.createComponent("builtin/"+dragger.tileType + ".qml");
+        const tileContent = Qt.createComponent("builtin/"+root.model.plugin + ".qml");
         if (tileContent.status == Component.Ready) {
-            var intTile = tileContent.createObject(dragger, { metadata: metadata, container: dragger } );
-            intTile.update.connect(function() {
-                dragger.metadata = intTile.metadata;
-                updateTile();
-            });
+            var intTile = tileContent.createObject(root, { metadata: Qt.binding(function() { return root.tileData }), container: root } );
             internalTile = intTile
         }
-        var addItem = true
-        controller.items.forEach ((item) => {
-           if (item.id == dragger.index) addItem = false
-        });
-        if (!addItem) return;
-        controller.items.push(
-            {
-                id: dragger.index,
-                col: dragger.col,
-                row:dragger.row,
-                len: dragger.len,
-                breadth:dragger.breadth,
-                plugin: dragger.tileType,
-                metadata: dragger.metadata
-            }
-        );
+
+    }
+
+    onTileDataChanged: {
+        root.model.metadata = JSON.stringify(root.tileData);
     }
 
     MouseArea {
@@ -94,45 +48,51 @@ Item {
         onClicked: function (mouse) {
             // If we are in the same place, acctivate the tile
             if (mouse.button == Qt.LeftButton) {
-                dragger.internalTile.activate();
-                dragger.toggled();
+                root.internalTile.activate();
+                controller.toggled();
                 return;
             }
             if (mouse.button == Qt.RightButton) {
-                dragger.showContextMenu(dragger.index);
+                root.showContextMenu(model.index);
                 mouse.accepted = true;
             }
         }
 
         onReleased: function(mouse) {
             prevItem.current = false
-            var loc = grid.mapFromItem(grid, dragger.x, dragger.y)
+            var loc = grid.mapFromItem(root.controller.tileContainer, root.x, root.y)
             var item = grid.childAt(loc.x, loc.y)
+
+            // Need to reset row and column ensure that position will be updated
+            var col = root.model.column;
+            var row = root.model.row;
+            root.model.column = 0
+            root.model.row = 0
+
             // Only move or activate if on a valid tile block
             if (item) {
-                dragger.col = item.col
-                dragger.row = item.row
+                root.model.column = item.col
+                root.model.row = item.row
+            } else {
+                // Reset the position if not in a valid grid cell
+                root.model.column = col;
+                root.model.row = row;
             }
-            var itemObject = controller.items.find(o => o.id === dragger.index);
-            itemObject.col = dragger.col
-            itemObject.row = dragger.row
-            dragger.x = dragger.col * controller.cellSize
-            dragger.y = dragger.row * controller.cellSize
 
             controller.updateGrid();
         }
 
         drag.onActiveChanged:  {
             if (mouseArea.drag.active)
-                dragger.controller.editMode = true
+                root.controller.editMode = true
             else {
-                dragger.controller.editMode = false
+                root.controller.editMode = false
             }
         }
 
         onMouseXChanged: function(mouse) {
-            var loc = grid.mapFromItem(grid, dragger.x, dragger.y)
-            var item = grid.childAt(loc.x, loc.y)
+            var loc = root.grid.mapFromItem(root.controller.tileContainer, root.x, root.y)
+            var item = root.grid.childAt(loc.x, loc.y)
             if (!item) return
             if (prevItem)
                 prevItem.current = false
@@ -156,12 +116,12 @@ Item {
             text: "Edit Tile"
             icon.name: "editor"
             onClicked: {
-                var conf = Qt.createComponent("ConfigWindow.qml");
-                if (dragger.internalTile.config != "")
-                    conf = Qt.createComponent("builtin/"+dragger.internalTile.config + ".qml");
-                if (conf.status === Component.Ready) {
-                    var confDial = conf.createObject(dragger.controller, {tile: dragger});
-                    confDial.open();
+                if (root.internalTile.config != ""){
+                    var conf = Qt.createComponent("builtin/"+root.internalTile.config + ".qml");
+                    if (conf.status === Component.Ready) {
+                        var confDial = conf.createObject(root.controller, {tile: root});
+                        confDial.open();
+                    }
                 }
             }
         }
@@ -169,13 +129,7 @@ Item {
             text: "Delete Tile"
             icon.name: "delete"
             onClicked: {
-                var tileList = dragger.controller.items;
-                dragger.controller.items = tileList.filter((value, index, arr) => {
-                    if (value.id == dragger.index ) { return false; }
-                    return true;
-                });
-                dragger.controller.updateGrid();
-                dragger.destroy();
+                root.controller.itemModel.remove(contextMenu.current);
             }
         }
     }

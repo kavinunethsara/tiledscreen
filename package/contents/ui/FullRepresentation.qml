@@ -33,8 +33,6 @@ Kicker.DashboardWindow {
         }
     }
 
-    Keys.onEscapePressed: root.toggle()
-
     function reloadData() {
     }
 
@@ -68,13 +66,13 @@ Kicker.DashboardWindow {
             Image {
                 id: bgImage
                 anchors.fill: parent;
-                visible: plasmoid.configuration.backgroundEnabled
+                visible: plasmoid.configuration.useBackgroundImage
                 source: plasmoid.configuration.backgroundImage
                 opacity: 0
                 fillMode: Image.PreserveAspectCrop
             }
             MultiEffect {
-                visible: plasmoid.configuration.backgroundEnabled
+                visible: plasmoid.configuration.useBackgroundImage
                 source: bgImage
                 anchors.fill: bgImage
                 anchors.margins: -64
