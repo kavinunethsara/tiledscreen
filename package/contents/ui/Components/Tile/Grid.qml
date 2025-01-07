@@ -168,7 +168,7 @@ Item {
                         return;
                     }
                     if (item.gridBox) {
-                        contextMenu.current = item.index
+                        contextMenu.current = item
                         contextMenu.popup();
                     }
                 }
@@ -176,11 +176,12 @@ Item {
 
             PlasmaComponents.Menu {
                 id: contextMenu
-                property int current: 0
+                property var current
                 PlasmaComponents.MenuItem{
                     text: "Add Tile"
                     icon.name: "application-x-executable"
                     onClicked: {
+                        tileSelector.position = Qt.point(contextMenu.current.col | 0, contextMenu.current.row | 0)
                         tileSelector.open()
                     }
                 }
@@ -253,8 +254,8 @@ Item {
         root.updateGrid();
     }
 
-    function createTile(tile) {
-        addTile(tile.plugin, tile.defaults, tile.preferredWidth, tile.preferredHeight);
+    function createTile(tile, col = 0, row = 0) {
+        addTile(tile.plugin, tile.defaults, tile.preferredWidth, tile.preferredHeight, col, row);
         root.updateGrid();
     }
 

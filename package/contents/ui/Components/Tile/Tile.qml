@@ -6,6 +6,7 @@ Item {
     id: root
 
     required property var model
+    required property int index
     property var controller: model.controller
     property var grid: model.grid
 
@@ -77,6 +78,23 @@ Item {
             if (item) {
                 root.model.column = item.col
                 root.model.row = item.row
+
+                // Move items below the tile if it's a grouping tile
+                if ( root.tileData.hasOwnProperty("grouping") && root.tileData.grouping ) {
+                    // 'grouping' is treated as a special metadata to signal that the tile is a Groouping tile
+                    for (let i =0; i < controller.itemModel.count; i++) {
+                        if (root.index  == i) continue // Skip if its the same tile
+
+                        let tempElem = controller.itemModel.get(i)
+                        let verticallyInside = tempElem.row >= row + root.model.tileHeight
+                        let horizontallyInside = tempElem.column >= col && tempElem.column < col + root.model.tileWidth
+
+                        if (verticallyInside && horizontallyInside) {
+                            controller.itemModel.get(i).row += (root.model.row - row)
+                            controller.itemModel.get(i).column += (root.model.column - col)
+                        }
+                    }
+                }
             } else {
                 // Reset the position if not in a valid grid cell
                 root.model.column = col;

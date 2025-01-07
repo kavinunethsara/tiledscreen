@@ -11,6 +11,7 @@ Kirigami.Dialog {
 
     required property var tiles
     required property var controller
+    property point position: Qt.point(0, 0)
 
     Item {
         id: container
@@ -81,7 +82,7 @@ Kirigami.Dialog {
                 let tile = listView.indexAt(pos.x, pos.y)
                 if (tile == -1)
                     return
-                root.controller.createTile(root.tiles[tile])
+                root.controller.createTile(root.tiles[tile], root.position.x, root.position.y)
                 root.close()
             }
 

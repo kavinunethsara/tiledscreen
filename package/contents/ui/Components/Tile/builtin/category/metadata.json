@@ -9,6 +9,7 @@
     "preferredHeight": 1,
     "defaults": {
         "name": "Category",
+        "grouping": true,
         "icon": ""
     }
 }
