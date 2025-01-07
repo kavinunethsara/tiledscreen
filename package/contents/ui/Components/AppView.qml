@@ -5,8 +5,6 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents
 //import 'scripts/util.js' as Util
 
-//pragma ComponentBehavior: Bound
-
 FocusScope {
     id: root
 
@@ -65,8 +63,6 @@ FocusScope {
         id: contextMenu
         property int current: 0
 
-        Keys.onEscapePressed: root.toggle()
-
         PlasmaComponents.MenuItem{
             text: "Add to Tiles"
             icon.name: "emblem-favorite-symbolic"
@@ -107,7 +103,8 @@ FocusScope {
         }
 
         Repeater {
-            model: list.itemAtIndex(contextMenu.current).model.actionList
+            model: list.itemAtIndex(contextMenu.current) && list.itemAtIndex(contextMenu.current).model.hasActionList ?
+            list.itemAtIndex(contextMenu.current).model.actionList : null
 
             delegate: Component {
                 Loader {
