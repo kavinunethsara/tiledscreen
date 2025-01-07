@@ -5,7 +5,6 @@
 
 import QtQuick
 import QtQuick.Layouts
-import org.kde.plasma.components as PlasmaComponents
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.private.kicker as Kicker
 
@@ -87,6 +86,9 @@ Kicker.DashboardWindow {
                     AppView {
                         id: appsView
                         visible: root.currentPage == "all"
+                        onAddTile: function (metadata) {
+                            tileView.addTile("IconTile", metadata)
+                        }
                     }
 
                     Tile.Grid {

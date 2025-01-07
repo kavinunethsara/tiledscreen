@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
+import org.kde.plasma.components as PlasmaComponents
 //import 'scripts/util.js' as Util
 
 pragma ComponentBehavior: Bound
@@ -14,6 +15,8 @@ FocusScope {
     Layout.fillWidth: true
     Layout.fillHeight: true
     Layout.margins: Kirigami.Units.largeSpacing
+
+    signal addTile(metadata: variant)
 
     property alias delegate: list.delegate
     property alias model: list.model
@@ -35,7 +38,7 @@ FocusScope {
             opacity: 0.7
         }
         highlightMoveDuration: 0
-        delegate: AppDelegate{ small: root.small; itemWidth: root.itemWidth }
+        delegate: AppDelegate{ itemController: root;small: root.small; itemWidth: root.itemWidth }
     }
 
     MouseArea {
@@ -47,5 +50,26 @@ FocusScope {
             list.currentIndex = list.indexAt(pos.x, pos.y)
             root.forceActiveFocus()
         }
+    }
+
+    PlasmaComponents.Menu {
+        id: contextMenu
+        property int current: 0
+        PlasmaComponents.MenuItem{
+            text: "Add to Tiles"
+            icon.name: "emblem-favorite-symbolic"
+            onClicked: {
+                var metadata = {
+                    name: list.currentItem.model.display,
+                    icon: list.currentItem.model.decoration
+                }
+                root.addTile(metadata);
+            }
+        }
+    }
+
+    function showContextMenu(index: int) {
+        contextMenu.current = index;
+        contextMenu.popup();
     }
 }

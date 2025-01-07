@@ -7,6 +7,8 @@ Item {
     required property variant model
     property real itemWidth: Kirigami.Units.gridUnit * 14
     property bool small: false
+    required property variant itemController
+
     height: content.implicitHeight
     width: root.itemWidth - Kirigami.Units.gridUnit * 2
 
@@ -30,7 +32,7 @@ Item {
 
     MouseArea{
         anchors.fill: parent
-        onClicked: root.trigger()
+        onClicked: root.itemController.showContextMenu(root.model.index)//root.trigger()
     }
 
     Keys.onPressed: event => {

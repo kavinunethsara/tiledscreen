@@ -1,13 +1,13 @@
 import QtQuick
-// import QtQuick.Layouts
-import QtQuick.Controls
+import org.kde.plasma.components as PlasmaComponents
 
-Rectangle {
+Item {
     required property variant grid
     required property variant controller
     required property int index
+    property variant metadata: {}
+    property string tileType: "IconTile"
     id: dragger
-    color: "green"
     width: len * controller.cellSize
     height: breadth * controller.cellSize
     property int col: 0
@@ -15,17 +15,16 @@ Rectangle {
     property int len: 2
     property int breadth: 2
 
-    border.color: "white"
-    border.width: 2
-
     z: 1000
 
-    Label {
-        id: tee
-        text: "NAN"
-    }
-
     Component.onCompleted: {
+        if (tileType == "IconTile") {
+            const tileContent = Qt.createComponent("IconTile.qml");
+            if (tileContent.status == Component.Ready) {
+                tileContent.createObject(dragger, metadata );
+            }
+        }
+
         controller.items.push(
             {
                 id: dragger.index,
@@ -33,10 +32,8 @@ Rectangle {
                 row:dragger.row,
                 len: dragger.len,
                 breadth:dragger.breadth,
-                plugin: "icon",
-                metadata: {
-                    name: "Icon"
-                }
+                plugin: dragger.tileType,
+                metadata: dragger.metadata
             }
         );
     }
@@ -45,9 +42,19 @@ Rectangle {
         id: mouseArea
         anchors.fill: parent
         drag.target: parent
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
 
         property variant prevItem: null
+
+        onPressed: function (mouse) {
+            if (mouse.button == Qt.RightButton) {
+                dragger.showContextMenu(dragger.index);
+            }
+            mouse.accepted = true;
+        }
+
         onReleased: function(mouse) {
+            prevItem.current = false
             var loc = grid.mapFromItem(grid, dragger.x, dragger.y)
             var item = grid.childAt(loc.x, loc.y)
             if (item) {
@@ -72,12 +79,38 @@ Rectangle {
         }
 
         onMouseXChanged: function(mouse) {
+            var loc = grid.mapFromItem(grid, dragger.x, dragger.y)
+            var item = grid.childAt(loc.x, loc.y)
+            if (!item) return
             if (prevItem)
                 prevItem.current = false
-                var loc = grid.mapFromItem(grid, dragger.x, dragger.y)
-                var item = grid.childAt(loc.x, loc.y)
-                item.current = true
-                prevItem = item
+            item.current = true
+            prevItem = item
         }
+    }
+
+
+
+    PlasmaComponents.Menu {
+        id: contextMenu
+        property int current: 0
+        PlasmaComponents.MenuItem{
+            text: "Delete Tile"
+            icon.name: "delete"
+            onClicked: {
+                var tileList = dragger.controller.items;
+                dragger.controller.items = tileList.filter((value, index, arr) => {
+                    if (value.id == dragger.index ) { return false; }
+                    return true;
+                });
+                dragger.controller.updateGrid();
+                dragger.destroy();
+            }
+        }
+    }
+
+    function showContextMenu(index: int) {
+        contextMenu.current = index;
+        contextMenu.popup();
     }
 }

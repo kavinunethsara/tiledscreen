@@ -32,6 +32,10 @@ Item {
             contentWidth: grid.implicitWidth
             contentHeight: grid.implicitHeight
 
+            function getNewIndex(): int {
+                return Math.random() * 100000
+            }
+
             GridLayout {
                 id: grid
                 columns: Math.floor(scroll.width / root.cellSize)
@@ -66,19 +70,6 @@ Item {
                 }
             }
 
-            Tile {
-                grid: grid
-                index: 0
-                controller: root
-            }
-
-            Tile {
-                grid: grid
-                index: 1
-                len: 4
-                controller: root
-            }
-
         }
 
     }
@@ -92,6 +83,15 @@ Item {
         code.text = JSON.stringify(root.items)
 
         root.minRows = row
+    }
+
+    function addTile(type: string, metadata: variant) {
+        const tile = Qt.createComponent("Tile.qml");
+        if (tile.status === Component.Ready) {
+            var tileObj = tile.createObject(scroll, { grid: grid, index: scroll.getNewIndex(), len: 2, controller: root, metadata: metadata, tileType: type });
+//
+        }
+
     }
 
 }
