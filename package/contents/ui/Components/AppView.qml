@@ -3,6 +3,8 @@ import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 //import 'scripts/util.js' as Util
 
+pragma ComponentBehavior: Bound
+
 FocusScope {
     id: root
 
@@ -16,12 +18,15 @@ FocusScope {
     property alias delegate: list.delegate
     property alias model: list.model
     property alias mouseActive: list.mouseActive
+    readonly property int itemWidth: root.width / Math.round(root.width / (Kirigami.Units.gridUnit * 12))
     focus: true
 
-    ListView {
+    GridView {
         id: list
         anchors.fill: parent
         property bool mouseActive: true
+        cellWidth: root.itemWidth
+        cellHeight: Kirigami.Units.gridUnit * 2 + Kirigami.Units.largeSpacing * 4
         focus: true
         clip: true
         highlight: Rectangle {
@@ -30,7 +35,7 @@ FocusScope {
             opacity: 0.7
         }
         highlightMoveDuration: 0
-        delegate: AppDelegate{ list: ListView.view; small: root.small }
+        delegate: AppDelegate{ small: root.small; itemWidth: root.itemWidth }
     }
 
     MouseArea {

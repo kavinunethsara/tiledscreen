@@ -5,25 +5,24 @@ import org.kde.plasma.components as PlasmaComponents
 Item {
     id: root
     required property variant model
-    required property variant list
+    property real itemWidth: Kirigami.Units.gridUnit * 14
     property bool small: false
-    property double listWidth: list.width
     height: content.implicitHeight
-    width: listWidth
+    width: root.itemWidth - Kirigami.Units.gridUnit * 2
 
     RowLayout {
         id: content
         Layout.fillWidth: true
         Kirigami.Icon {
             id: icon
-            Layout.margins: root.small ? Kirigami.Units.mediumSpacing : Kirigami.Units.largeSpacing
-            Layout.preferredWidth: root.small ? Kirigami.Units.gridUnit : undefined
+            Layout.margins: Kirigami.Units.largeSpacing
+            Layout.preferredWidth: root.small ? Kirigami.Units.gridUnit : Kirigami.Units.gridUnit * 2
             source: root.model.decoration
         }
         PlasmaComponents.Label {
             Layout.fillWidth: true
-            Layout.maximumWidth: root.listWidth - 4 * (root.small ? Kirigami.Units.mediumSpacing : Kirigami.Units.largeSpacing) - icon.implicitWidth
-            Layout.margins: root.small ? Kirigami.Units.mediumSpacing : Kirigami.Units.largeSpacing
+            Layout.maximumWidth: root.width - 5 * Kirigami.Units.largeSpacing - icon.implicitWidth
+            Layout.margins:  Kirigami.Units.largeSpacing
             text: root.model.display
             elide: Qt.ElideRight
         }

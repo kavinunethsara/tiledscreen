@@ -3,19 +3,19 @@
     "KPlugin": {
         "Authors": [
             {
-                "Email": "kavinunethsarakoswattage@gmail.com",
-                "Name": "Kavinu Nethsara"
+                "Email": "whjjackwhite@gmail.com",
+                "Name": "JackWhite"
             }
         ],
         "Category": "Application Launchers",
-        "Description": "what your app does in a few words",
+        "Description": "A full-screen launcher inspired by Windows 8 Start Screen",
         "EnabledByDefault": true,
         "Icon": "start-here-kde",
-        "Id": "org.kde.plasma.decomenu",
+        "Id": "whjjackwhite.tiledscreen",
         "License": "LGPL-2.1+",
-        "Name": "DecoMenu",
-        "Version": "1.0",
-        "Website": "https://plasma.kde.org/"
+        "Name": "Tiled Screen",
+        "Version": "2.0",
+        "Website": ""
     },
     "X-Plasma-API-Minimum-Version": "6.0",
     "X-Plasma-Provides": [
