@@ -5,6 +5,7 @@
 
 import QtQuick
 import QtQuick.Layouts
+import org.kde.plasma.plasmoid
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.private.kicker as Kicker
 
@@ -16,7 +17,7 @@ Kicker.DashboardWindow {
 
     property string currentPage: "home"
 
-    backgroundColor: Kirigami.Theme.backgroundColor.alpha(0.65)
+    backgroundColor: Kirigami.Theme.backgroundColor.alpha(plasmoid.configuration.backgroundOpacity / 100)
 
     onVisibleChanged: {
         if (visible) {

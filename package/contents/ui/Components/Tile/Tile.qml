@@ -55,7 +55,7 @@ Item {
         dragger.x = dragger.col * controller.cellSize
         dragger.y = dragger.row * controller.cellSize
 
-        const tileContent = Qt.createComponent(dragger.tileType + ".qml");
+        const tileContent = Qt.createComponent("builtin/"+dragger.tileType + ".qml");
         if (tileContent.status == Component.Ready) {
             var intTile = tileContent.createObject(dragger, { metadata: metadata, container: dragger } );
             intTile.update.connect(function() {
@@ -158,7 +158,7 @@ Item {
             onClicked: {
                 var conf = Qt.createComponent("ConfigWindow.qml");
                 if (dragger.internalTile.config != "")
-                    conf = Qt.createComponent(dragger.internalTile.config + ".qml");
+                    conf = Qt.createComponent("builtin/"+dragger.internalTile.config + ".qml");
                 if (conf.status === Component.Ready) {
                     var confDial = conf.createObject(dragger.controller, {tile: dragger});
                     confDial.open();
