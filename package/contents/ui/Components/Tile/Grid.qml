@@ -60,6 +60,15 @@ Item {
                 return (root.count - 1);
             }
 
+            Item {
+                id: tileBody
+                anchors {
+                    top:parent.top
+                    left:parent.left
+                    right: parent.right
+                }
+            }
+
             GridLayout {
                 id: grid
                 columns: Math.floor(scroll.width / root.cellSize)
@@ -160,7 +169,7 @@ Item {
         if (index == 0) index = scroll.getNewIndex() + 1
         if (tile.status === Component.Ready) {
             console.warn("Tile "+index+" ofType "+type+" with metadata"+metadata);
-            var tileObj = tile.createObject(scroll, { grid: grid, index: index, len: len, breadth: breadth, col: col, row: row, controller: root, metadata: metadata, tileType: type });
+            var tileObj = tile.createObject(tileBody, { grid: grid, index: index, len: len, breadth: breadth, col: col, row: row, controller: root, metadata: metadata, tileType: type });
             tileObj.toggled.connect(root.toggled);
 //
         }
