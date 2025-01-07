@@ -89,6 +89,12 @@ Kicker.DashboardWindow {
             }
         }
 
+        Rectangle {
+            anchors.fill: background
+            color: Kirigami.Theme.backgroundColor
+            opacity: plasmoid.configuration.overlayOpacity
+        }
+
         ColumnLayout{
             id: container
             anchors.fill: parent

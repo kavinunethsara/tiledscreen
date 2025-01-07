@@ -48,6 +48,9 @@
     <entry name="backgroundOpacity" type="Int">
       <default>65</default>
     </entry>
+    <entry name="overlayOpacity" type="Int">
+      <default>30</default>
+    </entry>
     <entry name="displayUserInfo" type="Bool">
       <default>true</default>
     </entry>

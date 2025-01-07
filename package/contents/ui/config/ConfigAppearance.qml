@@ -16,6 +16,7 @@ KCM.SimpleKCM {
     property alias cfg_backgroundImage: imagePath.selectedFile
     property alias cfg_backgroundImageBlur: blurSlider.value
     property alias cfg_backgroundOpacity: opacitySlider.value
+    property alias cfg_overlayOpacity: overlaySlider.value
 
     property alias cfg_displayUserInfo: showUser.checked
     property alias cfg_userInfoStyle: userNameStyle.currentIndex
@@ -53,6 +54,13 @@ KCM.SimpleKCM {
             FormCard.FormSpinBoxDelegate {
                 id: opacitySlider
                 label: "Background Opacity"
+                from: 0
+                to: 100
+                stepSize: 1
+            }
+            FormCard.FormSpinBoxDelegate {
+                id: overlaySlider
+                label: "Background Overlay Opacity"
                 from: 0
                 to: 100
                 stepSize: 1
