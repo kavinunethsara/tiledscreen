@@ -58,6 +58,7 @@ Kicker.DashboardWindow {
                 Layout.fillWidth: true
 
                 ToolBar {
+                    id: toolBar
                     onToggle: {
                         root.toggle();
                     }
@@ -69,7 +70,13 @@ Kicker.DashboardWindow {
                     title: (root.currentPage == "search") ? "Search" : root.currentPage == "home" ? "Favourites" : "All Apps"
                     action: root.currentPage != "home" ? "Favourites" : "All Apps"
 
-                    Layout.fillHeight: true
+                    Layout.fillHeight: parent? true : false
+                    anchors {
+                        top: toolBar.bottom
+                        bottom: parent.bottom
+                        left: parent.left
+                        right: parent.right
+                    }
 
                     hasSearch: true
                     fill: true
