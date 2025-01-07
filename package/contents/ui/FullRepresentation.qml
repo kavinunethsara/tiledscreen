@@ -19,6 +19,7 @@ Kicker.DashboardWindow {
     onVisibleChanged: {
         if (visible) {
             preloadAllAppsTimer.restart();
+            mainCat.grabFocus();
         }
     }
 
@@ -57,6 +58,8 @@ Kicker.DashboardWindow {
                         break;
                     }
                 }
+
+                searchView.model = runnerModel.modelForRow(0)
             }
         }
 
@@ -74,18 +77,49 @@ Kicker.DashboardWindow {
                 ToolBar {}
 
                 Category{
-                    title: root.currentPage == "home" ? "Favourites" : "All Apps"
+                    id: mainCat
+
+                    title: (root.currentPage == "search") ? "Search" : root.currentPage == "home" ? "Favourites" : "All Apps"
                     action: root.currentPage != "home" ? "Favourites" : "All Apps"
 
                     Layout.fillHeight: true
+                    hasSearch: true
                     fill: true
                     useBackground: false
 
-                    onActivated: root.currentPage == "home" ? root.currentPage = "all" : root.currentPage = "home"
+                    onActivated: {
+                        if (searchText != "") {
+                            searchText = "";
+                            return;
+                        }
+                        if (root.currentPage == "home") {
+                            root.currentPage = "all" ;
+                        } else {
+                            root.currentPage = "home";
+                        }
+                    }
+
+                    onSearchTextChanged: {
+                        if (searchText != "") {
+                            root.currentPage = "search"
+                        } else {
+                            root.currentPage = "home"
+                            return
+                        }
+                        runnerModel.query = searchText;
+                    }
 
                     AppView {
                         id: appsView
                         visible: root.currentPage == "all"
+                        onAddTile: function (metadata) {
+                            tileView.addTile("IconTile", metadata)
+                        }
+                    }
+
+                    AppView {
+                        id: searchView
+                        visible: root.currentPage == "search"
                         onAddTile: function (metadata) {
                             tileView.addTile("IconTile", metadata)
                         }

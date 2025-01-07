@@ -34,7 +34,7 @@ PlasmoidItem {
 
         flat: true
         // TODO: appletInterface property now can be ported to "applet" and have the real Applet* assigned directly
-        //appletInterface: kicker
+        appletInterface: kicker
 
         showAllApps: true
         showAllAppsCategorized: false
@@ -54,6 +54,28 @@ PlasmoidItem {
             }
 
             rootModel.refresh();
+        }
+    }
+
+    Kicker.RunnerModel {
+        id: runnerModel
+
+        appletInterface: kicker
+        mergeResults: true
+
+        runners: {
+            const results = ["krunner_services",
+            "krunner_systemsettings",
+            "krunner_sessions",
+            "krunner_powerdevil",
+            "calculator",
+            "unitconverter"];
+
+            if (Plasmoid.configuration.useExtraRunners) {
+                results.push(...Plasmoid.configuration.extraRunners);
+            }
+
+            return results;
         }
     }
 
@@ -87,6 +109,7 @@ PlasmoidItem {
         kicker.hideOnWindowDeactivate = true;
 
         rootModel.refreshed.connect(reset);
+        runnerModel.refreshed.connect(reset);
         if (rootModel.status == Component.Ready) rootModel.refresh();
     }
 }

@@ -12,15 +12,17 @@ Item{
     id: root
     property string title
     property string action
+    property bool hasSearch: false
     property bool fill: false
     property alias useBackground: containerItem.useBackground
+    property alias searchText: search.text
     default property alias content: containerItem.content
 
-    height: mainLayout.implicitHeight
     signal activated
+
+    height: mainLayout.implicitHeight
     Layout.fillWidth: true
     Layout.minimumWidth: mainLayout.implicitWidth
-
     ColumnLayout {
         id: mainLayout
         anchors.left: parent.left
@@ -32,11 +34,20 @@ Item{
         RowLayout {
             Layout.preferredHeight: actionButton.implicitHeight
             PlasmaComponents.Label {
-                Layout.fillWidth: true
                 text: root.title
+                Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
+                Layout.fillWidth: true
+            }
+            PlasmaComponents.TextField {
+                id: search
+                visible: root.hasSearch
+                implicitWidth: Kirigami.Units.gridUnit * 15
+                Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+                placeholderText: "Search..."
             }
             PlasmaComponents.Button {
                 id: actionButton
+                Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
                 text: root.action
                 visible: root.action
                 onClicked: root.activated();
@@ -47,5 +58,9 @@ Item{
             id: containerItem
             Layout.fillHeight: root.fill? true : false
         }
+    }
+
+    function grabFocus () {
+        search.forceActiveFocus();
     }
 }

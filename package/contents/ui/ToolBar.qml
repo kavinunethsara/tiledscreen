@@ -9,10 +9,5 @@ import org.kde.plasma.components as PlasmaComponents
 import org.kde.kirigami as Kirigami
 
 RowLayout {
-    PlasmaComponents.TextField {
-        Layout.maximumWidth: Kirigami.Units.gridUnit * 20
-        Layout.fillWidth: true
-        id: search
-        placeholderText: "Search..."
-    }
+
 }

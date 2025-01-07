@@ -1,5 +1,5 @@
 /*
- S PDX-FileCopyrightText: 2024 Ka*vinu Nethsara <kavinunethsarakoswattage@gmail.com>
+ S PDX-FileCopyrightText: 2024 Kavinu Nethsara <kavinunethsarakoswattage@gmail.com>
  SPDX-License-Identifier: LGPL-2.1-or-later
  */
 pragma ComponentBehavior: Bound
@@ -21,7 +21,7 @@ Item {
         id: buttonIcon
 
         anchors.fill: parent
-        source: "start-here"
+        source: plasmoid.configuration.icon
         active: mouseArea.containsMouse
         smooth: true
     }
