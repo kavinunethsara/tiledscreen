@@ -20,6 +20,10 @@ Rectangle {
     property int actionType: metadata.actionType
     property string action: metadata.action
 
+    readonly property string config: "TileConfig"
+
+    required property QtObject container
+
     onNameChanged: {
         updateMeta()
     }

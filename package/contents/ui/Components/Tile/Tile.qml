@@ -11,6 +11,8 @@ Item {
     property QtObject internalTile: Item{}
     property string tileType: "IconTile"
 
+    property alias hover: mouseArea.containsMouse
+
     width: len * controller.cellSize
     height: breadth * controller.cellSize
     property int col: 0
@@ -46,16 +48,14 @@ Item {
     }
 
     Component.onCompleted: {
-        if (tileType == "IconTile") {
-            const tileContent = Qt.createComponent("IconTile.qml");
-            if (tileContent.status == Component.Ready) {
-                var intTile = tileContent.createObject(dragger, { metadata: metadata } );
-                intTile.update.connect(function() {
-                    dragger.metadata = intTile.metadata;
-                    updateTile();
-                });
-                internalTile = intTile
-            }
+        const tileContent = Qt.createComponent(dragger.tileType + ".qml");
+        if (tileContent.status == Component.Ready) {
+            var intTile = tileContent.createObject(dragger, { metadata: metadata, container: dragger } );
+            intTile.update.connect(function() {
+                dragger.metadata = intTile.metadata;
+                updateTile();
+            });
+            internalTile = intTile
         }
 
         controller.items.push(
@@ -76,6 +76,7 @@ Item {
         anchors.fill: parent
         drag.target: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton
+        hoverEnabled: true
 
         property variant prevItem: null
 
@@ -130,7 +131,9 @@ Item {
             text: "Edit Tile"
             icon.name: "editor"
             onClicked: {
-                const conf = Qt.createComponent("ConfigWindow.qml");
+                var conf = Qt.createComponent("ConfigWindow.qml");
+                if (dragger.internalTile.config != "")
+                    conf = Qt.createComponent(dragger.internalTile.config + ".qml");
                 if (conf.status === Component.Ready) {
                     var confDial = conf.createObject(dragger.controller, {tile: dragger});
                     confDial.open();

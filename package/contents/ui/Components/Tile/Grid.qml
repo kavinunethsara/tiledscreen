@@ -59,47 +59,7 @@ Item {
                             anchors.fill: parent
                             anchors.margins: 2
                             color: rt.current? Kirigami.Theme.highlightColor : Kirigami.Theme.linkColor
-                            opacity: root.editMode || rt.current ? 0.7 : 0
-                        }
-
-                        MouseArea {
-                            acceptedButtons: Qt.RightButton
-                            onClicked: function (mouse) {
-                                contextMenu.popup()
-                            }
-                        }
-
-                        PlasmaComponents.Menu {
-                            id: contextMenu
-                            property int current: 0
-                            PlasmaComponents.MenuItem{
-                                text: "Add Icon Tile"
-                                icon.name: "editor"
-                                onClicked: {
-                                    var metadata = {
-                                        name: "Icon",
-                                        icon: "empty",
-                                        useCustomBack: false,
-                                        useCustomFront: false,
-                                        backColor: Qt.color.white,
-                                        frontColor: Kirigami.Theme.textColor,
-                                        actionType: 0,
-                                        action: ""
-                                    }
-                                    root.addTile("IconTile",metadata);
-                                }
-                            }
-                            PlasmaComponents.MenuItem{
-                                text: "Add Header Tile"
-                                icon.name: "delete"
-                                onClicked: {
-                                    var metadata = {
-                                        name: "Category",
-                                        icon: ""
-                                    }
-                                    root.addTile("CategoryTile",metadata);
-                                }
-                            }
+                            opacity: root.editMode ? 0.7 : 0
                         }
 
                         Component.onCompleted: {
@@ -107,6 +67,53 @@ Item {
                                 grid.celx = rt.col
                             }
                         }
+                    }
+                }
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.RightButton
+                onClicked: function (mouse) {
+                    var pos = scroll.mapToItem(grid, mouse.x, mouse.y);
+                    var item = grid.childAt(pos.x, pos.y);
+                    console.warn(item);
+                    if (item.gridBox) {
+                        contextMenu.current = item.index
+                        contextMenu.popup();
+                    }
+                }
+            }
+
+            PlasmaComponents.Menu {
+                id: contextMenu
+                property int current: 0
+                PlasmaComponents.MenuItem{
+                    text: "Add Icon Tile"
+                    icon.name: "editor"
+                    onClicked: {
+                        var metadata = {
+                            name: "Icon",
+                            icon: "empty",
+                            useCustomBack: false,
+                            useCustomFront: false,
+                            backColor: Qt.color.white,
+                            frontColor: Kirigami.Theme.textColor,
+                            actionType: 0,
+                            action: ""
+                        }
+                        root.addTile("IconTile",metadata);
+                    }
+                }
+                PlasmaComponents.MenuItem{
+                    text: "Add Header Tile"
+                    icon.name: "delete"
+                    onClicked: {
+                        var metadata = {
+                            name: "Category",
+                            icon: ""
+                        }
+                        root.addTile("CategoryTile",metadata);
                     }
                 }
             }
