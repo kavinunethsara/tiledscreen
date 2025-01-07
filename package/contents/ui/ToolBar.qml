@@ -6,7 +6,7 @@
 import QtQuick
 import QtQuick.Controls
 import org.kde.kirigami as Kirigami
-import org.kde.plasma.plasmoid
+import org.kde.plasma.core as PlasmaCore
 import org.kde.kirigamiaddons.components 1.0 as KirigamiComponents
 import org.kde.plasma.private.sessions as Sessions
 import org.kde.coreaddons 1.0 as KCoreAddons
@@ -69,7 +69,7 @@ Item {
         }
     }
     Rectangle {
-        visible:plasmoid.configuration.showUserInfo
+        visible:plasmoid.configuration.displayUserInfo
 
         color: mouseArea.containsMouse ? Kirigami.Theme.highlightColor :Kirigami.Theme.backgroundColor
         width: userIcon.width + userLabel.width+ Kirigami.Units.mediumSpacing * 4

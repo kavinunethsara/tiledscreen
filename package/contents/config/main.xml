@@ -33,19 +33,18 @@
       <default>false</default>
     </entry>
     <entry name="backgroundImage" type="String">
-      <default>""</default>
+      <default> </default>
     </entry>
     <entry name="backgroundImageBlur" type="Int">
-      <deafult>20</default>
+      <default>20</default>
     </entry>
     <entry name="backgroundOpacity" type="Int">
-      <deafult>65</default>
+      <default>65</default>
     </entry>
-
     <entry name="displayUserInfo" type="Bool">
       <default>true</default>
     </entry>
-    <entry name="userNameStyle" type="Int">
+    <entry name="userInfoStyle" type="Int">
       <default>0</default>
     </entry>
     <entry name="showLogoutButton" type="Bool">
