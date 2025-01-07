@@ -38,13 +38,6 @@ Kicker.DashboardWindow {
     mainItem: Item {
         anchors.fill: parent
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                root.toggle();
-            }
-        }
-
         ColumnLayout{
             id: container
             anchors.fill: parent
