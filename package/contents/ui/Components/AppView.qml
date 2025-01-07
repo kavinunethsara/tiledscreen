@@ -91,7 +91,6 @@ FocusScope {
                 return
             }
         }
-        console.warn('runApp', url, 'no index')
     }
 
     function showContextMenu(index: int) {

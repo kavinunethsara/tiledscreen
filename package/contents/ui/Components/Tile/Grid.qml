@@ -38,7 +38,6 @@ Item {
         initialLoad = true
         items = JSON.parse(plasmoid.configuration.tiles)
         items.forEach((item) => {
-            console.warn("Entry of "+item.plugin+ " with index "+item.id+ " @ "+item.row+" : "+item.col);
            addTile(item.plugin, item.metadata, item.len, item.breadth, item.col, item.row, item.id);
            if (item.id + 1 > count ) count = item.id + 1;
         });
@@ -175,7 +174,6 @@ Item {
         const tile = Qt.createComponent("Tile.qml");
         if (index == 0) index = scroll.getNewIndex() + 1
         if (tile.status === Component.Ready) {
-            console.warn("Tile "+index+" ofType "+type+" with metadata"+metadata);
             var tileObj = tile.createObject(tileBody, { grid: grid, index: index, len: len, breadth: breadth, col: col, row: row, controller: root, metadata: metadata, tileType: type });
             tileObj.toggled.connect(root.toggled);
 //

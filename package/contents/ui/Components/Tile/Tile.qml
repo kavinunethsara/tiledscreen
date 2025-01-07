@@ -38,7 +38,6 @@ Item {
     }
 
     function updateTile() {
-        console.warn(dragger.index);
         controller.items.forEach((item) => {
             if (item.id == dragger.index) {
                 item.col = dragger.col,
@@ -56,10 +55,8 @@ Item {
         dragger.x = dragger.col * controller.cellSize
         dragger.y = dragger.row * controller.cellSize
 
-        console.warn(dragger.tileType +" Setup");
         const tileContent = Qt.createComponent(dragger.tileType + ".qml");
         if (tileContent.status == Component.Ready) {
-            console.warn("Comp created with index "+dragger.index);
             var intTile = tileContent.createObject(dragger, { metadata: metadata, container: dragger } );
             intTile.update.connect(function() {
                 dragger.metadata = intTile.metadata;
@@ -69,7 +66,6 @@ Item {
         }
         var addItem = true
         controller.items.forEach ((item) => {
-            console.warn("Comparing "+dragger.index+" to "+item.id+ " of type "+item.plugin)
            if (item.id == dragger.index) addItem = false
         });
         if (!addItem) return;
