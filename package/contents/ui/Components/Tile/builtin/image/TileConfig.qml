@@ -72,7 +72,7 @@ FormCard.FormCardPage {
             text: "Text Color"
             color: root.tile.tileData.frontColor
             onColorChanged: {
-                root.tile.tileData.frontColor = color;
+                root.tile.tileData.frontColor = color.toString();
                 root.tile.tileData = root.tile.tileData;
             }
         }
