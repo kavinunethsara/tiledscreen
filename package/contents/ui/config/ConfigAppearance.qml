@@ -7,7 +7,6 @@ import QtQuick
 import QtCore
 import QtQuick.Dialogs as Dialogs
 import org.kde.kcmutils as KCM
-import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.formcard as FormCard
 
 KCM.SimpleKCM {
@@ -57,6 +56,7 @@ KCM.SimpleKCM {
                 from: 0
                 to: 100
                 stepSize: 1
+                enabled: useImage.checked
             }
             FormCard.FormSpinBoxDelegate {
                 id: overlaySlider

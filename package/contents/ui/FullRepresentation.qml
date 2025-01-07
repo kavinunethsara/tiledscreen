@@ -23,7 +23,7 @@ Kicker.DashboardWindow {
 
     }
 
-    backgroundColor: Kirigami.Theme.backgroundColor.alpha(plasmoid.configuration.backgroundOpacity / 100)
+    backgroundColor: "transparent"
 
     onVisibleChanged: {
         if (visible) {
