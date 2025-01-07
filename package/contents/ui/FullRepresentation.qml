@@ -17,6 +17,11 @@ Kicker.DashboardWindow {
     id: root
 
     property string currentPage: "home"
+    property Timer activationTimer: Timer {
+        interval: 1000
+        running: false
+
+    }
 
     backgroundColor: Kirigami.Theme.backgroundColor.alpha(plasmoid.configuration.backgroundOpacity / 100)
 
@@ -31,6 +36,19 @@ Kicker.DashboardWindow {
     Keys.onEscapePressed: root.toggle()
 
     function reloadData() {
+    }
+
+    function toggledMode() {
+        if (root.visible) {
+            if (activationTimer.running) {
+                root.currentPage = root.currentPage == "all"? "home" : "all";
+                return;
+            }
+            activationTimer.stop();
+        } else {
+            activationTimer.start();
+        }
+        root.toggle();
     }
 
     Component.onCompleted: {
