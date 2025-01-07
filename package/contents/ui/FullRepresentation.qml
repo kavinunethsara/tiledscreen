@@ -16,9 +16,12 @@ Kicker.DashboardWindow {
 
     property string currentPage: "home"
 
+    backgroundColor: Kirigami.Theme.backgroundColor.alpha(0.65)
+
     onVisibleChanged: {
         if (visible) {
             root.currentPage = "home"
+            mainCat.searchText = "";
             mainCat.grabFocus();
         }
     }
@@ -67,6 +70,7 @@ Kicker.DashboardWindow {
                     action: root.currentPage != "home" ? "Favourites" : "All Apps"
 
                     Layout.fillHeight: true
+
                     hasSearch: true
                     fill: true
                     useBackground: false

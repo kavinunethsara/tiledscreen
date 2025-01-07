@@ -34,23 +34,29 @@ Item{
         anchors.bottom: root.fill? parent.bottom : undefined
         //spacing: Kirigami.Units.smallSpacing * 2
 
-        RowLayout {
+        Item {
             Layout.preferredHeight: actionButton.implicitHeight
+            Layout.fillWidth: true
+
             PlasmaComponents.Label {
                 text: root.title
-                Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
-                Layout.fillWidth: true
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
             }
             PlasmaComponents.TextField {
                 id: search
                 visible: root.hasSearch
                 implicitWidth: Kirigami.Units.gridUnit * 15
-                Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
                 placeholderText: "Search..."
             }
             PlasmaComponents.Button {
                 id: actionButton
-                Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+
                 text: root.action
                 visible: root.action
                 onClicked: root.activated();
