@@ -58,7 +58,7 @@ Kicker.DashboardWindow {
             anchors.fill: bgImage
             anchors.margins: -64
             blurEnabled: true
-            blurMultiplier: plasmoid.configuration.backgroundImageBlurMultiplier / 10
+            blurMultiplier: plasmoid.configuration.backgroundImageBlurMultiplier
             blurMax: 64
             blur: plasmoid.configuration.backgroundImageBlur / 100
             opacity: plasmoid.configuration.backgroundOPacity / 100

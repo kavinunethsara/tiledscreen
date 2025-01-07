@@ -41,8 +41,8 @@
       <min>0</min>
     </entry>
     <entry name="backgroundImageBlurMultiplier" type="Int">
-      <default>10</default>
-      <max>50</max>
+      <default>1</default>
+      <max>5</max>
       <min>0</min>
     </entry>
     <entry name="backgroundOpacity" type="Int">

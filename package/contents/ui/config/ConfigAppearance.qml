@@ -55,8 +55,8 @@ KCM.SimpleKCM {
                 id: blurMultiplier
                 label: "Image Blur Multiplier"
                 from: 0
-                to: 50
-                stepSize: 2
+                to: 5
+                stepSize: 1
                 enabled: useImage.checked
             }
             FormCard.FormSpinBoxDelegate {
