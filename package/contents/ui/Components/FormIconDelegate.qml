@@ -56,6 +56,6 @@ FormCard.AbstractFormDelegate {
 
     KIconThemes.IconDialog {
         id: iconDialog
-        onIconNameChanged: buttonIcon.source = iconName
+        onIconNameChanged: () => {buttonIcon.source = iconName}
     }
 }

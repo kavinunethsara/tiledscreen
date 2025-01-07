@@ -8,10 +8,11 @@ import QtQuick
 import org.kde.kcmutils as KCM
 import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.formcard as FormCard
+import "../Components" as Utils
 
 KCM.SimpleKCM {
     id: root
-    property alias cfg_icon: icon.text
+    property alias cfg_icon: icon.iconName
     property alias cfg_cellSize: cellSize.value
     property string cfg_tiles
     property string cfg_tilesDefault
@@ -21,27 +22,16 @@ KCM.SimpleKCM {
             title: "Icon"
         }
         FormCard.FormCard {
-            FormCard.AbstractFormDelegate {
-                contentItem: Kirigami.Icon {
-                    id: buttonIcon
-                    height: Kirigami.Units.gridUnit * 3
-                    anchors.fill: parent
-                    source: icon.text
-                    smooth: true
-                }
-            }
-            FormCard.FormDelegateSeparator {}
-            FormCard.FormTextFieldDelegate {
+            Utils.FormIconDelegate {
                 id: icon
-                label: "Icon Name"
+                text: "Icon"
             }
-            FormCard.FormButtonDelegate {
-                text: "Select Icon"
-            }
+
+            FormCard.FormDelegateSeparator {}
             FormCard.FormButtonDelegate {
                 text: "Reset Icon"
                 onClicked: {
-                    icon.text = "start-here-kde-symbolic"
+                    icon.iconName = "start-here-kde-symbolic"
                 }
             }
         }
