@@ -19,14 +19,11 @@ Kicker.DashboardWindow {
     onVisibleChanged: {
         if (visible) {
             root.currentPage = "home"
-            preloadAllAppsTimer.restart();
             mainCat.grabFocus();
         }
     }
 
     function reloadData() {
-        preloadAllAppsTimer.done = false;
-        preloadAllAppsTimer.restart();
     }
 
     Component.onCompleted: {
@@ -42,33 +39,6 @@ Kicker.DashboardWindow {
             anchors.fill: parent
             onClicked: {
                 root.toggle();
-            }
-        }
-
-        Timer {
-            id: preloadAllAppsTimer
-
-            property bool done: false
-
-            interval: 1000
-            repeat: false
-
-            onTriggered: {
-                if (done) {
-                    return;
-                }
-
-                for (var i = 0; i < rootModel.count; ++i) {
-                    var model = rootModel.modelForRow(i);
-
-                    if (model.description === "KICKER_ALL_MODEL") {
-                        appsView.model = model;
-                        done = true;
-                        break;
-                    }
-                }
-
-                searchView.model = runnerModel.modelForRow(0)
             }
         }
 
@@ -126,6 +96,7 @@ Kicker.DashboardWindow {
                     AppView {
                         id: appsView
                         visible: root.currentPage == "all"
+                        model: rootModel.count ? rootModel.modelForRow(0) : null
                         onAddTile: function (metadata) {
                             tileView.addTile("IconTile", metadata)
                         }
@@ -136,6 +107,10 @@ Kicker.DashboardWindow {
 
                     AppView {
                         id: searchView
+                        // Forces the function be re-run every time runnerModel.count changes.
+                        // This is absolutely necessary to make the search view work reliably.'
+                        // (From Kickoff source code)
+                        model: runnerModel.count ? runnerModel.modelForRow(0) : null
                         visible: root.currentPage == "search"
                         onAddTile: function (metadata) {
                             tileView.addTile("IconTile", metadata)

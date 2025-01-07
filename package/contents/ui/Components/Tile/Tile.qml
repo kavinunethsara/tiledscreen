@@ -95,11 +95,17 @@ Item {
 
         property variant prevItem: null
 
-        onPressed: function (mouse) {
+        onClicked: function (mouse) {
+            // If we are in the same place, acctivate the tile
+            if (mouse.button == Qt.LeftButton) {
+                dragger.internalTile.activate();
+                dragger.toggled();
+                return;
+            }
             if (mouse.button == Qt.RightButton) {
                 dragger.showContextMenu(dragger.index);
+                mouse.accepted = true;
             }
-            mouse.accepted = true;
         }
 
         onReleased: function(mouse) {
@@ -108,14 +114,6 @@ Item {
             var item = grid.childAt(loc.x, loc.y)
             // Only move or activate if on a valid tile block
             if (item) {
-                // If we are in the same place, acctivate the tile
-                if (dragger.col == item.col && dragger.row == item.row && mouse.button == Qt.LeftButton) {
-                    dragger.internalTile.activate();
-                    dragger.toggled();
-                    return;
-                }
-
-                // Else move
                 dragger.col = item.col
                 dragger.row = item.row
             }

@@ -96,7 +96,7 @@ PlasmoidItem {
         kicker.hideOnWindowDeactivate = true;
 
         rootModel.refreshed.connect(reset);
-        runnerModel.refreshed.connect(reset);
+        runnerModel.completed.connect(reset);
         if (rootModel.status == Component.Ready) rootModel.refresh();
     }
 }

@@ -19,6 +19,8 @@ Item{
     property alias textField: search
     default property alias content: containerItem.content
 
+    Keys.forwardTo: hasSearch? [search] : [root]
+
     signal activated
 
     height: mainLayout.implicitHeight

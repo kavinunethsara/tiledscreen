@@ -105,10 +105,17 @@ Item {
 
             MouseArea {
                 anchors.fill: parent
+                propagateComposedEvents: true
                 acceptedButtons: Qt.RightButton
                 onClicked: function (mouse) {
                     var pos = scroll.mapToItem(grid, mouse.x, mouse.y);
+                    var tilepos = scroll.mapToItem(tileBody, mouse.x, mouse.y);
+                    var tile = tileBody.childAt(tilepos.x, tilepos.y);
                     var item = grid.childAt(pos.x, pos.y);
+                    if (tile && tile.index) {
+                        mouse.accepted = false;
+                        return;
+                    }
                     if (item.gridBox) {
                         contextMenu.current = item.index
                         contextMenu.popup();
