@@ -18,7 +18,7 @@ Kicker.DashboardWindow {
 
     property string currentPage: "home"
     property Timer activationTimer: Timer {
-        interval: 1000
+        interval: 250
         running: false
 
     }
@@ -41,10 +41,10 @@ Kicker.DashboardWindow {
     function reloadData() {
     }
 
-    function toggledMode() {
+    function toggleMode() {
         if (root.visible) {
-            if (activationTimer.running) {
-                root.currentPage = root.currentPage == "all"? "home" : "all";
+            if (activationTimer.running && root.currentPage == "home") {
+                root.currentPage = "all";
                 return;
             }
             activationTimer.stop();

@@ -41,7 +41,7 @@ Item {
         hoverEnabled: !dashWindow.visible
 
         onClicked: {
-            dashWindow.toggle();
+            dashWindow.toggleMode();
         }
     }
 
@@ -50,7 +50,7 @@ Item {
         enabled: dashWindow !== null
 
         function onActivated(): void {
-            dashWindow.toggle();
+            dashWindow.toggleMode();
             //justOpenedTimer.start();
         }
     }
