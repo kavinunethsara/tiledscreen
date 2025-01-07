@@ -6,32 +6,62 @@
 import QtQuick
 
 import org.kde.kcmutils as KCM
+import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.formcard as FormCard
 
 KCM.SimpleKCM {
     id: root
-    property var cfg_icon
-    property var cfg_useExtraRunners
-    property var cfg_extraRunners
+    property alias cfg_icon: icon.text
+    property alias cfg_cellSize: cellSize.value
+    property alias cfg_tiles: tiles
+    property string cfg_tilesDefault
 
     FormCard.FormCardPage {
         FormCard.FormHeader {
-            title: "General"
+            title: "Icon"
         }
         FormCard.FormCard {
+            FormCard.AbstractFormDelegate {
+                contentItem: Kirigami.Icon {
+                    id: buttonIcon
+                    height: Kirigami.Units.gridUnit * 3
+                    anchors.fill: parent
+                    source: icon.text
+                    smooth: true
+                }
+            }
+            FormCard.FormDelegateSeparator {}
             FormCard.FormTextFieldDelegate {
-                label: "Icon"
-                text: root.cfg_icon
+                id: icon
+                label: "Icon Name"
+            }
+            FormCard.FormButtonDelegate {
+                text: "Select Icon"
+            }
+            FormCard.FormButtonDelegate {
+                text: "Reset Icon"
+                onClicked: {
+                    icon.text = "start-here-kde-symbolic"
+                }
             }
         }
 
         FormCard.FormHeader {
-            title: "Search"
+            title: "Tiles"
         }
         FormCard.FormCard {
-            FormCard.FormCheckDelegate {
-                text: "Use extra search plugins"
-                checked: root.cfg_extraRunners
+            FormCard.FormSpinBoxDelegate {
+                id: cellSize
+                label: "Tile size"
+                from: 0
+                to: 40
+                stepSize: 2
+            }
+            FormCard.FormButtonDelegate {
+                text: "Reset tiles"
+                onClicked: {
+                    root.tiles = root.cfg_tilesDefault
+                }
             }
         }
     }

@@ -1,6 +1,8 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
+import org.kde.plasma.plasmoid
+import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.components as PlasmaComponents
 import org.kde.kirigami as Kirigami
 
@@ -11,20 +13,33 @@ Item {
     anchors.fill: parent
     property int minRows: 0
     property variant items: []
-    readonly property real cellSize: Kirigami.Units.gridUnit * 2.5
+    property real cellSizeMultiplier: plasmoid.configuration.cellSize / 10
+    readonly property real cellSize: Kirigami.Units.gridUnit * 2.5 * cellSizeMultiplier
 
     property bool editMode: false
+    property bool initialLoad: true
+
+    onItemsChanged: {
+        refreshItems();
+    }
+
+    function refreshItems () {
+        if (!initialLoad) {
+            plasmoid.configuration.tiles = JSON.stringify(root.items)
+        }
+    }
+
+    Component.onCompleted: {
+        initialLoad = true
+        items = JSON.parse(plasmoid.configuration.tiles)
+        items.forEach((item) => {
+           addTile(item.plugin, item.metadata, item.len, item.breadth, item.col, item.row, item.id);
+        });
+        initialLoad = false
+    }
 
     RowLayout {
         anchors.fill: parent
-
-        Label {
-            id: code
-            Layout.fillHeight: true
-            Layout.preferredWidth: 300
-            text: JSON.stringify(root.items)
-            wrapMode: Text.Wrap
-        }
 
         ScrollView {
             id: scroll
@@ -113,7 +128,7 @@ Item {
                             name: "Category",
                             icon: ""
                         }
-                        root.addTile("CategoryTile",metadata);
+                        root.addTile("CategoryTile",metadata, 4, 1);
                     }
                 }
             }
@@ -128,18 +143,19 @@ Item {
         items.forEach((item) => {
             if (row < (item.row + item.breadth)) row = item.row + item.breadth + 1
         });
-        code.text = JSON.stringify(root.items)
+        root.refreshItems()
 
         root.minRows = row
     }
 
-    function addTile(type: string, metadata: variant) {
+    function addTile(type: string, metadata: variant, len = 2, breadth = 2, col = 0, row = 0, index = 0) {
         const tile = Qt.createComponent("Tile.qml");
+        if (index == 0) index = scroll.getNewIndex() + 1
         if (tile.status === Component.Ready) {
-            var tileObj = tile.createObject(scroll, { grid: grid, index: scroll.getNewIndex(), len: 2, controller: root, metadata: metadata, tileType: type });
+            var tileObj = tile.createObject(scroll, { grid: grid, index: index, len: len, breadth: breadth, col: col, row: row, controller: root, metadata: metadata, tileType: type });
 //
         }
-
+        root.updateGrid();
     }
 
 }

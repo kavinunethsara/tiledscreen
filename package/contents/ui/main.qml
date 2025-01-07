@@ -63,20 +63,7 @@ PlasmoidItem {
         appletInterface: kicker
         mergeResults: true
 
-        runners: {
-            const results = ["krunner_services",
-            "krunner_systemsettings",
-            "krunner_sessions",
-            "krunner_powerdevil",
-            "calculator",
-            "unitconverter"];
-
-            if (Plasmoid.configuration.useExtraRunners) {
-                results.push(...Plasmoid.configuration.extraRunners);
-            }
-
-            return results;
-        }
+        runners: []
     }
 
     Kicker.WindowSystem {

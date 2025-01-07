@@ -33,8 +33,16 @@ Kicker.DashboardWindow {
         kicker.reset.connect(reloadData);
     }
 
+
     mainItem: Item {
         anchors.fill: parent
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                root.toggle();
+            }
+        }
 
         Timer {
             id: preloadAllAppsTimer

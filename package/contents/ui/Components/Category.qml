@@ -16,6 +16,7 @@ Item{
     property bool fill: false
     property alias useBackground: containerItem.useBackground
     property alias searchText: search.text
+    property alias textField: search
     default property alias content: containerItem.content
 
     signal activated

@@ -48,6 +48,9 @@ Item {
     }
 
     Component.onCompleted: {
+        dragger.x = dragger.col * controller.cellSize
+        dragger.y = dragger.row * controller.cellSize
+
         const tileContent = Qt.createComponent(dragger.tileType + ".qml");
         if (tileContent.status == Component.Ready) {
             var intTile = tileContent.createObject(dragger, { metadata: metadata, container: dragger } );
@@ -57,7 +60,11 @@ Item {
             });
             internalTile = intTile
         }
-
+        var addItem = true
+        controller.items.forEach ((item) => {
+           if (item.id == dragger.index) addItem = false
+        });
+        if (!addItem) return;
         controller.items.push(
             {
                 id: dragger.index,
