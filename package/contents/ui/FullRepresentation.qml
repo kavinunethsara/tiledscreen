@@ -92,7 +92,7 @@ Kicker.DashboardWindow {
         Rectangle {
             anchors.fill: background
             color: Kirigami.Theme.backgroundColor
-            opacity: plasmoid.configuration.overlayOpacity
+            opacity: plasmoid.configuration.overlayOpacity / 100
         }
 
         ColumnLayout{

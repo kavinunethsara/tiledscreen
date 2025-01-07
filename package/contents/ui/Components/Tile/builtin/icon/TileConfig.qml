@@ -1,23 +1,19 @@
 import QtQuick
-import QtQuick.Layouts
-import QtQuick.Controls
-import Qt.labs.platform
-import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.formcard as FormCard
 import "../.."
+import "../../../" as Utils
 
-ColumnLayout {
+FormCard.FormCardPage {
     id: root
     anchors.fill: parent
-    spacing: Kirigami.Units.mediumSpacing
     required property Tile tile
 
-    Label {
-        text: "General"
+    FormCard.FormHeader {
+        title: "General"
     }
-
-    ConfigEntry {
-        label: "Name"
-        TextField {
+    FormCard.FormCard {
+        FormCard.FormTextFieldDelegate {
+            label: "Name"
             placeholderText: "Name to display on tile"
             text: root.tile.tileData.name
             onTextChanged: {
@@ -25,11 +21,8 @@ ColumnLayout {
                 root.tile.tileData = root.tile.tileData;
             }
         }
-    }
-
-    ConfigEntry{
-        label: "Width"
-        SpinBox {
+        FormCard.FormSpinBoxDelegate {
+            label: "Width"
             value: root.tile.model.tileWidth
             from: 1
             to: 100
@@ -38,11 +31,8 @@ ColumnLayout {
                 root.tile.model.tileWidth = value;
             }
         }
-    }
-
-    ConfigEntry{
-        label: "Height"
-        SpinBox {
+        FormCard.FormSpinBoxDelegate {
+            label: "Height"
             value: root.tile.model.tileHeight
             from: 1
             to: 100
@@ -53,91 +43,62 @@ ColumnLayout {
         }
     }
 
-
-    Label {
-        text: "Appearance"
+    FormCard.FormHeader {
+        title: "Appearance"
     }
-
-    Switch {
-        id: customBack
-        text: "Custom background"
-        checked: root.tile.tileData.useCustomBack
-        onCheckedChanged: {
-            root.tile.tileData.useCustomBack = checked;
-            root.tile.tileData = root.tile.tileData;
+    FormCard.FormCard {
+        FormCard.FormSwitchDelegate {
+            id: customBack
+            text: "Custom background"
+            checked: root.tile.tileData.useCustomBack
+            onCheckedChanged: {
+                root.tile.tileData.useCustomBack = checked;
+                root.tile.tileData = root.tile.tileData;
+            }
         }
-    }
-
-    ConfigEntry {
-        label: "Background color"
-        Button {
-            text: "Select"
+        FormCard.FormColorDelegate {
             enabled: customBack.checked
-            onClicked: {
-                backColorDialog.open()
+            text: "Background Color"
+            color: root.tile.tileData.backColor
+            onColorChanged: {
+                root.tile.tileData.backColor = color;
+                root.tile.tileData = root.tile.tileData;
             }
         }
-    }
-
-    ColorDialog {
-        id: backColorDialog
-        currentColor: root.tile.tileData.backColor
-        onCurrentColorChanged: {
-            root.tile.tileData.backColor = currentColor;
-            root.tile.tileData = root.tile.tileData;
+        FormCard.FormSwitchDelegate {
+            id: customFront
+            text: "Custom text color"
+            checked: root.tile.tileData.useCustomFront
+            onCheckedChanged: {
+                root.tile.tileData.useCustomFront = checked;
+                root.tile.tileData = root.tile.tileData;
+            }
         }
-    }
-
-    Switch {
-        id: customFront
-        text: "Custom text color"
-        checked: root.tile.tileData.useCustomFront
-        onCheckedChanged: {
-            root.tile.tileData.useCustomFront = checked;
-            root.tile.tileData = root.tile.tileData;
-        }
-    }
-
-    ConfigEntry {
-        label: "Text color"
-        Button {
-            text: "Select"
+        FormCard.FormColorDelegate {
             enabled: customFront.checked
-            onClicked: {
-                textColorDialog.open()
+            text: "Text Color"
+            color: root.tile.tileData.frontColor
+            onColorChanged: {
+                root.tile.tileData.frontColor = color;
+                root.tile.tileData = root.tile.tileData;
             }
         }
-    }
-
-    ColorDialog {
-        id: textColorDialog
-        currentColor: root.tile.tileData.frontColor
-        onCurrentColorChanged: {
-            root.tile.tileData.frontColor = currentColor;
-            root.tile.tileData = root.tile.tileData;
-        }
-    }
-
-    ConfigEntry {
-        label: "Icon "
-        IconSelector {
-            text: "Select"
-            icon.name: root.tile.tileData.icon
-            onIconChanged: {
-                root.tile.tileData.icon = icon.name;
+        Utils.FormIconDelegate {
+            text: "Icon"
+            iconName: root.tile.tileData.icon
+            onIconNameChanged: {
+                root.tile.tileData.icon = iconName;
                 root.tile.tileData = root.tile.tileData;
             }
         }
     }
-
-    Label {
-        text: "Actions"
+    FormCard.FormHeader {
+        title: "Actions"
     }
-
-    ConfigEntry{
-        label: "Action type"
-        ComboBox{
+    FormCard.FormCard {
+        FormCard.FormComboBoxDelegate {
             id: actType
+            text: "Action Type"
             model: ["Desktop File", "DBus", "Shell"]
             currentIndex: root.tile.tileData.actionType
             onCurrentIndexChanged: {
@@ -145,11 +106,8 @@ ColumnLayout {
                 root.tile.tileData = root.tile.tileData;
             }
         }
-    }
-
-    ConfigEntry{
-        label: (actType.currentIndex == 0) ? "File Path" : actType.currentText + " Command"
-        TextField {
+        FormCard.FormTextFieldDelegate {
+            label: (actType.currentIndex == 0) ? "File Path" : actType.currentText + " Command"
             text: root.tile.tileData.action
             onTextChanged: {
                 root.tile.tileData.action = text;

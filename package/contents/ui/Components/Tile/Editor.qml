@@ -6,12 +6,14 @@ import org.kde.kirigami as Kirigami
 Rectangle {
     id: sidebar
     z: 10
-    radius: Kirigami.Units.mediumSpacing
-    border.width: 1
-    border.color: Kirigami.Theme.backgroundColor.darker(1.5)
-    color: Kirigami.Theme.backgroundColor
+    radius: Kirigami.Units.smallSpacing
 
-    property QtObject content: editor.contentItem.contentItem
+    Kirigami.Theme.colorSet: Kirigami.Theme.Window
+    Kirigami.Theme.inherit: false
+
+    color: Kirigami.Theme.backgroundColor;
+
+    property QtObject content: editor
     property var currentPage
 
     signal closeClicked
@@ -20,13 +22,13 @@ Rectangle {
 
     ColumnLayout {
         anchors.fill: parent
-        anchors.margins: Kirigami.Units.mediumSpacing
+        anchors.margins: Kirigami.Units.smallSpacing
         Button {
             text: "Close"
             onClicked: sidebar.closeClicked()
         }
 
-        ScrollView {
+        Item {
             id: editor
             Layout.fillWidth: true
             Layout.fillHeight: true

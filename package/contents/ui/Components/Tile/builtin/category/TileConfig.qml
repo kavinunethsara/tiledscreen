@@ -2,21 +2,21 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.formcard as FormCard
 import "../.."
+import "../../../" as Utils
 
-ColumnLayout {
+FormCard.FormCardPage {
     id: root
     anchors.fill: parent
-    spacing: Kirigami.Units.mediumSpacing
     required property Tile tile
 
-    Label {
-        text: "General"
+    FormCard.FormHeader {
+        title: "General"
     }
-
-    ConfigEntry {
-        label: "Name"
-        TextField {
+    FormCard.FormCard {
+        FormCard.FormTextFieldDelegate {
+            label: "Name"
             placeholderText: "Name to display on tile"
             text: root.tile.tileData.name
             onTextChanged: {
@@ -24,11 +24,8 @@ ColumnLayout {
                 root.tile.tileData = root.tile.tileData;
             }
         }
-    }
-
-    ConfigEntry{
-        label: "Width"
-        SpinBox {
+        FormCard.FormSpinBoxDelegate {
+            label: "Width"
             value: root.tile.model.tileWidth
             from: 1
             to: 100
@@ -37,11 +34,8 @@ ColumnLayout {
                 root.tile.model.tileWidth = value;
             }
         }
-    }
-
-    ConfigEntry{
-        label: "Height"
-        SpinBox {
+        FormCard.FormSpinBoxDelegate {
+            label: "Height"
             value: root.tile.model.tileHeight
             from: 1
             to: 100
@@ -52,20 +46,18 @@ ColumnLayout {
         }
     }
 
-
-    Label {
-        text: "Appearance"
+    FormCard.FormHeader {
+        title: "Appearance"
     }
-
-    ConfigEntry {
-        label: "Icon "
-        IconSelector {
-            text: "Select"
-            icon.name: root.tile.tileData.icon
-            onIconChanged: {
-                root.tile.tileData.icon = icon.name;
+    FormCard.FormCard {
+        Utils.FormIconDelegate {
+            text: "Icon"
+            iconName: root.tile.tileData.icon
+            onIconNameChanged: {
+                root.tile.tileData.icon = iconName;
                 root.tile.tileData = root.tile.tileData;
             }
         }
     }
+
 }

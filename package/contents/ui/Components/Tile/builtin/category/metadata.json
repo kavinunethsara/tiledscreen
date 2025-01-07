@@ -5,7 +5,7 @@
     "icon": "object-group-symbolic",
     "main": "CategoryTile.qml",
     "config": "TileConfig.qml",
-    "preferredWidth": 2,
+    "preferredWidth": 4,
     "preferredHeight": 1,
     "defaults": {
         "name": "Category",
