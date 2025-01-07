@@ -9,9 +9,6 @@ Rectangle {
     anchors.margins: Kirigami.Units.smallSpacing
 
     required property var metadata
-
-    readonly property string config: "TileConfig"
-
     required property Tile container
 
     function activate() {
