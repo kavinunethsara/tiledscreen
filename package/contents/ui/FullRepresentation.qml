@@ -90,7 +90,7 @@ Kicker.DashboardWindow {
         }
 
         Rectangle {
-            anchors.fill: background
+            anchors.fill: parent
             color: Kirigami.Theme.backgroundColor
             opacity: plasmoid.configuration.overlayOpacity / 100
         }
