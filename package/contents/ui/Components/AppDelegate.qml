@@ -32,7 +32,14 @@ Item {
 
     MouseArea{
         anchors.fill: parent
-        onClicked: root.itemController.showContextMenu(root.model.index)//root.trigger()
+        acceptedButtons: Qt.RightButton | Qt.LeftButton
+        onClicked: function (mouse) {
+            if (mouse.button == Qt.RightButton) {
+                root.itemController.showContextMenu(root.model.index)
+            } else {
+                root.trigger()
+            }
+        }
     }
 
     Keys.onPressed: event => {
@@ -43,8 +50,8 @@ Item {
     }
 
     function trigger() {
-        if ("trigger" in root.list.model) {
-            root.list.model.trigger(root.model.index, "", null)
+        if ("trigger" in root.itemController.model) {
+            root.itemController.model.trigger(root.model.index, "", null)
             root.toggle()
         }
     }

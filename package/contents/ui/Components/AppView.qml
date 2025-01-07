@@ -61,7 +61,13 @@ FocusScope {
             onClicked: {
                 var metadata = {
                     name: list.currentItem.model.display,
-                    icon: list.currentItem.model.decoration
+                    icon: list.currentItem.model.decoration,
+                    useCustomBack: false,
+                    useCustomFront: false,
+                    backColor: Qt.color.white,
+                    frontColor: Kirigami.Theme.textColor,
+                    actionType: 0,
+                    action: list.currentItem.model.url
                 }
                 root.addTile(metadata);
             }

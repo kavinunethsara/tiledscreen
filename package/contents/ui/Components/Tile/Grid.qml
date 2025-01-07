@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
+import org.kde.plasma.components as PlasmaComponents
 import org.kde.kirigami as Kirigami
 
 pragma ComponentBehavior: Bound
@@ -59,6 +60,46 @@ Item {
                             anchors.margins: 2
                             color: rt.current? Kirigami.Theme.highlightColor : Kirigami.Theme.linkColor
                             opacity: root.editMode || rt.current ? 0.7 : 0
+                        }
+
+                        MouseArea {
+                            acceptedButtons: Qt.RightButton
+                            onClicked: function (mouse) {
+                                contextMenu.popup()
+                            }
+                        }
+
+                        PlasmaComponents.Menu {
+                            id: contextMenu
+                            property int current: 0
+                            PlasmaComponents.MenuItem{
+                                text: "Add Icon Tile"
+                                icon.name: "editor"
+                                onClicked: {
+                                    var metadata = {
+                                        name: "Icon",
+                                        icon: "empty",
+                                        useCustomBack: false,
+                                        useCustomFront: false,
+                                        backColor: Qt.color.white,
+                                        frontColor: Kirigami.Theme.textColor,
+                                        actionType: 0,
+                                        action: ""
+                                    }
+                                    root.addTile("IconTile",metadata);
+                                }
+                            }
+                            PlasmaComponents.MenuItem{
+                                text: "Add Header Tile"
+                                icon.name: "delete"
+                                onClicked: {
+                                    var metadata = {
+                                        name: "Category",
+                                        icon: ""
+                                    }
+                                    root.addTile("CategoryTile",metadata);
+                                }
+                            }
                         }
 
                         Component.onCompleted: {

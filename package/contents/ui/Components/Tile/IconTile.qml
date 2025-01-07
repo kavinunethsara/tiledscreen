@@ -7,15 +7,72 @@ Rectangle {
     anchors.fill: parent
     anchors.margins: Kirigami.Units.smallSpacing
 
-    property string name: ""
-    property string icon: ""
+    required property variant metadata
+
+    signal update
+
+    property string name: metadata.name
+    property string icon: metadata.icon
+    property bool useCustomBack: metadata.useCustomBack
+    property bool useCustomFront: metadata.useCustomFront
+    property color backColor: metadata.backColor
+    property color frontColor: metadata.frontColor
+    property int actionType: metadata.actionType
+    property string action: metadata.action
+
+    onNameChanged: {
+        updateMeta()
+    }
+    onIconChanged: {
+        updateMeta()
+    }
+    onUseCustomBackChanged: {
+        updateMeta()
+    }
+    onUseCustomFrontChanged: {
+        updateMeta()
+    }
+    onBackColorChanged: {
+        updateMeta()
+    }
+    onFrontColorChanged: {
+        updateMeta();
+    }
+    onActionTypeChanged: {
+        updateMeta();
+    }
+    onActionChanged: {
+        updateMeta();
+    }
+
+    function updateMeta() {
+        metadata.name = root.name
+        metadata.icon = root.icon
+        metadata.useCustomBack = root.useCustomBack
+        metadata.useCustomFront = root.useCustomFront
+        metadata.backColor = root.backColor
+        metadata.frontColor = root.frontColor
+        metadata.actionType =  root.actionType
+        metadata.action =  root.action
+
+        root.update()
+    }
+
+    Component.onCompleted: {
+        if (!root.useCustomBack) {
+            root.backColor = imageColor.background
+        }
+        if (!root.useCustomFront) {
+            root.frontColor = imageColor.foreground
+        }
+    }
 
     Kirigami.ImageColors {
         id: imageColor
         source: root.icon
     }
 
-    color: imageColor.background || "transparent"
+    color: useCustomBack? backColor : imageColor.background
 
     Item {
         anchors {
@@ -43,6 +100,6 @@ Rectangle {
         anchors.margins: Kirigami.Units.smallSpacing
         elide: Qt.ElideRight
 
-        color: imageColor.foreground || Kirigami.Theme.textColor
+        color: root.useCustomFront? root.frontColor : imageColor.foreground
     }
 }

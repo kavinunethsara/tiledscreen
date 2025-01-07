@@ -2,12 +2,15 @@ import QtQuick
 import org.kde.plasma.components as PlasmaComponents
 
 Item {
+    id: dragger
+
     required property variant grid
     required property variant controller
     required property int index
     property variant metadata: {}
+    property QtObject internalTile: Item{}
     property string tileType: "IconTile"
-    id: dragger
+
     width: len * controller.cellSize
     height: breadth * controller.cellSize
     property int col: 0
@@ -17,11 +20,41 @@ Item {
 
     z: 1000
 
+    onLenChanged: {
+        updateTile()
+    }
+
+    onBreadthChanged: {
+        updateTile()
+    }
+
+    function updateTile() {
+        controller.items.forEach((item) => {
+            console.warn(item.index + ":"+ dragger.index);
+            if (item.id == dragger.index) {
+                console.warn("inside");
+                item.col = dragger.col,
+                item.row =dragger.row,
+                item.len = dragger.len,
+                item.breadth = dragger.breadth,
+                item.plugin = dragger.tileType,
+                item.metadata = dragger.metadata
+                console.warn(dragger.metadata.name);
+                controller.updateGrid();
+            }
+        });
+    }
+
     Component.onCompleted: {
         if (tileType == "IconTile") {
             const tileContent = Qt.createComponent("IconTile.qml");
             if (tileContent.status == Component.Ready) {
-                tileContent.createObject(dragger, metadata );
+                var intTile = tileContent.createObject(dragger, { metadata: metadata } );
+                intTile.update.connect(function() {
+                    dragger.metadata = intTile.metadata;
+                    updateTile();
+                });
+                internalTile = intTile
             }
         }
 
@@ -90,10 +123,20 @@ Item {
     }
 
 
-
     PlasmaComponents.Menu {
         id: contextMenu
         property int current: 0
+        PlasmaComponents.MenuItem{
+            text: "Edit Tile"
+            icon.name: "editor"
+            onClicked: {
+                const conf = Qt.createComponent("ConfigWindow.qml");
+                if (conf.status === Component.Ready) {
+                    var confDial = conf.createObject(dragger.controller, {tile: dragger});
+                    confDial.open();
+                }
+            }
+        }
         PlasmaComponents.MenuItem{
             text: "Delete Tile"
             icon.name: "delete"
