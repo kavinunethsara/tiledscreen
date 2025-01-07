@@ -42,26 +42,30 @@ Kicker.DashboardWindow {
     mainItem: Item {
         anchors.fill: parent
 
-        Image {
-            id: bgImage
-            anchors.fill: parent;
-            visible: plasmoid.configuration.backgroundEnabled
-            source: plasmoid.configuration.backgroundImage
-            fillMode: Image.PreserveAspectCrop
-            opacity: 0
+        Item{
+            id: background
+            anchors.fill: parent
+            opacity: plasmoid.configuration.backgroundOpacity / 100
             z: 0
-        }
-
-        MultiEffect {
-            visible: plasmoid.configuration.backgroundEnabled
-            source: bgImage
-            anchors.fill: bgImage
-            anchors.margins: -64
-            blurEnabled: true
-            blurMultiplier: plasmoid.configuration.backgroundImageBlurMultiplier
-            blurMax: 64
-            blur: plasmoid.configuration.backgroundImageBlur / 100
-            opacity: plasmoid.configuration.backgroundOPacity / 100
+            Image {
+                id: bgImage
+                anchors.fill: parent;
+                visible: plasmoid.configuration.backgroundEnabled
+                source: plasmoid.configuration.backgroundImage
+                opacity: 0
+                fillMode: Image.PreserveAspectCrop
+            }
+            MultiEffect {
+                visible: plasmoid.configuration.backgroundEnabled
+                source: bgImage
+                anchors.fill: bgImage
+                anchors.margins: -64
+                blurEnabled: true
+                // saturation: 10
+                // contrast: 0.2
+                blurMax: 64
+                blur: plasmoid.configuration.backgroundImageBlur / 100
+            }
         }
 
         ColumnLayout{

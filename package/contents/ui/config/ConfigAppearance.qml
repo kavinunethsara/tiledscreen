@@ -15,7 +15,6 @@ KCM.SimpleKCM {
     property alias cfg_useBackgroundImage: useImage.checked
     property alias cfg_backgroundImage: imagePath.selectedFile
     property alias cfg_backgroundImageBlur: blurSlider.value
-    property alias cfg_backgroundImageBlurMultiplier: blurMultiplier.value
     property alias cfg_backgroundOpacity: opacitySlider.value
 
     property alias cfg_displayUserInfo: showUser.checked
@@ -48,14 +47,6 @@ KCM.SimpleKCM {
                 label: "Image Blur"
                 from: 0
                 to: 100
-                stepSize: 1
-                enabled: useImage.checked
-            }
-            FormCard.FormSpinBoxDelegate {
-                id: blurMultiplier
-                label: "Image Blur Multiplier"
-                from: 0
-                to: 5
                 stepSize: 1
                 enabled: useImage.checked
             }
