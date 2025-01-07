@@ -1,5 +1,7 @@
 import QtQuick
+import QtCore
 import org.kde.kirigamiaddons.formcard as FormCard
+import QtQuick.Dialogs as Dialogs
 import "../.."
 
 FormCard.FormCardPage {
@@ -48,6 +50,15 @@ FormCard.FormCardPage {
                 root.tile.tileData.image = text;
                 root.tile.tileData = root.tile.tileData;
             }
+        }
+        FormCard.FormButtonDelegate {
+            id: imageSelector
+            text: "Select Image"
+            onClicked: imagePath.open()
+        }
+        Dialogs.FileDialog {
+            id: imagePath
+            currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
         }
         FormCard.FormComboBoxDelegate {
             text: "Scaling Mode"
