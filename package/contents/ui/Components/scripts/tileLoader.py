@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 Kavinu Nethsara <kavinunethsarakoswattage@gmail.com>
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
+
 import os as os
 import sys as sys
 import json as json
