@@ -1,0 +1,24 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "kavinunethsarakoswattage@gmail.com",
+                "Name": "Kavinu Nethsara"
+            }
+        ],
+        "Category": "Application Launchers",
+        "Description": "what your app does in a few words",
+        "EnabledByDefault": true,
+        "Icon": "start-here-kde",
+        "Id": "org.kde.plasma.decomenu",
+        "License": "LGPL-2.1+",
+        "Name": "DecoMenu",
+        "Version": "1.0",
+        "Website": "https://plasma.kde.org/"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0",
+    "X-Plasma-Provides": [
+        "org.kde.plasma.launchermenu"
+    ]
+}
