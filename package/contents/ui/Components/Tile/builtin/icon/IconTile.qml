@@ -41,7 +41,7 @@ Rectangle {
             left: parent.left
             right: parent.right
             top: parent.top
-            bottom: textLabel.top
+            bottom: root.container.model.tileHeight > 1 ? textLabel.top : parent.bottom
         }
         Kirigami.Icon {
             anchors.centerIn: parent
@@ -55,11 +55,13 @@ Rectangle {
         id: textLabel
         text: root.metadata.name
         horizontalAlignment: Qt.AlignHCenter
-
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.margins: Kirigami.Units.smallSpacing
+        visible: root.container.model.tileHeight > 1
+        anchors {
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+            margins: Kirigami.Units.smallSpacing
+        }
         elide: Qt.ElideRight
 
         color: root.metadata.useCustomFront? root.metadata.frontColor : imageColor.foreground
