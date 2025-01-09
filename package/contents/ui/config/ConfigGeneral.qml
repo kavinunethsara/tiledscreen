@@ -19,17 +19,17 @@ KCM.SimpleKCM {
 
     FormCard.FormCardPage {
         FormCard.FormHeader {
-            title: "Icon"
+            title: i18n("Icon")
         }
         FormCard.FormCard {
             Utils.FormIconDelegate {
                 id: icon
-                text: "Icon"
+                text: i18n("Icon")
             }
 
             FormCard.FormDelegateSeparator {}
             FormCard.FormButtonDelegate {
-                text: "Reset Icon"
+                text: i18n("Reset Icon")
                 onClicked: {
                     icon.iconName = "start-here-kde-symbolic"
                 }
@@ -37,18 +37,18 @@ KCM.SimpleKCM {
         }
 
         FormCard.FormHeader {
-            title: "Tiles"
+            title: i18n("Tiles")
         }
         FormCard.FormCard {
             FormCard.FormSpinBoxDelegate {
                 id: cellSize
-                label: "Tile size"
+                label: i18n("Tile size")
                 from: 0
                 to: 40
                 stepSize: 2
             }
             FormCard.FormButtonDelegate {
-                text: "Reset tiles"
+                text: i18n("Reset tiles")
                 onClicked: {
                     root.cfg_tiles = root.cfg_tilesDefault
                 }

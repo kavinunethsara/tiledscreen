@@ -117,8 +117,8 @@ Kicker.DashboardWindow {
                 Category{
                     id: mainCat
 
-                    title: (root.currentPage == "search") ? "Search" : root.currentPage == "home" ? "Favourites" : "All Apps"
-                    action: root.currentPage != "home" ? "Favourites" : "All Apps"
+                    title: (root.currentPage == "search") ? i18n("Search") : root.currentPage == "home" ? i18n("Favourites") : i18n("All Apps")
+                    action: root.currentPage != "home" ? i18n("Favourites") : i18n("All Apps")
 
                     Layout.fillHeight: parent? true : false
                     anchors {

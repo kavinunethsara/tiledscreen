@@ -17,7 +17,8 @@ Rectangle {
     required property Tile container
 
     function activate() {
-        container.controller.appsView.runApp(root.metadata.action);
+        if (metadata.actionType === 0)
+            container.controller.appsView.runApp(root.metadata.action)
     }
 
     Component.onCompleted: {

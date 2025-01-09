@@ -11,7 +11,7 @@ pragma ComponentBehavior: Bound
 
 Kirigami.Dialog {
     id: root
-    title: "Tiles"
+    title: i18n("Tiles")
 
     required property var tiles
     required property var controller

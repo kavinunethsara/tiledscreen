@@ -143,7 +143,7 @@ Item {
         id: contextMenu
         property int current: 0
         PlasmaComponents.MenuItem{
-            text: "Edit Tile"
+            text: i18n("Edit Tile")
             icon.name: "editor"
             onClicked: {
                 root.openEditor()
@@ -151,7 +151,7 @@ Item {
         }
 
         PlasmaComponents.MenuItem{
-            text: "Delete Tile"
+            text: i18n("Delete Tile")
             icon.name: "delete"
             onClicked: {
                 root.controller.itemModel.remove(contextMenu.current);

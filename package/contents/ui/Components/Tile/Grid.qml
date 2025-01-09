@@ -183,7 +183,7 @@ Item {
                 id: contextMenu
                 property var current
                 PlasmaComponents.MenuItem{
-                    text: "Add Tile"
+                    text: i18n("Add Tile")
                     icon.name: "application-x-executable"
                     onClicked: {
                         tileSelector.position = Qt.point(contextMenu.current.col | 0, contextMenu.current.row | 0)
@@ -251,6 +251,8 @@ Item {
             executable.connectSource(cmd)
         }
     }
+
+    function exec(cmd) { executable.exec(cmd) }
 
     function addTile(type: string, metadata: variant, len = 2, breadth = 2, col = 0, row = 0, index = 0) {
 

@@ -14,12 +14,12 @@ FormCard.FormCardPage {
     required property Tile tile
 
     FormCard.FormHeader {
-        title: "General"
+        title: i18n("General")
     }
     FormCard.FormCard {
         FormCard.FormTextFieldDelegate {
-            label: "Name"
-            placeholderText: "Name to display on tile"
+            label: i18n("Name")
+            placeholderText: i18n("Name to display on tile")
             text: root.tile.tileData.name
             onTextChanged: {
                 root.tile.tileData.name = text;
@@ -27,7 +27,7 @@ FormCard.FormCardPage {
             }
         }
         FormCard.FormSpinBoxDelegate {
-            label: "Width"
+            label: i18n("Width")
             value: root.tile.model.tileWidth
             from: 1
             to: 100
@@ -37,7 +37,7 @@ FormCard.FormCardPage {
             }
         }
         FormCard.FormSpinBoxDelegate {
-            label: "Height"
+            label: i18n("Height")
             value: root.tile.model.tileHeight
             from: 1
             to: 100
@@ -49,12 +49,12 @@ FormCard.FormCardPage {
     }
 
     FormCard.FormHeader {
-        title: "Appearance"
+        title: i18n("Appearance")
     }
     FormCard.FormCard {
         FormCard.FormSwitchDelegate {
             id: customBack
-            text: "Custom background"
+            text: i18n("Custom background")
             checked: root.tile.tileData.useCustomBack
             onCheckedChanged: {
                 root.tile.tileData.useCustomBack = checked;
@@ -63,7 +63,7 @@ FormCard.FormCardPage {
         }
         FormCard.FormColorDelegate {
             enabled: customBack.checked
-            text: "Background Color"
+            text: i18n("Background Color")
             color: root.tile.tileData.backColor
             onColorChanged: {
                 root.tile.tileData.backColor = color.toString();
@@ -72,7 +72,7 @@ FormCard.FormCardPage {
         }
         FormCard.FormSwitchDelegate {
             id: customFront
-            text: "Custom text color"
+            text: i18n("Custom text color")
             checked: root.tile.tileData.useCustomFront
             onCheckedChanged: {
                 root.tile.tileData.useCustomFront = checked;
@@ -81,7 +81,7 @@ FormCard.FormCardPage {
         }
         FormCard.FormColorDelegate {
             enabled: customFront.checked
-            text: "Text Color"
+            text: i18n("Text Color")
             color: root.tile.tileData.frontColor
             onColorChanged: {
                 root.tile.tileData.frontColor = color.toString();
@@ -89,7 +89,7 @@ FormCard.FormCardPage {
             }
         }
         Utils.FormIconDelegate {
-            text: "Icon"
+            text: i18n("Icon")
             iconName: root.tile.tileData.icon
             onIconNameChanged: {
                 root.tile.tileData.icon = iconName;
@@ -98,13 +98,13 @@ FormCard.FormCardPage {
         }
     }
     FormCard.FormHeader {
-        title: "Actions"
+        title: i18n("Actions")
     }
     FormCard.FormCard {
         FormCard.FormComboBoxDelegate {
             id: actType
-            text: "Action Type"
-            model: ["Desktop File", "DBus", "Shell"]
+            text: i18n("Action Type")
+            model: [i18n("Desktop File"), i18n("Shell")]
             currentIndex: root.tile.tileData.actionType
             onCurrentIndexChanged: {
                 root.tile.tileData.actionType = currentIndex;
@@ -112,7 +112,7 @@ FormCard.FormCardPage {
             }
         }
         FormCard.FormTextFieldDelegate {
-            label: (actType.currentIndex == 0) ? "File Path" : actType.currentText + " Command"
+            label: (actType.currentIndex == 0) ? i18n("File Path") : actType.currentText + i18n(" Command")
             text: root.tile.tileData.action
             onTextChanged: {
                 root.tile.tileData.action = text;

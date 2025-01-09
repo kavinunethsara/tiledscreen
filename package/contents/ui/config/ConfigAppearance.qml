@@ -30,17 +30,17 @@ KCM.SimpleKCM {
 
     FormCard.FormCardPage {
         FormCard.FormHeader {
-            title: "Background"
+            title: i18n("Background")
         }
         FormCard.FormCard {
             FormCard.FormSwitchDelegate {
                 id: useImage
-                text: "Background Image"
+                text: i18n("Background Image")
             }
             FormCard.FormButtonDelegate {
                 id: imageSelector
                 enabled: useImage.checked
-                text: "Select Background"
+                text: i18n("Select Background")
                 onClicked: imagePath.open()
             }
             Dialogs.FileDialog {
@@ -49,7 +49,7 @@ KCM.SimpleKCM {
             }
             FormCard.FormSpinBoxDelegate {
                 id: blurSlider
-                label: "Image Blur"
+                label: i18n("Image Blur")
                 from: 0
                 to: 100
                 stepSize: 1
@@ -57,7 +57,7 @@ KCM.SimpleKCM {
             }
             FormCard.FormSpinBoxDelegate {
                 id: opacitySlider
-                label: "Background Opacity"
+                label: i18n("Background Opacity")
                 from: 0
                 to: 100
                 stepSize: 1
@@ -65,7 +65,7 @@ KCM.SimpleKCM {
             }
             FormCard.FormSpinBoxDelegate {
                 id: overlaySlider
-                label: "Background Overlay Opacity"
+                label: i18n("Background Overlay Opacity")
                 from: 0
                 to: 100
                 stepSize: 1
@@ -73,29 +73,29 @@ KCM.SimpleKCM {
         }
 
         FormCard.FormHeader {
-            title: "Toolbar"
+            title: i18n("Toolbar")
         }
         FormCard.FormCard {
             FormCard.FormSwitchDelegate {
                 id: showUser
-                text: "Show User Information"
+                text: i18n("Show User Information")
             }
             FormCard.FormComboBoxDelegate {
                 id: userNameStyle
-                text: "Show user name as"
+                text: i18n("Show user name as")
                 model: [
-                    "Full Name",
-                    "User Name"
+                    i18n("Full Name"),
+                    i18n("User Name")
                 ]
                 enabled: showUser.checked
             }
             FormCard.FormSwitchDelegate {
                 id: showLock
-                text: "Show lock button"
+                text: i18n("Show lock button")
             }
             FormCard.FormSwitchDelegate {
                 id: showLogout
-                text: "Show power button"
+                text: i18n("Show power button")
             }
 
         }

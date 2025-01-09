@@ -29,7 +29,7 @@ Rectangle {
         anchors.fill: parent
         anchors.margins: Kirigami.Units.smallSpacing
         Button {
-            text: "Close"
+            text: i18n("Close")
             onClicked: sidebar.closeClicked()
         }
 

@@ -14,12 +14,12 @@ FormCard.FormCardPage {
     required property Tile tile
 
     FormCard.FormHeader {
-        title: "General"
+        title: i18n("General")
     }
     FormCard.FormCard {
         FormCard.FormTextFieldDelegate {
-            label: "Name"
-            placeholderText: "Name to display on tile"
+            label: i18n("Name")
+            placeholderText: i18n("Name to display on tile")
             text: root.tile.tileData.name
             onTextChanged: {
                 root.tile.tileData.name = text;
@@ -27,7 +27,7 @@ FormCard.FormCardPage {
             }
         }
         FormCard.FormSpinBoxDelegate {
-            label: "Width"
+            label: i18n("Width")
             value: root.tile.model.tileWidth
             from: 1
             to: 100
@@ -37,7 +37,7 @@ FormCard.FormCardPage {
             }
         }
         FormCard.FormSpinBoxDelegate {
-            label: "Height"
+            label: i18n("Height")
             value: root.tile.model.tileHeight
             from: 1
             to: 100
@@ -49,11 +49,11 @@ FormCard.FormCardPage {
     }
 
     FormCard.FormHeader {
-        title: "Appearance"
+        title: i18n("Appearance")
     }
     FormCard.FormCard {
         Utils.FormIconDelegate {
-            text: "Icon"
+            text: i18n("Icon")
             iconName: root.tile.tileData.icon
             onIconNameChanged: {
                 root.tile.tileData.icon = iconName;
@@ -63,12 +63,12 @@ FormCard.FormCardPage {
     }
 
     FormCard.FormHeader {
-        title: "Grouping"
+        title: i18n("Grouping")
     }
     FormCard.FormCard {
         FormCard.FormSwitchDelegate {
-            text: "Enable tile grouping"
-            description: "When enabled, tiles positioned directly below will be attached to this tile."
+            text: i18n("Enable tile grouping")
+            description: i18n("When enabled, tiles positioned directly below will be attached to this tile.")
             checked: root.tile.tileData.grouping
             onCheckedChanged: {
                 root.tile.tileData.grouping = checked;
