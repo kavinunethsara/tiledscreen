@@ -104,7 +104,7 @@ FormCard.FormCardPage {
         FormCard.FormComboBoxDelegate {
             id: actType
             text: i18n("Action Type")
-            model: [i18n("Desktop File"), i18n("Shell")]
+            model: [i18n("Desktop File"), i18n("Command Line")]
             currentIndex: root.tile.tileData.actionType
             onCurrentIndexChanged: {
                 root.tile.tileData.actionType = currentIndex;
@@ -112,7 +112,7 @@ FormCard.FormCardPage {
             }
         }
         FormCard.FormTextFieldDelegate {
-            label: (actType.currentIndex == 0) ? i18n("File Path") : actType.currentText + i18n(" Command")
+            label: (actType.currentIndex == 0) ? i18n("File Path") : i18n("%1 Command", actType.currentText)
             text: root.tile.tileData.action
             onTextChanged: {
                 root.tile.tileData.action = text;

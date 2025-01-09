@@ -19,6 +19,8 @@ Rectangle {
     function activate() {
         if (metadata.actionType === 0)
             container.controller.appsView.runApp(root.metadata.action)
+        if (metadata.actionType === 1)
+            container.controller.exec(root.metadata.action)
     }
 
     Component.onCompleted: {
