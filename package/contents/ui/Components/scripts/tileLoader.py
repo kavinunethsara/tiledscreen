@@ -51,6 +51,6 @@ def gettiles():
                     continue
                 metadata['path'] = folder
                 tiles.append(metadata)
-    print(tiles)
+    print(json.dumps(tiles))
 
 gettiles()

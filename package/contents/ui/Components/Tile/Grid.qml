@@ -237,13 +237,6 @@ Item {
         onNewData: function(source, data) {
             disconnectSource(source)
             let jsdata = data.stdout
-            while (jsdata.includes("'")) {
-                jsdata = jsdata.replace("'", "\"")
-            }
-            while (jsdata.includes("False") || jsdata.includes("True")) {
-                jsdata = jsdata.replace("False", "false")
-                jsdata = jsdata.replace("True", "true")
-            }
             root.parseTileData(jsdata)
         }
 
@@ -251,8 +244,6 @@ Item {
             executable.connectSource(cmd)
         }
     }
-
-    function exec(cmd) { executable.exec(cmd) }
 
     function addTile(type: string, metadata: variant, len = 2, breadth = 2, col = 0, row = 0, index = 0) {
 
