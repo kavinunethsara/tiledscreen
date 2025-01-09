@@ -6,6 +6,7 @@
 import QtQuick
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents
+import org.kde.plasma.plasma5support as Plasma5Support
 import "../.."
 
 Rectangle {
@@ -16,11 +17,24 @@ Rectangle {
     required property var metadata
     required property Tile container
 
+    Plasma5Support.DataSource {
+        id: executable
+        engine: "executable"
+        connectedSources: []
+        onNewData: function(source, data) {
+            disconnectSource(source)
+        }
+
+        function exec(cmd) {
+            executable.connectSource(cmd)
+        }
+    }
+
     function activate() {
         if (metadata.actionType === 0)
             container.controller.appsView.runApp(root.metadata.action)
         if (metadata.actionType === 1)
-            container.controller.exec(root.metadata.action)
+            executable.exec(root.metadata.action)
     }
 
     Component.onCompleted: {
