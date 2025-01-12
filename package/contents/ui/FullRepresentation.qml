@@ -174,7 +174,7 @@ Kicker.DashboardWindow {
                         model: runnerModel.count ? runnerModel.modelForRow(0) : null
                         visible: root.currentPage == "search"
                         onAddTile: function (metadata) {
-                            tileView.addTile("IconTile", metadata)
+                            tileView.addTile("icon", metadata)
                         }
                         onToggle: {
                             root.toggle()

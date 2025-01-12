@@ -77,10 +77,10 @@ FocusScope {
                     icon: list.currentItem.model.decoration,
                     useCustomBack: false,
                     useCustomFront: false,
-                    backColor: Qt.color.white,
-                    frontColor: Kirigami.Theme.textColor,
+                    backColor: Kirigami.Theme.backgroundColor.toString(),
+                    frontColor: Kirigami.Theme.textColor.toString(),
                     actionType: 0,
-                    action: list.currentItem.model.favoriteId
+                    action: list.currentItem.model.favoriteId.replace("applications:", "")
                 }
                 root.addTile(metadata);
             }
