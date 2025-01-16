@@ -5,6 +5,7 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
+import QtCore
 import QtQuick.Layouts
 import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.plasmoid
@@ -98,5 +99,6 @@ PlasmoidItem {
         rootModel.refreshed.connect(reset);
         runnerModel.completed.connect(reset);
         if (rootModel.status == Component.Ready) rootModel.refresh();
+
     }
 }

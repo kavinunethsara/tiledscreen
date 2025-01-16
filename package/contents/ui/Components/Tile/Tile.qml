@@ -6,6 +6,7 @@
 import QtQuick
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents
+import '../scripts/util.js' as Utils
 
 Item {
     id: root
@@ -15,6 +16,7 @@ Item {
     property var controller: model.controller
     property var grid: model.grid
 
+    property variant config: {}
     property variant tileData: {}
     property QtObject internalTile: Item{}
 
@@ -28,18 +30,21 @@ Item {
     z: 1000
 
     Component.onCompleted: {
-        root.tileData = JSON.parse(root.model.metadata);
+        root.config = new Utils.TileData(root)
+        root.tileData = JSON.parse(root.model.metadata)
         let tileInfo = controller.tiles.find((tile) => tile.plugin == root.model.plugin)
-        const tileContent = Qt.createComponent(tileInfo.path + "/" +tileInfo.main);
+        const tileContent = Qt.createComponent(tileInfo.path + "/" +tileInfo.main)
         if (tileContent.status == Component.Ready) {
-            var intTile = tileContent.createObject(root, { metadata: Qt.binding(function() { return root.tileData }), container: root } );
+            var intTile = tileContent.createObject(root, { metadata: Qt.binding(function() { return root.config }), container: root } );
             internalTile = intTile
         }
 
     }
 
     onTileDataChanged: {
-        root.model.metadata = JSON.stringify(root.tileData);
+        root.config.metadata = root.tileData
+        root.configChanged()
+        root.model.metadata = JSON.stringify(root.tileData)
     }
 
     MouseArea {
@@ -124,10 +129,10 @@ Item {
             var loc = root.grid.mapFromItem(root.controller.tileContainer, root.x, root.y)
             var item = root.grid.childAt(loc.x, loc.y)
             if (!item) return
-                if (prevItem)
-                    prevItem.current = false
-                    item.current = true
-                    prevItem = item
+            if (prevItem)
+                prevItem.current = false
+            item.current = true
+            prevItem = item
         }
     }
 
