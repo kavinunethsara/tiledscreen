@@ -174,7 +174,13 @@ Item {
         let tileInfo = controller.tiles.find((tile) => tile.plugin == root.model.plugin)
         var conf = Qt.createComponent(tileInfo.path + "/" + tileInfo.config);
         if (conf.status === Component.Ready) {
-            root.controller.openEditor(conf, {tile: root});
+            const tileOpts = {
+                tile: root,
+                config: Qt.binding(function() {
+                    return root.config
+                })
+            }
+            root.controller.openEditor(conf, tileOpts);
         }
     }
 }

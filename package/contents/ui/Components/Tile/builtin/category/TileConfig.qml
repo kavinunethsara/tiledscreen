@@ -5,13 +5,12 @@
 
 import QtQuick
 import org.kde.kirigamiaddons.formcard as FormCard
-import "../.."
 import "../../../" as Utils
 
 FormCard.FormCardPage {
     id: root
     anchors.fill: parent
-    required property Tile tile
+    required property variant config
 
     FormCard.FormHeader {
         title: i18n("General")
@@ -20,30 +19,29 @@ FormCard.FormCardPage {
         FormCard.FormTextFieldDelegate {
             label: i18n("Name")
             placeholderText: i18n("Name to display on tile")
-            text: root.tile.tileData.name
+            text: config.name
             onTextChanged: {
-                root.tile.tileData.name = text;
-                root.tile.tileData = root.tile.tileData;
+                config.name = text
             }
         }
         FormCard.FormSpinBoxDelegate {
             label: i18n("Width")
-            value: root.tile.model.tileWidth
+            value: config.width
             from: 1
             to: 100
             stepSize: 1
             onValueChanged: {
-                root.tile.model.tileWidth = value;
+                config.width = value
             }
         }
         FormCard.FormSpinBoxDelegate {
             label: i18n("Height")
-            value: root.tile.model.tileHeight
+            value: config.height
             from: 1
             to: 100
             stepSize: 1
             onValueChanged: {
-                root.tile.model.tileHeight = value;
+                config.height = value
             }
         }
     }
@@ -54,10 +52,9 @@ FormCard.FormCardPage {
     FormCard.FormCard {
         Utils.FormIconDelegate {
             text: i18n("Icon")
-            iconName: root.tile.tileData.icon
+            iconName: config.icon
             onIconNameChanged: {
-                root.tile.tileData.icon = iconName;
-                root.tile.tileData = root.tile.tileData;
+                config.icon = iconName
             }
         }
     }
@@ -69,10 +66,9 @@ FormCard.FormCardPage {
         FormCard.FormSwitchDelegate {
             text: i18n("Enable tile grouping")
             description: i18n("When enabled, tiles positioned directly below will be attached to this tile.")
-            checked: root.tile.tileData.grouping
+            checked: config.grouping
             onCheckedChanged: {
-                root.tile.tileData.grouping = checked;
-                root.tile.tileData = root.tile.tileData;
+                config.grouping = checked
             }
         }
     }

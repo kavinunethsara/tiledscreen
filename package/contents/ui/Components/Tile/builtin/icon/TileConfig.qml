@@ -11,38 +11,39 @@ import "../../../" as Utils
 FormCard.FormCardPage {
     id: root
     anchors.fill: parent
-    required property Tile tile
+    required property variant config
 
     FormCard.FormHeader {
         title: i18n("General")
     }
     FormCard.FormCard {
         FormCard.FormTextFieldDelegate {
+            id: tet
             label: i18n("Name")
             placeholderText: i18n("Name to display on tile")
-            text: root.tile.config.name
+            text: config.name
             onTextChanged: {
-                root.tile.config.name = text
+                config.name = text
             }
         }
         FormCard.FormSpinBoxDelegate {
             label: i18n("Width")
-            value: root.tile.config.width
+            value: config.width
             from: 1
             to: 100
             stepSize: 1
             onValueChanged: {
-                root.tile.config.width = value;
+                config.width = value;
             }
         }
         FormCard.FormSpinBoxDelegate {
             label: i18n("Height")
-            value: root.tile.config.height
+            value: config.height
             from: 1
             to: 100
             stepSize: 1
             onValueChanged: {
-                root.tile.config.height = value;
+                config.height = value;
             }
         }
     }
@@ -54,40 +55,40 @@ FormCard.FormCardPage {
         FormCard.FormSwitchDelegate {
             id: customBack
             text: i18n("Custom background")
-            checked: root.tile.config.useCustomBack
+            checked: config.useCustomBack
             onCheckedChanged: {
-                root.tile.config.useCustomBack = checked
+                config.useCustomBack = checked
             }
         }
         FormCard.FormColorDelegate {
             enabled: customBack.checked
             text: i18n("Background Color")
-            color: root.tile.config.backColor
+            color: config.backColor
             onColorChanged: {
-                root.tile.config.backColor = color.toString()
+                config.backColor = color.toString()
             }
         }
         FormCard.FormSwitchDelegate {
             id: customFront
             text: i18n("Custom text color")
-            checked: root.tile.config.useCustomFront
+            checked: config.useCustomFront
             onCheckedChanged: {
-                root.tile.config.useCustomFront = checked
+                config.useCustomFront = checked
             }
         }
         FormCard.FormColorDelegate {
             enabled: customFront.checked
             text: i18n("Text Color")
-            color: root.tile.config.frontColor
+            color: config.frontColor
             onColorChanged: {
-                root.tile.config.frontColor = color.toString()
+                config.frontColor = color.toString()
             }
         }
         Utils.FormIconDelegate {
             text: i18n("Icon")
-            iconName: root.tile.config.icon
+            iconName: config.icon
             onIconNameChanged: {
-                root.tile.config.icon = iconName
+                config.icon = iconName
             }
         }
     }
@@ -99,16 +100,16 @@ FormCard.FormCardPage {
             id: actType
             text: i18n("Action Type")
             model: [i18n("Desktop File"), i18n("Command Line")]
-            currentIndex: root.tile.config.actionType
+            currentIndex: config.actionType
             onCurrentIndexChanged: {
-                root.tile.config.actionType = currentIndex
+                config.actionType = currentIndex
             }
         }
         FormCard.FormTextFieldDelegate {
             label: (actType.currentIndex == 0) ? i18n("File Path") : i18n("%1 Command", actType.currentText)
-            text: root.tile.config.action
+            text: config.action
             onTextChanged: {
-                root.tile.config.action = text
+                config.action = text
             }
         }
     }
