@@ -35,7 +35,10 @@ Item {
         let tileInfo = controller.tiles.find((tile) => tile.plugin == root.model.plugin)
         const tileContent = Qt.createComponent(tileInfo.path + "/" +tileInfo.main)
         if (tileContent.status == Component.Ready) {
-            var intTile = tileContent.createObject(root, { metadata: Qt.binding(function() { return root.config }), container: root } );
+            var intTile = tileContent.createObject(root, {
+                metadata: Qt.binding(function() { return root.config }),
+                container: root
+            } );
             internalTile = intTile
         }
 

@@ -64,6 +64,9 @@ An example `metadata.json`:
 }
 
 ```
+> Do not define 'height' or 'width' as configuration fileds using the defaults. This will interfere with configuration of the tiles
+
+> Following documentation is for TiledScreen V 1.x . Older API for v 0.9.x is now deprecated and may be removed from a later version. Using the older and newer APIs together can result in unwanted behavior
 
 ### Tile internals
 
@@ -98,12 +101,10 @@ This might be useful if the tiles of the same type needs to look connected to ea
 In the tile configuration component
 
 ```qml
-required property var tile // The Tile parent element
+required property var config // The configuration for the tile
 ```
 
-This provides direct access to the `Tile` component.
-
-> When updating tile.tielData, tile.tileData needs to be reassigned to itself for the tile to be update correctly. This might change in the future
+This provides direct access to the tile configuration.
 
 ### Tile component
 
@@ -133,20 +134,22 @@ The `model` property contains a `ListElement` with following properties
 
 ### Tile configuration
 
-Tile configuration is changed by setting the relevant values directly on the `Tile` Component.
+Tile configuration is changed by setting the relevant values of `config` property.
 
 For changing tile width/height from the configuration component:
 
 ```javascript
-tile.model.tileWidth = 2
-tile.model.tileHeight = 2
+config.width = 2
+config.height = 2
 ```
+
+> Do not define height and width as configuration fields for the tile ( from 'defaults' ).
+> This will interfere with the tile height and width configuration and may behave irratically
 
 For changing a configuration value for the tile (setting configuration `useBinding` to `true`) :
 
 ```javascript
-tile.tileData.useBinding = true
-tile.tileData = tile.tileData // This is currently required.
+config.useBinding = true
 ```
 
 If defined, `grouping` configuration key acts as a special option. When `grouping` is `true`, the all tiles directly below this tile will move together.
