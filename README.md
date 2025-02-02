@@ -80,13 +80,13 @@ required property var metadata // Holds the Tile configuration
 metadata property will hold the tile configuration as an JavaScript Object.
 The container property is a reference to the underlying Tile component. It's properties and structure is explained in [Tile component](#tile-component)
 
-Additionally, following functions are also required
+Additionally, following function is triggered when the tile is clicked.
 
 ```qml
-function activate () {} // Run when activated from the launcher
+function activate (handler) {} // Event handler is passed down as the handler parameter
 ```
 
-This function is mandatory. If your tile does not need have any effect when activated, define this as an empty function
+If this function is defined, it will be triggered when the tile is clicked, optionally passing the event along as the `handler ` parameter. Tiled Screen will automatically close after this function's return. If it's `undefined` the event will be passed through and Tiled Screen will not close.
 
 To fit the tile properly, The tile's root element needs to be configured as below
 

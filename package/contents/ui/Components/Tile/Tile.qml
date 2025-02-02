@@ -66,8 +66,10 @@ Item {
                     root.openEditor();
                     return
                 }
-                root.internalTile.activate();
-                controller.toggled();
+                if (root.internalTile.activate) {
+                    root.internalTile.activate(mouse)
+                    controller.toggled();
+                }
                 return;
             }
             if (mouse.button == Qt.RightButton) {
