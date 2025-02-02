@@ -7,6 +7,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import org.kde.kirigami as Kirigami
+import org.kde.plasma.extras as PlasmaExtras
 
 import QtQuick.Dialogs
 import org.kde.plasma.plasma5support as Plasma5Support
@@ -72,13 +73,13 @@ Kirigami.Dialog {
         FileDialog {
             id: fileDialog
             currentFolder: StandardPaths.standardLocations(StandardPaths.DownloadLocation)[0]
-            nameFilters: ["Zip archive (*.zip)"]
+            nameFilters: ["Tile zip archive (*.tile.zip)"]
             onAccepted: {
                 installer.install(selectedFile.toString())
             }
         }
 
-        GridView {
+        ListView {
             id: listView
             anchors {
                 top: installButton.bottom
@@ -88,55 +89,24 @@ Kirigami.Dialog {
             }
             anchors.margins: Kirigami.Units.largeSpacing
 
-            cellWidth: Kirigami.Units.gridUnit * 10 + Kirigami.Units.mediumSpacing * 2
-            cellHeight: Kirigami.Units.gridUnit * 4 + Kirigami.Units.mediumSpacing * 2
-
-            highlight: Rectangle { radius: 5; color: Kirigami.Theme.highlightColor }
+            highlight: PlasmaExtras.Highlight {}
 
             model: root.tiles
 
-            delegate: Item {
+            delegate:  RowLayout {
                 id: del
                 required property var model
-                required property int index
-
-                width: Kirigami.Units.gridUnit * 10 + Kirigami.Units.mediumSpacing * 2
-                height: Kirigami.Units.gridUnit * 4 + Kirigami.Units.mediumSpacing * 2
-
-                RowLayout {
-                    anchors.fill: parent
-                    anchors.margins: Kirigami.Units.mediumSpacing
-
-                    Kirigami.Icon {
-                        source: del.model.icon
-                        Layout.fillHeight: true
-                        Layout.alignment: Qt.AlignHCenter
-
-                        Layout.margins: Kirigami.Units.mediumSpacing
-                    }
-
-                    ColumnLayout {
-                        Layout.fillWidth: true
-                        Layout.margins: Kirigami.Units.mediumSpacing
-                        Label {
-                            text: del.model.name
-                            Layout.fillWidth: true
-                            horizontalAlignment: Qt.AlignLeft
-                            elide: Qt.ElideRight
-                            color: listView.currentIndex == del.index ? Kirigami.Theme.highlightedTextColor: Kirigami.Theme.textColor
-                        }
-                        Label {
-                            text: del.model.description
-                            Layout.fillWidth: true
-                            horizontalAlignment: Qt.AlignLeft
-                            wrapMode:Text.WordWrap
-                            elide: Qt.ElideRight
-                            color: listView.currentIndex == del.index ? Kirigami.Theme.highlightedTextColor: Kirigami.Theme.textColor
-                        }
-                    }
+                anchors.left: parent.left
+                anchors.right: parent.right
+                Kirigami.IconTitleSubtitle {
+                    icon.source: del.model.icon
+                    title: del.model.name
+                    subtitle: del.model.description
+                    Layout.margins: Kirigami.Units.smallSpacing
                 }
             }
         }
+
         MouseArea{
             id: mouseArea
             anchors.fill: listView
