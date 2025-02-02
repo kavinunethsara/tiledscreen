@@ -46,6 +46,7 @@ Kirigami.Dialog {
                 if (jsdata != "") {
                     statusDialog.text = jsdata
                 } else {
+                    root.controller.getTiles()
                     statusDialog.text = "Successfully installed"
                 }
                 statusDialog.open()
