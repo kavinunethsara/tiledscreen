@@ -1,5 +1,5 @@
 /*
- SPDX-FileCopyrightText: 2024 Kavinu Nethsara <kavinunethsarakoswattage@gmail.com>
+ SPDX-FileCopyrightText: 2025 Kavinu Nethsara <kavinunethsarakoswattage@gmail.com>
  SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -12,7 +12,7 @@ import "../.."
 FormCard.FormCardPage {
     id: root
     anchors.fill: parent
-    required property Tile tile
+    required property variant config
 
     FormCard.FormHeader {
         title: "General"
@@ -21,39 +21,37 @@ FormCard.FormCardPage {
         FormCard.FormTextFieldDelegate {
             label: "Text"
             placeholderText: "Text to display on tile"
-            text: root.tile.tileData.name
+            text: config.name
             onTextChanged: {
-                root.tile.tileData.name = text;
-                root.tile.tileData = root.tile.tileData;
+                config.name = text
             }
         }
         FormCard.FormSpinBoxDelegate {
             label: "Width"
-            value: root.tile.model.tileWidth
+            value: config.width
             from: 1
             to: 100
             stepSize: 1
             onValueChanged: {
-                root.tile.model.tileWidth = value;
+                config.widthidth = value
             }
         }
         FormCard.FormSpinBoxDelegate {
             label: "Height"
-            value: root.tile.model.tileHeight
+            value: config.height
             from: 1
             to: 100
             stepSize: 1
             onValueChanged: {
-                root.tile.model.tileHeight = value;
+                config.height = value
             }
         }
         FormCard.FormTextFieldDelegate {
             label: "Image Path"
             placeholderText: "Path to the image"
-            text: root.tile.tileData.image
+            text: config.image
             onTextChanged: {
-                root.tile.tileData.image = text;
-                root.tile.tileData = root.tile.tileData;
+                config.image = text
             }
         }
         FormCard.FormButtonDelegate {
@@ -68,28 +66,25 @@ FormCard.FormCardPage {
         FormCard.FormComboBoxDelegate {
             text: "Scaling Mode"
             model:["Stretch", "Crop and Fit", "Fit Inside", "No scaling"]
-            currentIndex: root.tile.tileData.mode
+            currentIndex: config.mode
             onCurrentIndexChanged: {
-                root.tile.tileData.mode = currentIndex;
-                root.tile.tileData = root.tile.tileData;
+                config.mode = currentIndex
             }
         }
         FormCard.FormSwitchDelegate {
             id: customFront
             text: "Custom text color"
-            checked: root.tile.tileData.useCustomFront
+            checked: config.useCustomFront
             onCheckedChanged: {
-                root.tile.tileData.useCustomFront = checked;
-                root.tile.tileData = root.tile.tileData;
+                config.useCustomFront = checked
             }
         }
         FormCard.FormColorDelegate {
             enabled: customFront.checked
             text: "Text Color"
-            color: root.tile.tileData.frontColor
+            color: config.frontColor
             onColorChanged: {
-                root.tile.tileData.frontColor = color.toString();
-                root.tile.tileData = root.tile.tileData;
+                config.frontColor = color.toString()
             }
         }
     }
