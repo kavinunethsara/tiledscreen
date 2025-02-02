@@ -7,7 +7,6 @@ import QtQuick
 import QtCore
 import org.kde.kirigamiaddons.formcard as FormCard
 import QtQuick.Dialogs as Dialogs
-import "../.."
 
 FormCard.FormCardPage {
     id: root
@@ -47,6 +46,7 @@ FormCard.FormCardPage {
             }
         }
         FormCard.FormTextFieldDelegate {
+            id: imagePath
             label: "Image Path"
             placeholderText: "Path to the image"
             text: config.image
@@ -57,12 +57,16 @@ FormCard.FormCardPage {
         FormCard.FormButtonDelegate {
             id: imageSelector
             text: "Select Image"
-            onClicked: imagePath.open()
+            onClicked: imageDialog.open()
         }
         Dialogs.FileDialog {
-            id: imagePath
+            id: imageDialog
             currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
+            onAccepted: {
+                imagePath.text = selectedFile.toString()
+            }
         }
+
         FormCard.FormComboBoxDelegate {
             text: "Scaling Mode"
             model:["Stretch", "Crop and Fit", "Fit Inside", "No scaling"]
