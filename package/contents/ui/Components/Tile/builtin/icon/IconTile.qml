@@ -1,5 +1,5 @@
 /*
- SPDX-FileCopyrightText: 2024 Kavinu Nethsara <kavinunethsarakoswattage@gmail.com>
+ SPDX-FileCopyrightText: 2025 Kavinu Nethsara <kavinunethsarakoswattage@gmail.com>
  SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -41,7 +41,7 @@ Rectangle {
         if (!root.metadata.useCustomBack) {
             root.metadata.backColor = imageColor.background
         }
-        if (!root.useCustomFront) {
+        if (!root.metadata.useCustomFront) {
             root.metadata.frontColor = imageColor.foreground
         }
     }

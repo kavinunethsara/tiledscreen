@@ -1,11 +1,10 @@
 /*
- SPDX-FileCopyrightText: 2024 Kavinu Nethsara <kavinunethsarakoswattage@gmail.com>
+ SPDX-FileCopyrightText: 2025 Kavinu Nethsara <kavinunethsarakoswattage@gmail.com>
  SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 import QtQuick
 import org.kde.kirigamiaddons.formcard as FormCard
-import "../.."
 import "../../../" as Utils
 
 FormCard.FormCardPage {
@@ -33,7 +32,7 @@ FormCard.FormCardPage {
             to: 100
             stepSize: 1
             onValueChanged: {
-                config.width = value;
+                config.width = value
             }
         }
         FormCard.FormSpinBoxDelegate {
@@ -43,7 +42,7 @@ FormCard.FormCardPage {
             to: 100
             stepSize: 1
             onValueChanged: {
-                config.height = value;
+                config.height = value
             }
         }
     }
