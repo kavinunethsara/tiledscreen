@@ -39,10 +39,10 @@ Rectangle {
 
     Component.onCompleted: {
         if (!root.metadata.useCustomBack) {
-            root.metadata.backColor = imageColor.background
+            root.metadata.backColor = imageColor.background.toString()
         }
         if (!root.metadata.useCustomFront) {
-            root.metadata.frontColor = imageColor.foreground
+            root.metadata.frontColor = imageColor.foreground.toString()
         }
     }
 

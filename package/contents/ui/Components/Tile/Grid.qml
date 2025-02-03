@@ -1,7 +1,7 @@
 /*
  SPDX-FileCopyrightText: 2024 Kavinu Nethsara <kavinunethsarakoswattage@gmail.com>
  SPDX-License-Identifier: LGPL-2.1-or-later
- */
+*/
 
 import QtQuick
 import QtQuick.Layouts
@@ -9,7 +9,6 @@ import QtQuick.Controls
 import org.kde.plasma.plasmoid
 import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.components as PlasmaComponents
-import org.kde.plasma.private.kicker as Kicker
 import org.kde.kirigami as Kirigami
 
 import org.kde.plasma.plasma5support as Plasma5Support
@@ -164,17 +163,15 @@ Item {
                 propagateComposedEvents: true
                 acceptedButtons: Qt.RightButton
                 onClicked: function (mouse) {
-                    var pos = scroll.mapToItem(grid, mouse.x, mouse.y);
-                    var tilepos = scroll.mapToItem(tileBody, mouse.x, mouse.y);
-                    var tile = tileBody.childAt(tilepos.x, tilepos.y);
-                    var item = grid.childAt(pos.x, pos.y);
+                    var tile = tileBody.childAt(mouse.x, mouse.y)
+                    var item = grid.childAt(mouse.x, mouse.y)
                     if (tile && tile.model.plugin) {
-                        mouse.accepted = false;
-                        return;
+                        mouse.accepted = false
+                        return
                     }
                     if (item.gridBox) {
                         contextMenu.current = item
-                        contextMenu.popup();
+                        contextMenu.popup()
                     }
                 }
             }
