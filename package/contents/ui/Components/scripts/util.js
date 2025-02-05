@@ -9,7 +9,7 @@ class TileData {
 
         dataObj.forEach(([key, _value]) => {
 
-            this.__defineGetter__(key,() => this.metadata[key] ? this.metadata[key] : defaults[key] )
+            this.__defineGetter__(key,() => this.metadata.hasOwnProperty(key) ? this.metadata[key] : defaults[key] )
 
             this.__defineSetter__(key, (val) => {
                 this.metadata[key] = val
