@@ -49,9 +49,11 @@ Item {
 
     // Sync changes from old API to new one
     onTileDataChanged: {
-        root.config.metadata = root.tileData
-        root.configChanged()
-        root.model.metadata = JSON.stringify(root.tileData)
+        if (root.tileData) {
+            root.config.metadata = root.tileData
+            root.configChanged()
+            root.model.metadata = JSON.stringify(root.tileData)
+        }
     }
 
     MouseArea {

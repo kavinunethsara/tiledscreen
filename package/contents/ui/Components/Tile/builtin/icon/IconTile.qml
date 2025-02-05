@@ -17,6 +17,8 @@ Rectangle {
     required property var metadata
     required property Tile container
 
+    property var fillModes: [Image.Stretch, Image.PreserveAspectCrop, Image.PreserveAspectFit, Image.Pad]
+
     Plasma5Support.DataSource {
         id: executable
         engine: "executable"
@@ -51,9 +53,20 @@ Rectangle {
         source: root.metadata.icon
     }
 
+    // Background Image
+    Image {
+        id: backImage
+        anchors.fill: parent
+        visible: root.metadata.useBackgroundImage
+
+        source: root.metadata.backgroundImage
+        fillMode: root.fillModes[root.metadata.imageMode]
+    }
+
     color: root.metadata.useCustomBack? root.metadata.backColor : imageColor.background
 
     Item {
+        visible: root.metadata.showIcon
         anchors {
             left: parent.left
             right: parent.right

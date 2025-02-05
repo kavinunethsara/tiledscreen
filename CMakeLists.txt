@@ -5,6 +5,6 @@ project(plasma-tiledscreen)
 find_package(ECM REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
-find_package(KF6Plasma REQUIRED)
+find_package(Plasma REQUIRED)
 
 plasma_install_package(package com.github.kavinunethsara.tiledscreen)

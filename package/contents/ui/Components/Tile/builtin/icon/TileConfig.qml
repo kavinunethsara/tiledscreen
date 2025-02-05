@@ -6,6 +6,8 @@
 import QtQuick
 import org.kde.kirigamiaddons.formcard as FormCard
 import "../../../" as Utils
+import QtQuick.Dialogs as Dialogs
+import QtCore
 
 FormCard.FormCardPage {
     id: root
@@ -51,6 +53,14 @@ FormCard.FormCardPage {
         title: i18n("Appearance")
     }
     FormCard.FormCard {
+        FormCard.FormSwitchDelegate {
+            text: i18n("Show icon")
+            checked: config.showIcon
+            onCheckedChanged: {
+                config.showIcon = checked
+            }
+        }
+
         FormCard.FormSwitchDelegate {
             id: customBack
             text: i18n("Custom background")
@@ -109,6 +119,53 @@ FormCard.FormCardPage {
             text: config.action
             onTextChanged: {
                 config.action = text
+            }
+        }
+    }
+
+    FormCard.FormHeader {
+        title: i18n("Background Image")
+    }
+
+    FormCard.FormCard {
+        FormCard.FormSwitchDelegate {
+            id: imageBack
+            text: i18n("Background Image")
+            checked: config.useBackgroundImage
+            onCheckedChanged: {
+                config.useBackgroundImage = checked
+            }
+        }
+        FormCard.FormTextFieldDelegate {
+            id: imagePath
+            enabled: imageBack.checked
+            label: "Image Path"
+            placeholderText: "Path to the image"
+            text: config.backgroundImage
+            onTextChanged: {
+                config.backgroundImage = text
+            }
+        }
+        FormCard.FormButtonDelegate {
+            id: imageSelector
+            enabled: imageBack.checked
+            text: "Select Image"
+            onClicked: imageDialog.open()
+        }
+        Dialogs.FileDialog {
+            id: imageDialog
+            currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
+            onAccepted: {
+                imagePath.text = selectedFile.toString()
+            }
+        }
+        FormCard.FormComboBoxDelegate {
+            text: "Background Scaling Mode"
+            enabled: imageBack.checked
+            model:["Stretch", "Crop and Fit", "Fit Inside", "No scaling"]
+            currentIndex: config.imageMode
+            onCurrentIndexChanged: {
+                config.imageMode = currentIndex
             }
         }
     }

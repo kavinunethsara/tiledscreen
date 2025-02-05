@@ -14,6 +14,10 @@
         "useCustomFront": false,
         "backColor": "white",
         "frontColor": "black",
+        "showIcon": true,
+        "imageMode": 1,
+        "useBackgroundImage": false,
+        "backgroundImage": "/usr/share/wallpapers/Next/contents/images/1024x768.png",
         "actionType": 0,
         "action": ""
     }
