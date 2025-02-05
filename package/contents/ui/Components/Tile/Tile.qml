@@ -30,9 +30,12 @@ Item {
     z: 1000
 
     Component.onCompleted: {
-        root.config = new Utils.TileData(root)
-        root.tileData = JSON.parse(root.model.metadata)
         let tileInfo = controller.tiles.find((tile) => tile.plugin == root.model.plugin)
+        root.config = new Utils.TileData(root, tileInfo.defaults)
+
+        // For backward compatibility with API 0.9
+        root.tileData = JSON.parse(root.model.metadata)
+
         const tileContent = Qt.createComponent(tileInfo.path + "/" +tileInfo.main)
         if (tileContent.status == Component.Ready) {
             var intTile = tileContent.createObject(root, {
@@ -44,6 +47,7 @@ Item {
 
     }
 
+    // Sync changes from old API to new one
     onTileDataChanged: {
         root.config.metadata = root.tileData
         root.configChanged()

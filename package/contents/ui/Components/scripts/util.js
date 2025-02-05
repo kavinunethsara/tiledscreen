@@ -1,12 +1,16 @@
 // This keeps track of the tile config and automatically updates the model
 class TileData {
-    constructor(root){
+    constructor(root, defaults){
         this.root = root
         this.model = root.model
         this.metadata = JSON.parse(this.model.metadata)
-        const dataObj =  Object.entries(this.metadata)
-        dataObj.forEach(([key, value]) => {
-            this.__defineGetter__(key, () => this.metadata[key])
+
+        const dataObj =  Object.entries(defaults)
+
+        dataObj.forEach(([key, _value]) => {
+
+            this.__defineGetter__(key,() => this.metadata[key] ? this.metadata[key] : defaults[key] )
+
             this.__defineSetter__(key, (val) => {
                 this.metadata[key] = val
                 this.model.metadata = JSON.stringify(this.metadata)
