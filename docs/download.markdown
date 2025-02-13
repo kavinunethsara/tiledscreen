@@ -9,7 +9,7 @@ Download options
     <a class="tile rounded bordered" href="#plasma-get-new">
         <div class="flex column center-content">
             <div class="tile rounded cutout">
-                <img src="/assets/images/edit-download.svg" width=100 height=100 />
+                <img src="{{site.baseurl}}/assets/images/edit-download.svg" width=100 height=100 />
             </div>
             <h4> Plasma Get New </h4>
             <p> Automatic installation </p>
@@ -19,7 +19,7 @@ Download options
     <a class="tile rounded bordered" href="https://store.kde.org/p/2238981">
         <div class="flex column center-content">
             <div class="tile rounded cutout">
-                <img src="/assets/images/globe.svg" width=100 height=100 />
+                <img src="{{site.baseurl}}/assets/images/globe.svg" width=100 height=100 />
             </div>
             <h4> KDE (Pling) Store </h4>
             <p> Manual install </p>

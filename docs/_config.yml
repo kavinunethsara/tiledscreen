@@ -22,8 +22,8 @@ title: TiledScreen
 email: kavinunuethsarakoswattage@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   The home page and documentation of Tiled Screen for KDE PLasma 6
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/tiledscreen" # the subpath of your site, e.g. /blog
+url: "https://kavinunethsara.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  kavinunethsara
 
 # Build settings

@@ -1,10 +1,10 @@
 ---
 layout: article
 title: Release 1.0
-cover: "/assets/images/article-front.png"
+cover: "{{site.baseurl}}/assets/images/article-front.png"
 ---
 
-<img class="background" src="/assets/images/article-front.png" />
+<img class="background" src="{{site.baseurl}}/assets/images/article-front.png" />
 
 # Tiled Screen Version 1.0
 
@@ -18,13 +18,13 @@ This is the first stable release of Tiled Screen. Following this release, all Ti
             <h4> Redesigned tile selector </h4>
             <p> The tile selector now looks more consistent with the rest of the system. It is now also possible to install tiles directly using the <b>Install From File</b> button in the selector.</p>
         </div>
-        <img src="/assets/images/v1-tile-menu.png" />
+        <img src="{{site.baseurl}}/assets/images/v1-tile-menu.png" />
     </div>
 </div>
 
 <div class="tile rounded">
     <div class="grid x2 adaptive stretch-width">
-        <img src="/assets/images/v1-backed-tiles.png" />
+        <img src="{{site.baseurl}}/assets/images/v1-backed-tiles.png" />
         <div class="flex column spaced">
             <h4> Background images for Icon tiles </h4>
             <p> It is now possible to add background images to icon tiles. If you want, you can also hide the icon from a tile.</p>
@@ -40,13 +40,13 @@ This is the first stable release of Tiled Screen. Following this release, all Ti
             <h4> Calendar Tile </h4>
             <p> Calendar is a new downloadable tile in the official collection. This provides the same calendar interface as the Calendar Plasma Widget with few customization options.</p>
         </div>
-        <img src="/assets/images/v1-calendar.png" />
+        <img src="{{site.baseurl}}/assets/images/v1-calendar.png" />
     </div>
 </div>
 
 <div class="tile rounded">
     <div class="grid x2 adaptive stretch-width">
-        <img src="/assets/images/v1-outlined-binaryclock.png" />
+        <img src="{{site.baseurl}}/assets/images/v1-outlined-binaryclock.png" />
         <div class="flex column spaced">
             <h4> Binary Clock: Border </h4>
             <p> It is now possible to add a border to Binary clock. The width of the border can be configured while the colour is taken from the active LED colour. </p>

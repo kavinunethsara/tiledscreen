@@ -4,7 +4,7 @@ layout: article
 {% assign images = page.images | split: "," %}
 {% assign firstimage = images.first %}
 
-<img class="background" src="/assets/images/tiles/{{page.domain}}/{{ page.cover }}" />
+<img class="background" src="{{site.baseurl}}/assets/images/tiles/{{page.domain}}/{{ page.cover }}" />
 
 <div class="flex row center-content stretch-width">
     <h1 class="nowrap"> {{ page.title }} </h1>
@@ -12,11 +12,11 @@ layout: article
     <span class="flex stretch-width"> <!-- Separator --> </span>
     {% if page.website %}
     <a href="{{ page.website }}">
-        <button class="center-content"> <img src="/assets/images/edit-download.svg" class="icon" /> Website </button>
+        <button class="center-content"> <img src="{{site.baseurl}}/assets/images/edit-download.svg" class="icon" /> Website </button>
     </a>
     {% endif %}
     <a href="{{ page.download }}">
-        <button class="center-content"> <img src="/assets/images/edit-download.svg" class="icon" /> Download </button>
+        <button class="center-content"> <img src="{{site.baseurl}}/assets/images/edit-download.svg" class="icon" /> Download </button>
     </a>
 </div>
 
@@ -36,13 +36,13 @@ layout: article
 
 {% if images.size > 0 %}
 <section class="gallery" id="gallery">
-    <img class="active" src="/assets/images/tiles/{{page.domain}}/{{firstimage}}" />
+    <img class="active" src="{{site.baseurl}}/assets/images/tiles/{{page.domain}}/{{firstimage}}" />
     <div class="flex row wrap center-content">
         {% for image in images %}
             {% if forloop.first %}
-                <img class="thumbnail current spaced" src="/assets/images/tiles/{{page.domain}}/{{image}}" />
+                <img class="thumbnail current spaced" src="{{site.baseurl}}/assets/images/tiles/{{page.domain}}/{{image}}" />
             {% else %}
-                <img class="thumbnail spaced" src="/assets/images/tiles/{{page.domain}}/{{image}}" />
+                <img class="thumbnail spaced" src="{{site.baseurl}}/assets/images/tiles/{{page.domain}}/{{image}}" />
             {% endif %}
         {% endfor %}
     </div>

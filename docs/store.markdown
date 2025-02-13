@@ -1,9 +1,9 @@
 ---
 layout: default
 title: Store
-cover: "/assets/images/article-front.png"
+cover: "{{site.baseurl}}/assets/images/article-front.png"
 ---
-<img class="background" src="/assets/images/article-front.png" />
+<img class="background" src="{{site.baseurl}}/assets/images/article-front.png" />
 
 # Store
 
@@ -75,7 +75,7 @@ cover: "/assets/images/article-front.png"
     
     const Tile = (data) => (
         `<a class="tile rounded gray fill-available" href="${data.url}">
-            <img src="/assets/images/tiles/${data.domain}/${data.thumbnail}" />
+            <img src="{{site.baseurl}}/assets/images/tiles/${data.domain}/${data.thumbnail}" />
             <div class="flex column spaced">
                 <div class="flex row center-content">
                     <h4 class="flex stretch-width"> ${data.title} </h4>

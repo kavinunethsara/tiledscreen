@@ -4,5 +4,5 @@
 
 layout: home
 title: Home
-cover: "/assets/images/article-front.png"
+cover: "{{site.baseurl}}/assets/images/article-front.png"
 ---
