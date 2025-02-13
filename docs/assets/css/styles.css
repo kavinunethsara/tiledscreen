@@ -52,6 +52,7 @@ article img {
   right: 0;
   -webkit-mask-image: linear-gradient(to top, transparent 30%, black 70%);
   mask-image: linear-gradient(to top, transparent 30%, black 70%);
+  width: 100%;
 }
 
 .hero {
