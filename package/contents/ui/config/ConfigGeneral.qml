@@ -4,7 +4,8 @@
  */
 
 import QtQuick
-
+import QtQuick.Layouts
+import QtQuick.Controls as Controls
 import org.kde.kcmutils as KCM
 import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.formcard as FormCard
@@ -51,6 +52,24 @@ KCM.SimpleKCM {
                 text: i18n("Reset tiles")
                 onClicked: {
                     root.cfg_tiles = root.cfg_tilesDefault
+                    infoDial.open()
+                }
+
+                Kirigami.Dialog {
+                    id: infoDial
+                    title: i18n("Requires Re-Login")
+                    RowLayout {
+                        Layout.margins: Kirigami.Units.smallSpacing
+                        Kirigami.Icon {
+                            source: "dialog-warning-symbolic"
+                            Layout.margins: Kirigami.Units.smallSpacing
+                        }
+                        Controls.Label {
+                            id: dialLabel
+                            text: "You need to log out and log back in for this to take effect."
+                            Layout.margins: Kirigami.Units.smallSpacing
+                        }
+                    }
                 }
             }
         }
