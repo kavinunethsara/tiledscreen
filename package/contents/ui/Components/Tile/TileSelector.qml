@@ -28,11 +28,27 @@ Kirigami.Dialog {
         implicitWidth: Kirigami.Units.gridUnit * 20 + Kirigami.Units.mediumSpacing * 4 + Kirigami.Units.largeSpacing * 2
         implicitHeight: Kirigami.Units.gridUnit * 16 + Kirigami.Units.largeSpacing * 2
 
+        Label {
+            text: i18n("Download Tiles...")
+            color: Kirigami.Theme.linkColor
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.margins: Kirigami.Units.smallSpacing
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                onClicked: {
+                    Qt.openUrlExternally("https://kavinunethsara.github.io/tiledscreen/")
+                }
+            }
+        }
+
         Button {
             id: installButton
             text: i18n("Install from file")
             anchors.top: parent.top
             anchors.right: parent.right
+            anchors.margins: Kirigami.Units.smallSpacing
             onClicked: fileDialog.open()
         }
 
