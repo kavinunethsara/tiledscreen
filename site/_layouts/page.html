@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     {% if page.domain %}
     <meta name=" description" content= "{{page.excerpt}}" />
     {% else %}
@@ -17,6 +18,8 @@
     {% elsif page.cover %}
     <meta property=”og:image” content="{{page.cover}}" />
     {% endif %}
+
+    <link rel="icon" type="image/x-icon" href="/assets/images/tiledscreen.svg">
     <link rel="stylesheet" href="/assets/css/styles.css">
     <title>Tiled Screen : {{ page.title }}</title>
 </head>

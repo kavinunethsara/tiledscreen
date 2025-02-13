@@ -6,7 +6,7 @@ domain: "com.github.kavinunethsara.calendar"
 thumbnail: cover.png
 cover: cover.png
 official: true
-download: http://localohst/asd
+download: "https://github.com/kavinunethsara/calendarTile/releases/download/1.0/calendar.tile.zip"
 images: cover.png,tile-backed.png,tile-hollow.png
 
 author: Kavinu Nethsara
