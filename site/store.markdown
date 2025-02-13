@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Store
+cover: "/assets/images/article-front.png"
 ---
 <img class="background" src="/assets/images/article-front.png" />
 

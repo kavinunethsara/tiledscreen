@@ -1,6 +1,7 @@
 ---
 layout: article
 title: Release 1.0
+cover: "/assets/images/article-front.png"
 ---
 
 <img class="background" src="/assets/images/article-front.png" />

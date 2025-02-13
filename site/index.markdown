@@ -4,4 +4,5 @@
 
 layout: home
 title: Home
+cover: "/assets/images/article-front.png"
 ---

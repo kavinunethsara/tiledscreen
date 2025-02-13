@@ -10,6 +10,11 @@ layout: article
     <h1 class="nowrap"> {{ page.title }} </h1>
     <h4 class="spaced center-content nowrap"> {{ page.version }} </h4>
     <span class="flex stretch-width"> <!-- Separator --> </span>
+    {% if page.website %}
+    <a href="{{ page.website }}">
+        <button class="center-content"> <img src="/assets/images/edit-download.svg" class="icon" /> Website </button>
+    </a>
+    {% endif %}
     <a href="{{ page.download }}">
         <button class="center-content"> <img src="/assets/images/edit-download.svg" class="icon" /> Download </button>
     </a>
