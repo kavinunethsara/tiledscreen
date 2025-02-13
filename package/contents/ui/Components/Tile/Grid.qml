@@ -267,6 +267,7 @@ Item {
 
     function loadTiles() {
         initialLoad = true
+        itemModel.clear()
         var items = JSON.parse(plasmoid.configuration.tiles);
         items.forEach((item) => {
             itemModel.append({ grid: grid, controller: root, metadata: JSON.stringify(item.metadata), plugin: item.plugin, tileWidth: item.tileWidth, tileHeight: item.tileHeight, column: item.column, row: item.row });
