@@ -1,0 +1,5 @@
+{% if include.name==page.title %}
+<a href="{{include.link}}" class="button active {{ include.class }}">{{include.name}}</a>
+{% else %}
+<a href="{{include.link}}" class="button {{ include.class }}">{{include.name}}</a>
+{% endif %}

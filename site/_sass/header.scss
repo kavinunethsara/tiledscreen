@@ -1,0 +1,25 @@
+header {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    margin: 10px;
+    background-color: transparent;
+    color: white;
+
+    width: 100%;
+
+    .stylized {
+        background-color: transparent;
+        color: white !important;
+        font-size: 18pt;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    @media screen and (max-width: 700px) {
+        & {
+            flex-direction: column;
+            margin: 0;
+        }
+    }
+}

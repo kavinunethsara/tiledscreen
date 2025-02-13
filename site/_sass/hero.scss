@@ -1,0 +1,21 @@
+.hero {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: white;
+    padding: 20px;
+
+    h1 {
+       font-size: 36pt;
+       text-align: center;
+       margin: 10px;
+       padding: 0;
+    }
+
+    h2 {
+        font-size: 15pt;
+        text-align: center;
+        font-weight: normal;
+        margin: 5px;
+    }
+}

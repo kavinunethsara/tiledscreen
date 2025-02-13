@@ -1,0 +1,21 @@
+<nav class="primary">
+    <div class="flex row stretch-width center-content">
+        <a href="/" class="stylized">Tiled&nbsp;Screen</a>
+        <div class="flex stretch-width"></div>
+        <button class="button mobile-only" onClick=showMenu() >
+            <img src="/assets/images/application-menu.svg" style="width: 20pt; height: 20pt; filter: invert();"/>
+        </button>
+    </div>
+    <div class="desktop-only" id="collapsible">
+        {% include navlink.html name="Store" link="/store" %}
+        {% include navlink.html name="Documentation" link="/docs" %}
+        {% include navlink.html name="About" link="/about" %}
+        {% include navlink.html name="Download" link="/download" %}
+    </div>
+    <script>
+        const menu = document.querySelector('#collapsible')
+        const showMenu = () => {
+            menu.classList.toggle('desktop-only')
+        }
+    </script>
+</nav>

@@ -1,0 +1,47 @@
+---
+layout: article
+---
+{% assign images = page.images | split: "," %}
+{% assign firstimage = images.first %}
+
+<img class="background" src="/assets/images/tiles/{{page.domain}}/{{ page.cover }}" />
+
+<div class="flex row center-content stretch-width">
+    <h1 class="nowrap"> {{ page.title }} </h1>
+    <h4 class="spaced center-content nowrap"> {{ page.version }} </h4>
+    <span class="flex stretch-width"> <!-- Separator --> </span>
+    <a href="{{ page.download }}">
+        <button class="center-content"> <img src="/assets/images/edit-download.svg" class="icon" /> Download </button>
+    </a>
+</div>
+
+
+{% if page.official %}
+<span class="badge official">Official</span>
+{% endif %}
+
+<p>
+    <b> Created by </b>
+        <a href="{{page.email}}">{{ page.author }}</a>,
+    <b> License: </b>
+        {{ page.license }},
+    <b> Last update: </b>
+        {{ page.last-update }}
+</p>
+
+{% if images.size > 0 %}
+<section class="gallery" id="gallery">
+    <img class="active" src="/assets/images/tiles/{{page.domain}}/{{firstimage}}" />
+    <div class="flex row wrap center-content">
+        {% for image in images %}
+            {% if forloop.first %}
+                <img class="thumbnail current spaced" src="/assets/images/tiles/{{page.domain}}/{{image}}" />
+            {% else %}
+                <img class="thumbnail spaced" src="/assets/images/tiles/{{page.domain}}/{{image}}" />
+            {% endif %}
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+{{ content }}

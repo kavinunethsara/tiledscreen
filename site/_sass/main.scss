@@ -1,0 +1,64 @@
+@use 'sass:color';
+
+* {
+    box-sizing: border-box;
+    font-family: "noto sans";
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+
+    background: linear-gradient(135deg, rgb(5, 5, 5), rgb(40, 40, 40));
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+
+    width: 100%;
+    min-height: 100dvh;
+    margin: 0px;
+    padding: 0px;
+
+    color: white;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100%;
+    color: white;
+
+    max-width: 900px;
+}
+
+article {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100%;
+    color: white;
+    padding: 10px;
+
+    text-align: left;
+    align-content: left;
+    align-items: left;
+
+    img {
+        width: 100%;
+        border-radius: 10px;
+    }
+}
+
+.background {
+    z-index: -1;
+    border-radius: 0;
+    opacity: 0.3;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    -webkit-mask-image: linear-gradient(to top, transparent 30%, black 70%);
+    mask-image: linear-gradient(to top, transparent 30%, black 70%);
+}

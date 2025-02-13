@@ -1,0 +1,21 @@
+.gallery {
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+
+    img.active {
+        width: 100%;
+        border-radius: 10px;
+    }
+
+    img.thumbnail {
+        width: 200px;
+        max-width: 40%;
+        border-radius: 5px;
+        border: 3px solid transparent;
+
+        &.current {
+            border: 3px solid dodgerblue;
+        }
+    }
+}
