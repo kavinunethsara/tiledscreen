@@ -6,7 +6,7 @@ domain: "com.github.kavinunethsara.binaryclock"
 thumbnail: bged.png
 cover: bged.png
 official: true
-download: http://localohst/asd
+download: "https://github.com/kavinunethsara/BinaryclockTile/releases/download/v1.5.0/binaryclock.tile.zip"
 images: bged.png,outlined.png
 
 author: Kavinu Nethsara

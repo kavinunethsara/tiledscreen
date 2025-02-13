@@ -33,7 +33,7 @@ cover: "{{site.baseurl}}/assets/images/article-front.png"
         {
             title: "{{tile.title}}",
             excerpt: "{{tile.excerpt}}",
-            url: "{{tile.url}}",
+            url: "{{site.baseurl}}/{{tile.url}}",
             domain: "{{tile.domain}}",
             thumbnail: "{{tile.thumbnail}}",
             author: "{{tile.author}}",

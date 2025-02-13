@@ -38,7 +38,7 @@ Kirigami.Dialog {
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
                 onClicked: {
-                    Qt.openUrlExternally("https://kavinunethsara.github.io/tiledscreen/")
+                    Qt.openUrlExternally("https://kavinunethsara.github.io/tiledscreen/store")
                 }
             }
         }
