@@ -272,6 +272,7 @@ Item {
         items.forEach((item) => {
             itemModel.append({ grid: grid, controller: root, metadata: JSON.stringify(item.metadata), plugin: item.plugin, tileWidth: item.tileWidth, tileHeight: item.tileHeight, column: item.column, row: item.row });
         });
+        root.updateGrid()
         initialLoad = false
     }
 
