@@ -32,7 +32,7 @@ FormCard.FormCardPage {
             to: 100
             stepSize: 1
             onValueChanged: {
-                config.widthidth = value
+                config.width = value
             }
         }
         FormCard.FormSpinBoxDelegate {
