@@ -5,7 +5,7 @@
 import QtCore
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls
+import org.kde.plasma.components as PlasmaComponents
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.extras as PlasmaExtras
 
@@ -22,130 +22,107 @@ Kirigami.Dialog {
     required property var controller
     property point position: Qt.point(0, 0)
 
-    Item {
-        id: container
-        // hints for the dialog dimensions
-        implicitWidth: Kirigami.Units.gridUnit * 20 + Kirigami.Units.mediumSpacing * 4 + Kirigami.Units.largeSpacing * 2
-        implicitHeight: Kirigami.Units.gridUnit * 16 + Kirigami.Units.largeSpacing * 2
+    property var installer: Plasma5Support.DataSource {
+        engine: "executable"
+        connectedSources: []
+        onNewData: function(source, data) {
+            disconnectSource(source)
+            let jsdata = data.stdout + data.stderr
+            if (jsdata != "") {
+                root.statusDialog.text = jsdata
+            } else {
+                root.controller.getTiles()
+                root.statusDialog.text = "Successfully installed"
+            }
+            root.statusDialog.open()
+        }
 
-        Label {
+        function install(file) {
+            const scriptUrl = Qt.resolvedUrl("../scripts/tileInstaller.py").toString().replace("file://", "")
+            let path = file.replace("file://", "")
+            root.installer.connectSource("python '" + scriptUrl+ "' '"+path+"'")
+        }
+    }
+
+    property var statusDialog:Kirigami.Dialog {
+        property alias text: statusDialogLabel.text
+        ColumnLayout {
+            PlasmaComponents.Label {
+                id: statusDialogLabel
+                Layout.fillWidth: true
+                Layout.margins: Kirigami.Units.largeSpacing
+            }
+        }
+    }
+
+    property var fileDialog: FileDialog {
+        currentFolder: StandardPaths.standardLocations(StandardPaths.DownloadLocation)[0]
+        nameFilters: ["Tile zip archive (*.tile.zip)"]
+        onAccepted: {
+            root.installer.install(selectedFile.toString())
+        }
+    }
+
+    customFooterActions: [
+        Kirigami.Action {
             text: i18n("Download Tiles...")
-            color: Kirigami.Theme.linkColor
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.margins: Kirigami.Units.smallSpacing
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                onClicked: {
-                    Qt.openUrlExternally("https://kavinunethsara.github.io/tiledscreen/store")
-                }
+            icon.name: "download"
+            onTriggered: {
+                Qt.openUrlExternally("https://kavinunethsara.github.io/tiledscreen/store")
             }
-        }
-
-        Button {
-            id: installButton
+        },
+        Kirigami.Action {
             text: i18n("Install from file")
-            anchors.top: parent.top
+            icon.name: "install"
+            onTriggered: root.fileDialog.open()
+        }
+    ]
+
+    ListView {
+        id: listView
+        Layout.fillWidth: true
+        implicitWidth: Kirigami.Units.gridUnit * 18
+        implicitHeight: Kirigami.Units.gridUnit * 20
+        clip: true
+
+        highlight: PlasmaExtras.Highlight {}
+
+        model: root.tiles
+
+        delegate:  RowLayout {
+            id: del
+            required property var model
+            anchors.left: parent.left
             anchors.right: parent.right
-            anchors.margins: Kirigami.Units.smallSpacing
-            onClicked: fileDialog.open()
-        }
-
-        Plasma5Support.DataSource {
-            id: installer
-            engine: "executable"
-            connectedSources: []
-            onNewData: function(source, data) {
-                disconnectSource(source)
-                let jsdata = data.stdout + data.stderr
-                if (jsdata != "") {
-                    statusDialog.text = jsdata
-                } else {
-                    root.controller.getTiles()
-                    statusDialog.text = "Successfully installed"
-                }
-                statusDialog.open()
-            }
-
-            function install(file) {
-                const scriptUrl = Qt.resolvedUrl("../scripts/tileInstaller.py").toString().replace("file://", "")
-                let path = file.replace("file://", "")
-                installer.connectSource("python '" + scriptUrl+ "' '"+path+"'")
-            }
-        }
-
-        Kirigami.Dialog {
-            id: statusDialog
-            property alias text: statusDialogLabel.text
-            ColumnLayout {
-                Label {
-                    id: statusDialogLabel
-                    Layout.fillWidth: true
-                    Layout.margins: Kirigami.Units.largeSpacing
-                }
-            }
-        }
-
-        FileDialog {
-            id: fileDialog
-            currentFolder: StandardPaths.standardLocations(StandardPaths.DownloadLocation)[0]
-            nameFilters: ["Tile zip archive (*.tile.zip)"]
-            onAccepted: {
-                installer.install(selectedFile.toString())
-            }
-        }
-
-        ListView {
-            id: listView
-            anchors {
-                top: installButton.bottom
-                left: parent.left
-                right: parent.right
-                bottom: parent.bottom
-            }
-            anchors.margins: Kirigami.Units.largeSpacing
-
-            highlight: PlasmaExtras.Highlight {}
-
-            model: root.tiles
-
-            delegate:  RowLayout {
-                id: del
-                required property var model
-                anchors.left: parent.left
-                anchors.right: parent.right
-                Kirigami.IconTitleSubtitle {
-                    icon.source: del.model.icon
-                    title: del.model.name
-                    subtitle: del.model.description
-                    Layout.margins: Kirigami.Units.smallSpacing
-                }
+            Kirigami.IconTitleSubtitle {
+                icon.source: del.model.icon
+                title: del.model.name
+                subtitle: del.model.description
+                Layout.margins: Kirigami.Units.smallSpacing
             }
         }
 
         MouseArea{
-            id: mouseArea
-            anchors.fill: listView
+            anchors.fill: parent
             hoverEnabled: true
             onClicked: function (mouse) {
-                let pos = mouseArea.mapToItem(listView, Qt.point(mouse.x, mouse.y))
+                let pos = mapToItem(parent.contentItem, Qt.point(mouse.x, mouse.y))
                 let tile = listView.indexAt(pos.x, pos.y)
                 if (tile == -1)
                     return
-                root.controller.createTile(root.tiles[tile], root.position.x, root.position.y)
-                root.close()
+                    root.controller.createTile(root.tiles[tile], root.position.x, root.position.y)
+                    root.close()
             }
 
             onMouseXChanged:  function(mouse) { setCurrent(mouse) }
             onMouseYChanged:  function(mouse) { setCurrent(mouse) }
 
             function setCurrent(mouse) {
-                let pos = mouseArea.mapToItem(listView, Qt.point(mouse.x, mouse.y))
+                let pos = mapToItem(parent.contentItem, Qt.point(mouse.x, mouse.y))
                 let tile = listView.indexAt(pos.x, pos.y)
                 if (tile == -1)
                     return
-                listView.currentIndex = tile
+                    listView.currentIndex = tile
             }
 
         }

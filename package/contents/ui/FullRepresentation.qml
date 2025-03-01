@@ -117,7 +117,10 @@ Kicker.DashboardWindow {
                 Category{
                     id: mainCat
 
-                    title: (root.currentPage == "search") ? i18n("Search") : root.currentPage == "home" ? i18n("Favourites") : i18n("All Apps")
+                    title: (root.currentPage == "search") ? i18n("Search") :
+                    root.currentPage == "home" ? i18n("Favourites") :
+                    root.currentPage == "all" ? i18n("All Apps") : root.currentPage
+
                     action: root.currentPage != "home" ? i18n("Favourites") : i18n("All Apps")
 
                     Layout.fillHeight: parent? true : false
@@ -133,14 +136,20 @@ Kicker.DashboardWindow {
                     useBackground: false
 
                     onActivated: {
+                        if (expandedView.currentView) {
+                            expandedView.currentView.destroy()
+                            root.currentPage = "home"
+                            return
+                        }
+
                         if (searchText != "") {
-                            searchText = "";
-                            return;
+                            searchText = ""
+                            return
                         }
                         if (root.currentPage == "home") {
-                            root.currentPage = "all" ;
+                            root.currentPage = "all"
                         } else {
-                            root.currentPage = "home";
+                            root.currentPage = "home"
                         }
                     }
 
@@ -184,13 +193,32 @@ Kicker.DashboardWindow {
                     Tile.Grid {
                         id: tileView
                         visible: root.currentPage == "home"
-                        appsView: appsView
 
                         onToggled: {
                             root.toggle()
                         }
 
+                        onExpanded: function (view, data) {
+                            if (expandedView.currentView)
+                                expandedView.currentView.destroy()
+                            expandedView.currentView = view.createObject(expandedView, data)
+                        }
+
                         Keys.forwardTo: [mainCat.textField]
+                    }
+
+                    Item {
+                        id: expandedView
+                        visible: currentView
+                        property var currentView: null
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+
+                        onCurrentViewChanged: {
+                            if (currentView) {
+                                root.currentPage = currentView.title || "page"
+                            }
+                        }
                     }
                 }
             }

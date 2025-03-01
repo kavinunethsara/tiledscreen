@@ -18,6 +18,7 @@ pragma ComponentBehavior: Bound
 Item {
     id: root
     anchors.fill: parent
+    property double gridHeight: grid.implicitHeight
     property int minRows: 0
     property int count: 0
     property ListModel itemModel: ListModel {
@@ -29,7 +30,6 @@ Item {
         }
     }
     property var tiles: []
-    property QtObject appsView
     property real cellSizeMultiplier: plasmoid.configuration.cellSize / 10
     readonly property real cellSize: Kirigami.Units.gridUnit * 2.5 * cellSizeMultiplier
 
@@ -40,6 +40,7 @@ Item {
     property bool initialLoad: true
 
     signal toggled()
+    signal expanded(view: variant , config: variant )
 
     Component.onCompleted: {
         getTiles()
@@ -242,7 +243,6 @@ Item {
     }
 
     function addTile(type: string, metadata: variant, len = 2, breadth = 2, col = 0, row = 0, index = 0) {
-
         itemModel.append({ grid: grid, controller: root, metadata: JSON.stringify(metadata), plugin: type, tileWidth: len, tileHeight: breadth, column: col, row: row });
 
         root.updateGrid();

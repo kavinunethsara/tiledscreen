@@ -1,0 +1,18 @@
+{
+    "name": "Bluetooth",
+    "plugin": "bluetooth",
+    "description": "Toggle Bluetooth On or Off",
+    "icon": "bluetooth",
+    "main": "BluetoothTile.qml",
+    "config": "TileConfig.qml",
+    "preferredWidth": 2,
+    "preferredHeight": 2,
+    "defaults": {
+        "useCustomBack": false,
+        "useCustomFront": false,
+        "backColor": "white",
+        "frontColor": "black",
+        "showLabel": true,
+        "rounded": true
+    }
+}

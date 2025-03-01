@@ -60,20 +60,24 @@ Item {
         id: mouseArea
         anchors.fill: parent
         drag.target: parent
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
         hoverEnabled: true
 
         property variant prevItem: null
 
         onClicked: function (mouse) {
             // If we are in the same place, acctivate the tile
-            if (mouse.button == Qt.LeftButton) {
+            if (mouse.button != Qt.RightButton) {
                 if (root.controller.editMode){
                     root.openEditor();
                     return
                 }
                 if (root.internalTile.activate) {
+                    const tileInfo = controller.tiles.find((tile) => tile.plugin == root.model.plugin)
+
                     root.internalTile.activate(mouse)
+
+                    if (tileInfo.expandedView) return
                     controller.toggled();
                 }
                 return;
@@ -182,7 +186,7 @@ Item {
 
 
     function openEditor() {
-        let tileInfo = controller.tiles.find((tile) => tile.plugin == root.model.plugin)
+        const tileInfo = controller.tiles.find((tile) => tile.plugin == root.model.plugin)
         var conf = Qt.createComponent(tileInfo.path + "/" + tileInfo.config);
         if (conf.status === Component.Ready) {
             const tileOpts = {
@@ -192,6 +196,21 @@ Item {
                 })
             }
             root.controller.openEditor(conf, tileOpts);
+        }
+    }
+
+    function expandView() {
+        const tileInfo = controller.tiles.find((tile) => tile.plugin == root.model.plugin)
+        if (!tileInfo.expandedView) return
+        var expansion = Qt.createComponent(tileInfo.path + "/" + tileInfo.expandedView);
+        if (expansion.status === Component.Ready) {
+            const tileOpts = {
+                tile: root,
+                config: Qt.binding(function() {
+                    return root.config
+                })
+            }
+            root.controller.expanded(expansion, tileOpts);
         }
     }
 }
