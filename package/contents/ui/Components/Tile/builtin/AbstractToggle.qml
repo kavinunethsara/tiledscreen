@@ -12,6 +12,10 @@ GenericBackground {
     property alias icon: icon.source
     property alias text: label.text
 
+    Component.onCompleted: {
+        container.toggleOnActivate = false
+    }
+
     Rectangle {
         visible: root.toggled
         anchors.fill: parent
@@ -30,6 +34,7 @@ GenericBackground {
         }
         color: root.metadata.useCustomFront? root.metadata.frontColor : Kirigami.Theme.textColor
     }
+
     PlasmaComponents.Label {
         id: label
         visible: root.metadata.width > 1 && root.metadata.height > 1 && root.metadata.showLabel

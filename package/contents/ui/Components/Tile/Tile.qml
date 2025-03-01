@@ -15,6 +15,7 @@ Item {
     required property int index
     property var controller: model.controller
     property var grid: model.grid
+    property bool toggleOnActivate: true
 
     property variant config: {}
     property variant tileData: {}
@@ -74,7 +75,8 @@ Item {
                 }
                 if (root.internalTile.activate) {
                     root.internalTile.activate(mouse)
-                    controller.toggled();
+                    if (toggleOnActivate)
+                        controller.toggled()
                 }
                 return;
             }
