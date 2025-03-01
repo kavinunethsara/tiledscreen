@@ -26,21 +26,6 @@ baseurl: "/tiledscreen" # the subpath of your site, e.g. /blog
 url: "https://kavinunethsara.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  kavinunethsara
 
-# Build settings
-plugins:
-  - jekyll-feed
-
-collections:
-    tiles:
-        output: true
-        permalink: /tile/:path/
-
-defaults:
-  - scope:
-      path: ""
-      type: "tiles"
-    values:
-      layout: "post"
 
 # Exclude from processing.
 # The following items will not be processed, by default.

@@ -68,7 +68,7 @@ Kirigami.Dialog {
             text: i18n("Download Tiles...")
             icon.name: "download"
             onTriggered: {
-                Qt.openUrlExternally("https://kavinunethsara.github.io/tiledscreen/store")
+                Qt.openUrlExternally("https://kavinunethsara.github.io/tiledwidgets/store")
             }
         },
         Kirigami.Action {
