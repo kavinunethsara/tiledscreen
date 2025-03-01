@@ -75,7 +75,7 @@ Item {
                 }
                 if (root.internalTile.activate) {
                     root.internalTile.activate(mouse)
-                    if (toggleOnActivate)
+                    if (root.toggleOnActivate)
                         controller.toggled()
                 }
                 return;

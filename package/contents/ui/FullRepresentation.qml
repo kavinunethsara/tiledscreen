@@ -193,6 +193,7 @@ Kicker.DashboardWindow {
                     Tile.Grid {
                         id: tileView
                         visible: root.currentPage == "home"
+                        property variant appsView: appsView
 
                         onToggled: {
                             root.toggle()
