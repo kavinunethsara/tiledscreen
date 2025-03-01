@@ -73,11 +73,7 @@ Item {
                     return
                 }
                 if (root.internalTile.activate) {
-                    const tileInfo = controller.tiles.find((tile) => tile.plugin == root.model.plugin)
-
                     root.internalTile.activate(mouse)
-
-                    if (tileInfo.expandedView) return
                     controller.toggled();
                 }
                 return;
