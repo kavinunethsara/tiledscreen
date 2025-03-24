@@ -105,6 +105,7 @@ GenericBackground {
         PlasmaComponents.Label {
             text: player.trackName || "No Media Playing"
             Layout.fillWidth: true
+            font.weight: Font.Bold
             elide: Qt.ElideRight
         }
         PlasmaComponents.Label {
