@@ -197,6 +197,11 @@ Item {
         id: tileSelector
         tiles: root.tiles
         controller: root
+        errorDialog: errorDialog
+    }
+
+    ErrorDialog {
+        id: errorDialog
     }
 
     function updateGrid() {
@@ -233,6 +238,11 @@ Item {
         connectedSources: []
         onNewData: function(source, data) {
             disconnectSource(source)
+            if (data.stderr) {
+                errorDialog.error = data.stderr
+                errorDialog.open()
+                return
+            }
             let jsdata = data.stdout
             root.parseTileData(jsdata)
         }

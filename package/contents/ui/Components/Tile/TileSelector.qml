@@ -20,6 +20,7 @@ Kirigami.Dialog {
 
     required property var tiles
     required property var controller
+    required property ErrorDialog errorDialog
     property point position: Qt.point(0, 0)
 
     property var installer: Plasma5Support.DataSource {
@@ -27,6 +28,11 @@ Kirigami.Dialog {
         connectedSources: []
         onNewData: function(source, data) {
             disconnectSource(source)
+            if (data.stderr) {
+                root.errorDialog.error = data.stderr
+                root.errorDialog.open()
+                return
+            }
             let jsdata = data.stdout + data.stderr
             if (jsdata != "") {
                 root.statusDialog.text = jsdata
