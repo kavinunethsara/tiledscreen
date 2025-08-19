@@ -9,7 +9,7 @@ import org.kde.kirigami as Kirigami
 Item {
     id: root
     width: Kirigami.Units.gridUnit * 1.5 + Kirigami.Units.largeSpacing * 2
-    height: Kirigami.Units.gridUnit * 1.5 + Kirigami.Units.largeSpacing * 2
+    height: width
     anchors.top: parent.top
     property alias source: icon.source
     property alias hint: tooltip.text
@@ -39,7 +39,12 @@ Item {
     }
 
     Rectangle {
-        anchors.fill: parent
+        anchors {
+            left: parent.left
+            right: parent.right
+            verticalCenter: parent.verticalCenter
+        }
+        height: parent.width
         color: Kirigami.Theme.highlightColor
         radius: parent.width
         opacity: mouseArea.containsMouse ? 1 : 0
