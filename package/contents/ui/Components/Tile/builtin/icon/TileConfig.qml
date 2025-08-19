@@ -53,6 +53,15 @@ FormCard.FormCardPage {
         title: i18n("Appearance")
     }
     FormCard.FormCard {
+        FormCard.FormComboBoxDelegate {
+            text: i18n("Text Align")
+            model: [i18n("Left"), i18n("Center"), i18n("Right")]
+            currentIndex: config.alignment
+            onCurrentIndexChanged: {
+                config.alignment = currentIndex
+            }
+        }
+
         FormCard.FormSwitchDelegate {
             text: i18n("Show icon")
             checked: config.showIcon

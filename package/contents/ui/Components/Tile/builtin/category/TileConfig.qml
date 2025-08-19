@@ -49,6 +49,16 @@ FormCard.FormCardPage {
     FormCard.FormHeader {
         title: i18n("Appearance")
     }
+
+    FormCard.FormComboBoxDelegate {
+        text: i18n("Text Align")
+        model: [i18n("Left"), i18n("Center"), i18n("Right")]
+        currentIndex: config.alignment
+        onCurrentIndexChanged: {
+            config.alignment = currentIndex
+        }
+    }
+
     FormCard.FormCard {
         Utils.FormIconDelegate {
             text: i18n("Icon")

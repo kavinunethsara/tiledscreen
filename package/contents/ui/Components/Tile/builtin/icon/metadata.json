@@ -9,6 +9,7 @@
     "preferredHeight": 2,
     "defaults": {
         "name": "Icon",
+        "alignment": 1,
         "icon": "empty",
         "useCustomBack": false,
         "useCustomFront": false,

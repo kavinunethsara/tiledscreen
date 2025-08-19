@@ -18,6 +18,7 @@ Rectangle {
     required property Tile container
 
     property var fillModes: [Image.Stretch, Image.PreserveAspectCrop, Image.PreserveAspectFit, Image.Pad]
+    property var alignModes: [Qt.AlignLeft, Qt.AlignHCenter, Qt.AlignRight]
 
     Plasma5Support.DataSource {
         id: executable
@@ -102,7 +103,7 @@ Rectangle {
     PlasmaComponents.Label {
         id: textLabel
         text: root.metadata.name
-        horizontalAlignment: Qt.AlignHCenter
+        horizontalAlignment: root.alignModes[root.metadata.alignment]
         visible: root.container.model.tileHeight > 1
         anchors {
             left: parent.left

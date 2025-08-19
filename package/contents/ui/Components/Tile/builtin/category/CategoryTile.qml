@@ -16,6 +16,8 @@ Rectangle {
     required property var metadata
     required property Tile container
 
+    property var alignModes: [Qt.AlignLeft, Qt.AlignHCenter, Qt.AlignRight]
+
     color: "transparent"
 
     Item {
@@ -40,7 +42,7 @@ Rectangle {
     PlasmaComponents.Label {
         id: textLabel
         text: root.metadata.name
-        horizontalAlignment: Qt.AlignHCenter
+        horizontalAlignment: root.alignModes[root.metadata.alignment]
         verticalAlignment: Qt.AlignVCenter
 
         anchors.left: iconContainer.right
