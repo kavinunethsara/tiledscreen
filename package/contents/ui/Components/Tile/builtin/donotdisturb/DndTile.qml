@@ -30,8 +30,8 @@ AbstractToggle {
             return;
         }
 
-        var d = new Date();
-        d.setYear(d.getFullYear()+1)
+        let d = new Date();
+        d.setFullYear(d.getFullYear()+1)
 
         notificationSettings.notificationsInhibitedUntil = d
         notificationSettings.save()
@@ -43,23 +43,24 @@ AbstractToggle {
         console.warn("Notif P1", inhibited)
 
         if (!NotificationManager.Server.valid) {
-            return false
+            return false;
         }
 
-        console.warn("Notif P2", inhibited)
-
-        var inhibitedUntil = notificationSettings.notificationsInhibitedUntil
-
+        var inhibitedUntil = notificationSettings.notificationsInhibitedUntil;
         if (!isNaN(inhibitedUntil.getTime())) {
-            inhibited |= (Date.now() < inhibitedUntil.getTime())
+            inhibited |= (Date.now() < inhibitedUntil.getTime());
         }
 
         if (notificationSettings.notificationsInhibitedByApplication) {
-            inhibited |= true
+            inhibited |= true;
+        }
+
+        if (notificationSettings.inhibitNotificationsWhenFullscreen) {
+            inhibited |= notificationSettings.fullscreenFocused;
         }
 
         if (notificationSettings.inhibitNotificationsWhenScreensMirrored) {
-            inhibited |= notificationSettings.screensMirrored
+            inhibited |= notificationSettings.screensMirrored;
         }
 
         console.warn("Notif", inhibited)
