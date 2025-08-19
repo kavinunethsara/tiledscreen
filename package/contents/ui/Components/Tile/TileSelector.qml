@@ -40,7 +40,7 @@ Kirigami.Dialog {
         function install(file) {
             const scriptUrl = Qt.resolvedUrl("../scripts/tileInstaller.py").toString().replace("file://", "")
             let path = file.replace("file://", "")
-            root.installer.connectSource("python '" + scriptUrl+ "' '"+path+"'")
+            root.installer.connectSource("python3 '" + scriptUrl+ "' '"+path+"'")
         }
     }
 

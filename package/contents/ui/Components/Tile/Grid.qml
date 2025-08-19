@@ -256,7 +256,7 @@ Item {
     function getTiles() {
         const scriptUrl = Qt.resolvedUrl("../scripts/tileLoader.py").toString().replace("file://", "")
         const builtinsUrl = Qt.resolvedUrl("./builtin/").toString().replace("file://", "")
-        executable.exec("python "+"'"+scriptUrl+"'"+" '"+builtinsUrl+"' ");
+        executable.exec("python3 "+"'"+scriptUrl+"'"+" '"+builtinsUrl+"' ");
     }
 
     function parseTileData(data) {
