@@ -48,9 +48,27 @@ Rectangle {
         }
     }
 
+    /* This timer is required to prevent multiple refreshes of the imageColors object.
+     * Otherwise it refreshes too many times and crash when usin a path as an icon
+     */
+    Timer {
+        id: iconTimer
+        interval: 1000
+        repeat: false
+        triggeredOnStart: true
+        onTriggered: {
+            imageColor.source = root.metadata.icon
+        }
+    }
+
+    onMetadataChanged: {
+        iconTimer.restart()
+    }
+
+    // BUG: Multiple consecutive refreshes when using a file path causes SegmentationFault
+    // Worked around by using a timer to stagger the refreshes
     Kirigami.ImageColors {
         id: imageColor
-        source: root.metadata.icon
     }
 
     // Background Image
