@@ -25,7 +25,10 @@ PlasmoidItem {
 
     Component {
         id: compactRepresentationComponent
-        CompactRepresentation {}
+        CompactRepresentation {
+            inPanel: kicker.inPanel
+            vertical: kicker.vertical
+        }
     }
 
     Kicker.RootModel {

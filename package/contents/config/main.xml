@@ -10,6 +10,10 @@
       <label>The name of the icon to use for the compact representation (e.g. on a small panel).</label>
       <default>start-here-kde-symbolic</default>
     </entry>
+    <entry name="label" type="String">
+      <label>Text label</label>
+      <default></default>
+    </entry>
     <entry name="cellSize" type="Int">
       <default>10</default>
     </entry>

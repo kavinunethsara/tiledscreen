@@ -6,6 +6,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls
 import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.plasmoid
 import org.kde.plasma.components as PlasmaComponents
@@ -15,15 +16,60 @@ import org.kde.plasma.private.kicker as Kicker
 Item {
     id: root
 
+    property bool shouldHaveLabel: plasmoid.configuration.label != ""
+    required property bool inPanel
+    required property bool vertical
+
+    readonly property var sizing: {
+        let impWidth = buttonIcon.Layout.preferredWidth;
+        if (shouldHaveLabel) {
+            impWidth += buttonLabel.contentWidth + buttonLabel.Layout.leftMargin + buttonLabel.Layout.rightMargin;
+        }
+
+        // at least square, but can be wider/taller
+        if (inPanel) {
+            if (vertical) {
+                return {
+                    preferredWidth: buttonIcon.Layout.preferredWidth,
+                };
+            } else { // horizontal
+                return {
+                    preferredWidth: impWidth,
+                };
+            }
+        } else {
+            return {
+                preferredWidth: impWidth,
+            };
+        }
+    }
+
+    Layout.minimumWidth: sizing.preferredWidth
+
     signal reset
 
-    Kirigami.Icon {
-        id: buttonIcon
+    RowLayout{
+        id: rootLayout
+        Layout.fillHeight: true
 
-        anchors.fill: parent
-        source: plasmoid.configuration.icon
-        active: mouseArea.containsMouse
-        smooth: true
+        Kirigami.Icon {
+            id: buttonIcon
+
+            Layout.fillHeight: true
+            Layout.preferredWidth: implicitHeight
+            source: plasmoid.configuration.icon
+            active: mouseArea.containsMouse
+            smooth: true
+        }
+        Label {
+            id: buttonLabel
+            visible: plasmoid.configuration.label != ""
+
+            Layout.margins: Kirigami.Units.smallSpacing
+            verticalAlignment: Qt.AlignVCenter
+
+            text: plasmoid.configuration.label
+        }
     }
 
     FullRepresentation {

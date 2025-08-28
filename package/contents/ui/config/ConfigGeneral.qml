@@ -14,6 +14,7 @@ import "../Components" as Utils
 KCM.SimpleKCM {
     id: root
     property alias cfg_icon: icon.iconName
+    property alias cfg_label: labelText.text
     property alias cfg_cellSize: cellSize.value
     property string cfg_tiles
     property string cfg_tilesDefault
@@ -28,12 +29,16 @@ KCM.SimpleKCM {
                 text: i18n("Icon")
             }
 
-            FormCard.FormDelegateSeparator {}
             FormCard.FormButtonDelegate {
                 text: i18n("Reset Icon")
                 onClicked: {
                     icon.iconName = "start-here-kde-symbolic"
                 }
+            }
+            FormCard.FormDelegateSeparator {}
+            FormCard.FormTextFieldDelegate {
+                id: labelText
+                label: "Label text"
             }
         }
 
