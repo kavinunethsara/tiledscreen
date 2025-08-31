@@ -13,6 +13,7 @@ Item {
     anchors.top: parent.top
     property alias source: icon.source
     property alias hint: tooltip.text
+    activeFocusOnTab: true
 
     signal activated
 
@@ -26,6 +27,10 @@ Item {
     ToolTip {
         id: tooltip
         visible: mouseArea.containsMouse
+    }
+
+    Keys.onReturnPressed: {
+        root.activated()
     }
 
     MouseArea {
@@ -47,6 +52,6 @@ Item {
         height: parent.width
         color: Kirigami.Theme.highlightColor
         radius: parent.width
-        opacity: mouseArea.containsMouse ? 1 : 0
+        opacity: mouseArea.containsMouse || root.activeFocus ? 1 : 0
     }
 }

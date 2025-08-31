@@ -71,7 +71,9 @@ Item {
     Rectangle {
         visible:plasmoid.configuration.displayUserInfo
 
-        color: mouseArea.containsMouse ? Kirigami.Theme.highlightColor :Kirigami.Theme.backgroundColor
+        activeFocusOnTab: true
+
+        color: mouseArea.containsMouse || activeFocus? Kirigami.Theme.highlightColor :Kirigami.Theme.backgroundColor
         width: userIcon.width + userLabel.width+ Kirigami.Units.mediumSpacing * 4
         height: userIcon.height + Kirigami.Units.mediumSpacing * 2
         radius: height
@@ -107,6 +109,8 @@ Item {
             anchors.fill: parent
             onClicked: sessionsModel.startNewSession(sessionsModel.shouldLock)
         }
+
+        Keys.onReturnPressed: sessionsModel.startNewSession(sessionsModel.shouldLock)
     }
     ToolbarButton {
         id: lockIcon

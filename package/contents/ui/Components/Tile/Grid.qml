@@ -214,6 +214,7 @@ Item {
 
             root.minRows = row
         }
+
     }
 
     function serializeModel() {
@@ -254,13 +255,11 @@ Item {
 
     function addTile(type: string, metadata: variant, len = 2, breadth = 2, col = 0, row = 0, index = 0) {
         itemModel.append({ grid: grid, controller: root, metadata: JSON.stringify(metadata), plugin: type, tileWidth: len, tileHeight: breadth, column: col, row: row });
-
         root.updateGrid();
     }
 
     function createTile(tile, col = 0, row = 0) {
         addTile(tile.plugin, tile.defaults, tile.preferredWidth, tile.preferredHeight, col, row);
-        root.updateGrid();
     }
 
     function getTiles() {
@@ -279,6 +278,9 @@ Item {
         initialLoad = true
         itemModel.clear()
         var items = JSON.parse(plasmoid.configuration.tiles);
+        items = items.sort((a, b) =>
+            parseInt(a.row.toString() + a.column.toString()) - parseInt(b.row.toString() + b.column.toString())
+        )
         items.forEach((item) => {
             itemModel.append({ grid: grid, controller: root, metadata: JSON.stringify(item.metadata), plugin: item.plugin, tileWidth: item.tileWidth, tileHeight: item.tileHeight, column: item.column, row: item.row });
         });

@@ -16,6 +16,8 @@ FocusScope {
     property bool small: false
     clip: true
 
+    activeFocusOnTab: true
+
     Layout.fillWidth: true
     Layout.fillHeight: true
     Layout.margins: Kirigami.Units.largeSpacing

@@ -204,16 +204,14 @@ Kicker.DashboardWindow {
                                 expandedView.currentView.destroy()
                             expandedView.currentView = view.createObject(expandedView, data)
                         }
-
-                        Keys.forwardTo: [mainCat.textField]
                     }
 
                     Item {
                         id: expandedView
+                        property Item currentView: null
                         visible: currentView
-                        property var currentView: null
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
+                        Layout.preferredHeight: currentView.Layout.preferredHeight || Kirigami.Units.gridUnit * 5
+                        Layout.preferredWidth: currentView.Layout.preferredWidth || Kirigami.Units.gridUnit * 5
 
                         onCurrentViewChanged: {
                             if (currentView) {

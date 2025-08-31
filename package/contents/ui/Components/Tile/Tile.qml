@@ -30,6 +30,8 @@ Item {
 
     z: 1000
 
+    activeFocusOnTab: true
+
     Component.onCompleted: {
         let tileInfo = controller.tiles.find((tile) => tile.plugin == root.model.plugin)
         root.config = new Utils.TileData(root, tileInfo.defaults)
@@ -55,6 +57,22 @@ Item {
             root.configChanged()
             root.model.metadata = JSON.stringify(root.tileData)
         }
+    }
+
+    Keys.onReturnPressed: {
+        if (root.controller.editMode){
+            root.openEditor();
+            return
+        }
+        if (root.internalTile.activate) {
+            root.internalTile.activate(mouse)
+            if (root.toggleOnActivate)
+                controller.toggled()
+        }
+    }
+
+    Keys.onMenuPressed: {
+        root.showContextMenu(model.index);
     }
 
     MouseArea {
@@ -156,6 +174,14 @@ Item {
         z: 2
     }
 
+    Rectangle {
+        anchors.fill: root
+        anchors.margins: Kirigami.Units.smallSpacing
+        color: Kirigami.Theme.highlightColor
+        opacity: 0.4
+        visible: root.activeFocus
+        z: 10
+    }
 
     PlasmaComponents.Menu {
         id: contextMenu
