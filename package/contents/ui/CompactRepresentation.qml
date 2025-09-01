@@ -50,13 +50,14 @@ Item {
 
     RowLayout{
         id: rootLayout
-        Layout.fillHeight: true
+        anchors.fill: parent
 
         Kirigami.Icon {
             id: buttonIcon
 
             Layout.fillHeight: true
             Layout.preferredWidth: implicitHeight
+            Layout.fillWidth: !shouldHaveLabel
             source: plasmoid.configuration.icon
             active: mouseArea.containsMouse
             smooth: true
