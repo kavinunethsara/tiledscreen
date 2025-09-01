@@ -138,8 +138,6 @@ Kicker.DashboardWindow {
                     onActivated: {
                         if (expandedView.currentView) {
                             expandedView.currentView.destroy()
-                            root.currentPage = "home"
-                            return
                         }
 
                         if (searchText != "") {
@@ -208,16 +206,20 @@ Kicker.DashboardWindow {
 
                     Item {
                         id: expandedView
+                        anchors.centerIn: parent
+
                         property Item currentView: null
                         visible: currentView
-                        Layout.preferredHeight: currentView.Layout.preferredHeight || Kirigami.Units.gridUnit * 5
-                        Layout.preferredWidth: currentView.Layout.preferredWidth || Kirigami.Units.gridUnit * 5
 
-                        onCurrentViewChanged: {
-                            if (currentView) {
-                                root.currentPage = currentView.title || "page"
-                            }
+                        width: parent.width / 2
+                        height: parent.height / 2
+
+                        Rectangle {
+                            anchors.fill: parent
+                            color: Kirigami.Theme.backgroundColor
+                            radius: Kirigami.Units.mediumSpacing
                         }
+
                     }
                 }
             }
