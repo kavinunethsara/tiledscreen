@@ -1,0 +1,3 @@
+[submodule "package/contents/ui/Components/Tile"]
+	path = package/contents/ui/Components/Tile
+	url = https://github.com/kavinunethsara/TileComponent.git
