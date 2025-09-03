@@ -9,6 +9,8 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents
 Item {
     id: root
+    property alias mouse: mouseArea
+
     required property variant model
     property real itemWidth: Kirigami.Units.gridUnit * 14
     property bool small: false
@@ -37,6 +39,7 @@ Item {
     }
 
     MouseArea{
+        id: mouseArea
         anchors.fill: parent
         acceptedButtons: Qt.RightButton | Qt.LeftButton
         onClicked: function (mouse) {

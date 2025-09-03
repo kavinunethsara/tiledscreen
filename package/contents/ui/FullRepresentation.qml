@@ -12,6 +12,7 @@ import org.kde.plasma.private.kicker as Kicker
 
 import './Components'
 import './Components/Tile' as Tile
+import './Components/Tutorial' as Tutorial
 
 Kicker.DashboardWindow {
     id: root
@@ -95,9 +96,17 @@ Kicker.DashboardWindow {
             opacity: plasmoid.configuration.overlayOpacity / 100
         }
 
+        Loader {
+            anchors.fill: parent
+            visible: plasmoid.configuration.firstRun
+            active: plasmoid.configuration.firstRun
+            sourceComponent: Tutorial.Guide{}
+        }
+
         ColumnLayout{
             id: container
             anchors.fill: parent
+            visible: !plasmoid.configuration.firstRun
 
             ColumnLayout {
                 spacing: Kirigami.Units.smallSpacing * 2

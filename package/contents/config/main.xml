@@ -30,6 +30,10 @@
       <default>[{"metadata":{"name":"Dolphin","icon":"org.kde.dolphin","useCustomBack":false,"useCustomFront":false,"frontColor":{"r":0.019607843831181526,"g":0.019607843831181526,"b":0.019607843831181526,"a":1,"hsvHue":-1,"hsvSaturation":0,"hsvValue":0.019607843831181526,"hslHue":-1,"hslSaturation":0,"hslLightness":0.019607843831181526,"valid":true},"actionType":0,"action":"org.kde.dolphin.desktop"},"plugin":"icon","tileWidth":2,"tileHeight":2,"column":0,"row":0},{"metadata":{"name":"Discover","icon":"plasmadiscover","useCustomBack":false,"useCustomFront":false,"frontColor":{"r":0.019607843831181526,"g":0.019607843831181526,"b":0.019607843831181526,"a":1,"hsvHue":-1,"hsvSaturation":0,"hsvValue":0.019607843831181526,"hslHue":-1,"hslSaturation":0,"hslLightness":0.019607843831181526,"valid":true},"actionType":0,"action":"org.kde.discover.desktop"},"plugin":"icon","tileWidth":2,"tileHeight":2,"column":2,"row":0},{"metadata":{"name":"Gwenview","icon":"org.kde.gwenview","useCustomBack":false,"useCustomFront":false,"frontColor":{"r":0.019607843831181526,"g":0.019607843831181526,"b":0.019607843831181526,"a":1,"hsvHue":-1,"hsvSaturation":0,"hsvValue":0.019607843831181526,"hslHue":-1,"hslSaturation":0,"hslLightness":0.019607843831181526,"valid":true},"actionType":0,"action":"org.kde.gwenview.desktop"},"plugin":"icon","tileWidth":2,"tileHeight":2,"column":6,"row":0},{"metadata":{"name":"KWrite","icon":"kwrite","useCustomBack":false,"useCustomFront":false,"frontColor":{"r":0.019607843831181526,"g":0.019607843831181526,"b":0.019607843831181526,"a":1,"hsvHue":-1,"hsvSaturation":0,"hsvValue":0.019607843831181526,"hslHue":-1,"hslSaturation":0,"hslLightness":0.019607843831181526,"valid":true},"actionType":0,"action":"org.kde.kwrite.desktop"},"plugin":"icon","tileWidth":2,"tileHeight":2,"column":4,"row":0}]</default>
     </entry>
 
+    <entry name="firstRun" type="Bool">
+      <default>true</default>
+    </entry>
+
   </group>
 
   <group name="Appearance">
