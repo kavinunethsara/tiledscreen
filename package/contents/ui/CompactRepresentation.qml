@@ -56,8 +56,9 @@ Item {
             id: buttonIcon
 
             Layout.fillHeight: true
-            Layout.preferredWidth: implicitHeight
-            Layout.fillWidth: !shouldHaveLabel
+            Layout.minimumHeight: implicitHeight
+            Layout.fillWidth: !root.shouldHaveLabel
+            Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
             source: plasmoid.configuration.icon
             active: mouseArea.containsMouse
             smooth: true
