@@ -64,6 +64,12 @@ Kicker.DashboardWindow {
     mainItem: Item {
         anchors.fill: parent
 
+        Keys.onReleased: event => {
+            if (event.key === Qt.Key_Escape) {
+                root.close()
+            }
+        }
+
         Item{
             id: background
             anchors.fill: parent
