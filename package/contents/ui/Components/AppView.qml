@@ -29,7 +29,6 @@ FocusScope {
     property alias model: list.model
     property alias mouseActive: list.mouseActive
     readonly property int itemWidth: root.width / Math.round(root.width / (Kirigami.Units.gridUnit * 12))
-    focus: true
 
     GridView {
         id: list
@@ -37,8 +36,9 @@ FocusScope {
         property bool mouseActive: true
         cellWidth: root.itemWidth
         cellHeight: Kirigami.Units.gridUnit * 2 + Kirigami.Units.largeSpacing * 4
-        focus: true
         clip: true
+        focus: true
+
         highlight: Rectangle {
             color: Kirigami.Theme.highlightColor
             radius: Kirigami.Units.largeSpacing
@@ -62,7 +62,6 @@ FocusScope {
         onPositionChanged: function(mouse) {
             let pos = list.contentItem.mapFromItem(root, mouse.x, mouse.y)
             list.currentIndex = list.indexAt(pos.x, pos.y)
-            root.forceActiveFocus()
         }
     }
 

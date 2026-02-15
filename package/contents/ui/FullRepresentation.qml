@@ -63,10 +63,29 @@ Kicker.DashboardWindow {
 
     mainItem: Item {
         anchors.fill: parent
+        focus: true
 
         Keys.onReleased: event => {
             if (event.key === Qt.Key_Escape) {
                 root.close()
+            }
+            if ([Qt.Key_Left, Qt.Key_Right, Qt.Key_Up, Qt.Key_Down].includes(event.key)) {
+                if (root.currentPage == "home")
+                    tileView.handleKeys(event);
+                else
+                    return;
+            }
+        }
+
+        Keys.onPressed: function (button) {
+            const pressedKey = button.key;
+            if (pressedKey == Qt.Key_Backspace) {
+                mainCat.textField.text = mainCat.textField.text.substr(0,mainCat.textField.text.length - 1)
+                return;
+            }
+            if ((pressedKey >= Qt.Key_A && pressedKey <= Qt.Key_Z) || (pressedKey >= Qt.Key_0 && pressedKey <= Qt.Key_9) || button.text == " ") {
+                mainCat.textField.text += button.text
+                return;
             }
         }
 
@@ -161,6 +180,7 @@ Kicker.DashboardWindow {
                         }
                         if (root.currentPage == "home") {
                             root.currentPage = "all"
+                            appsView.forceActiveFocus();
                         } else {
                             root.currentPage = "home"
                         }
@@ -174,6 +194,7 @@ Kicker.DashboardWindow {
                             return
                         }
                         runnerModel.query = searchText;
+                        searchView.forceActiveFocus();
                     }
 
                     AppView {
