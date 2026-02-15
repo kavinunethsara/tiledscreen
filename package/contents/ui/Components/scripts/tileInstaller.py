@@ -24,11 +24,19 @@ def mkdir(path):
 with zipfile.ZipFile(sys.argv[1]) as package:
     data = {}
     try:
-        with package.open("metadata.json") as metadata:
-            data = json.loads(metadata.read())
-            if not ('name' in data and 'plugin' in data):
-                print("Not a valid tile archive.")
-                exit()
+        if "metadata.json" in package.namelist():
+            with package.open("metadata.json") as metadata:
+                data = json.loads(metadata.read())
+                if not ('name' in data and 'plugin' in data):
+                    print("Not a valid tile archive.")
+                    exit()
+        else:
+            with package.open("tile.json") as metadata:
+                data = json.loads(metadata.read())
+                if not ('name' in data and 'plugin' in data):
+                    print("Not a valid tile archive.")
+                    exit()
+
     except:
         print("Not a valid tile archive.")
         exit()

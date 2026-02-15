@@ -43,7 +43,7 @@ def gettiles():
         except:
             continue
         for entry in direct:
-            if (entry.name == "metadata.json"):
+            if (entry.name == "metadata.json" or entry.name == "tile.json"):
                 metafile = open(entry.path, 'r')
                 try:
                     metadata = json.loads(metafile.read())
