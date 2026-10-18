@@ -14,7 +14,7 @@
         "Id": "com.github.kavinunethsara.tiledscreen",
         "License": "LGPL-2.1+",
         "Name": "Tiled Screen",
-        "Version": "2.2",
+        "Version": "2.3",
         "Website": ""
     },
     "X-Plasma-API-Minimum-Version": "6.0",
