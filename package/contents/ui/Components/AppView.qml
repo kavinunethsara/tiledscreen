@@ -126,6 +126,7 @@ FocusScope {
         for (var i = 0; i < root.model.count; i++) {
             var modelIndex = root.model.index(i, 0)
             var favoriteId = root.model.data(modelIndex, Qt.UserRole + 3)
+            if (favoriteId.startsWith("applications:")) return favoriteId = favoriteId.replace("applications:", "")
             if (favoriteId == url) {
                 root.model.trigger(i, "", null)
                 return
